@@ -1,5 +1,14 @@
+import HomeCard from "./HomeCard";
+import SearchHome from "./SearchHome";
+
 function HomePage() {
-  return <main>Home Page</main>;
+  return (
+    <main>
+      <SearchHome/>
+      
+      <HomeCard />
+    </main>
+  );
 }
 
 export default HomePage;
