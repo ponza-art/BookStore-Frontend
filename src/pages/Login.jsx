@@ -22,6 +22,7 @@ export default function Login() {
               {" "}
               Welcome Back Please enter your details
             </span>
+            <form>
             <div className="py-4 relative">
               <label class="mb-2 text-md text-yellow-800" for="email">
                 Email:
@@ -83,6 +84,7 @@ export default function Login() {
                 Sign up for free
               </Link>
             </div>
+            </form>
           </div>
           <div className="relative">
             <img
