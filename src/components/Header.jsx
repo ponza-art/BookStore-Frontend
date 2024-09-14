@@ -84,7 +84,7 @@ function Header() {
             {" "}
             <Link
               className="hover:text-white focus:text-white active:text-white"
-              to={"#"}
+              to={"/login"}
             >
               Log in
             </Link>{" "}
