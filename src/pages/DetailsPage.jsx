@@ -80,6 +80,7 @@ function DetailsPage() {
                 <span>100% Secure Payment</span>
               </div>
             </div>
+
             <div className="border-l border-t border-r p-4">
               <BadgeCheck size={48} />
               <div className="mt-1">
@@ -87,6 +88,7 @@ function DetailsPage() {
                 <span>Within 30 Days</span>
               </div>
             </div>
+
             <div className="border-l border-t border-r border-b p-4">
               <MessageCircleQuestion size={48} />
               <div className="mt-1">
