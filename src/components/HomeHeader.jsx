@@ -3,7 +3,7 @@ import React from "react";
 export default function HomeHeader() {
   return (
     <div>
-      <div className="text-center my-5 mt-10">
+      <div className="text-center my-5 mt-10 mb-20">
         {" "}
         <h1 className="text-3xl font-semibold">
           Discover Read &{" "}

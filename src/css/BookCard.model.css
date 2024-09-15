@@ -1,0 +1,15 @@
+.parentDev:hover .cartDev {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.parentDev .cartDev {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.parentDev:hover .bodyCard {
+    transform: translateY(-10%);
+    transition: transform 0.2s ease-in-out;
+}

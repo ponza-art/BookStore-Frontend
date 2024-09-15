@@ -1,0 +1,14 @@
+{
+  "books": [
+    {
+      "id": "1",
+      "title": "Harry Potter",
+      "description": "Harry Potter is a film series based on the Harry Potter series of novels by J. K. Rowling."
+    },
+    {
+      "id": "2",
+      "title": "The Lord of the Rings",
+      "description": "The Lord of the Rings is an epic[1] high fantasy novel[a] by the English author and scholar J. R. R. Tolkien."
+    }
+  ]
+}
