@@ -5,7 +5,7 @@ import YoutupeIcon from "../../icons/YoutupeIcon";
 
 function Footer() {
   return (
-    <footer className="footer footer-center bg-base-200 text-base-content rounded p-9" style={{ backgroundColor: "#dab26d" }}>
+    <footer className="footer footer-center bg-base-200 text-base-content rounded p-9 w-full" style={{ backgroundColor: "#dab26d" }}>
       <nav>
         <img src="bookstore.png" width={"80"} alt="Logo" />
       </nav>

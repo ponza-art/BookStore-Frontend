@@ -3,19 +3,19 @@ import React from "react";
 export default function HomeHeader() {
   return (
     <div>
-      <div className="text-center my-5 mt-10 mb-20">
+      <div className="text-center my-5 mt-10">
         {" "}
         <h1 className="text-3xl font-semibold">
           Discover Read &{" "}
-          <h2 className="text-red-500 inline-block">Download</h2> Books{" "}
+          <h2 className="text-red-700 inline-block">Download</h2> Books{" "}
         </h1>
       </div>
       {
         //cover Div
       }
       <div
-        className=" parentDiv grid grid-cols-12 gap-4  mx-2 lg:mx-auto mt-20 container "
-        style={{ width: "90vw" }}
+        className=" parentDiv grid grid-cols-12 gap-4   mx-auto mt-20  container "
+        style={{ maxWidth: "90vw",margin:" auto" }}
       >
         <div className="xl:col-span-3 col-span-2 grid grid-cols-12 xl:me-10 lg:me-5 me-20 ">
           <div className=" col-span-6 mt-12 transition-transform duration-1000 ease-in-out hover:-translate-y-4 hidden xl:block ">
@@ -47,7 +47,7 @@ export default function HomeHeader() {
           //second div
         }
 
-        <div className="lg:col-span-6 md:col-span-9  col-span-12 grid grid-cols-12 relative">
+        <div className="lg:col-span-6 md:col-span-9  col-span-12 grid grid-cols-12 relative me-10 mb-20 sm:mb-40 ">
           <div className="col-span-4 relative z-10 transition-transform duration-1000 ease-in-out hover:-translate-y-4 h-28 ">
             <img
               className="relative ml-12"
@@ -60,7 +60,7 @@ export default function HomeHeader() {
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-11.jpg"
             />
           </div>
-          <div className=" h-28 col-span-4 relative z-10 transition-transform duration-1000 ease-in-out hover:-translate-y-4 mb-60">
+          <div className=" h-28 col-span-4 relative z-10 transition-transform duration-1000 ease-in-out hover:-translate-y-4 ">
             <img
               className="relative "
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-2.png"

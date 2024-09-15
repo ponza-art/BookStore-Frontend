@@ -23,7 +23,6 @@ const BookCard = ({ key, title, author, price, imageUrl }) => {
         <div className="card-title cartDev">
           <span className="font-semibold">Add to Cart</span>
           <FaRegHeart className="cursor-pointer iconBody" />
-          {/* <BsArrowLeftRight className="text-green-500 cursor-pointer" /> */}
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div className="navbar px-10" style={{ backgroundColor: "#dab26d" }}>
+    <div className="navbar" style={{ backgroundColor: "#dab26d" }}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
