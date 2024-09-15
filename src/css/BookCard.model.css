@@ -1,19 +1,15 @@
-
 .parentDev:hover .cartDev {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    justify-content:space-between;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out;
 }
 
-
- 
+.parentDev .cartDev {
+    opacity: 0;
+    visibility: hidden;
+}
 
 .parentDev:hover .bodyCard {
-    transform: translateY(-40px);
-    transition: transform 0.3s ease-in-out;
+    transform: translateY(-10%);
+    transition: transform 0.2s ease-in-out;
 }
-.iconBody{
-    /* justify-self :flex-end; */
-    /* margin-left: */
-} 

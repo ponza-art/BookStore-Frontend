@@ -7,9 +7,15 @@ function HomePage() {
   return (
     <main >
       <HomeHeader />
-      <SearchHome />
+      <div className="mt-9">
+
+      <SearchHome  />
+      </div>
+
+<div className="mt-5">
 
       <HomeCard />
+</div>
     </main>
   );
 

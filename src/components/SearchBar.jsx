@@ -3,8 +3,8 @@ import { IoMdSearch } from "react-icons/io";
 
 export default function SearchBar() {
   return (
-    <div className="form-control">
-      <div className="input flex items-center gap-2" style={{ borderRadius: "50px", width: "600px", border: "1px solid #ccc", padding: "5px" }}>
+    <div className="form-control ">
+      <div className="input flex  items-center gap-2" style={{ borderRadius: "50px", width: "600px", border: "1px solid #ccc", padding: "5px" }}>
         <input
           type="text"
           className=" bg-white p-1 flex-grow"
