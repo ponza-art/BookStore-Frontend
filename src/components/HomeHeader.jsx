@@ -54,7 +54,7 @@ export default function HomeHeader() {
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-1.png"
             />
           </div>
-          <div className=" h-28 col-span-4 relative z-30 transform scale-110 translate-y-2 md:translate-y-1 md:translate-x-7 ease-in-out transition-transform duration-1000 hover:-translate-y-4 ">
+          <div className=" h-28 col-span-4 relative z-30 transform scale-110 translate-y-2 md:translate-y-1 translate-x-7  ease-in-out transition-transform duration-1000 hover:-translate-y-4 ">
             <img
               className="relative"
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-11.jpg"
