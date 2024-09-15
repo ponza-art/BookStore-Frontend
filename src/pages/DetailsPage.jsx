@@ -31,7 +31,7 @@ function DetailsPage() {
       <section className="py-14">
         <div className="px-6 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 md:items-center lg:grid-cols-4">
           <div className="justify-self-center">
-            <div className="carousel w-64">
+            <div className="carousel w-64">لاع
               <div id="item1" className="carousel-item w-full">
                 <img src="/book-1.jpg" className="w-full" alt="Book Image" />
               </div>
@@ -65,10 +65,12 @@ function DetailsPage() {
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
-              <button className="btn rounded-none px-8">View</button>
-              <button className="btn btn-neutral rounded-none px-8">
+              <a className="btn rounded-none px-8" href='https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D' target="_blank"
+                    rel="noreferrer">
+                    View</a>
+              <a className="btn btn-neutral rounded-none px-8" href="https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D">
                 Download
-              </button>
+              </a>
             </div>
           </div>
 
