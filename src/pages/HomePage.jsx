@@ -4,20 +4,14 @@ import HomeHeader from "../components/HomeHeader";
 
 function HomePage() {
   return (
-    <main>
-      <div className="">
+    <main className="container mx-auto">
 
       <HomeHeader />
-      </div>
-      <br />
-      <br /><br /><br />
-      <br /><br /><br />
-      <br /><br />
-      <br /><br />
-      <div className="">
+    <div className="mt-10">
         <SearchHome />
-      </div>
-      <div className="mt-5">
+
+    </div>
+      <div className="mt-5 ">
         <HomeCard />
       </div>
     </main>
