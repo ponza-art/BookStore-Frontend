@@ -7,7 +7,7 @@ export default function HomeHeader() {
         {" "}
         <h1 className="text-3xl font-semibold">
           Discover Read &{" "}
-          <h2 className="text-red-700 inline-block">Download</h2> Books{" "}
+          <span className="text-red-700 inline-block">Download</span> Books{" "}
         </h1>
       </div>
       {

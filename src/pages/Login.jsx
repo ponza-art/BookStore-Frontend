@@ -24,7 +24,7 @@ export default function Login() {
             </span>
             <form>
             <div className="py-4 relative">
-              <label class="mb-2 text-md text-yellow-800" for="email">
+              <label className="mb-2 text-md text-yellow-800" htmlFor="email">
                 Email:
               </label>
               <input
@@ -36,7 +36,7 @@ export default function Login() {
               />
             </div>
             <div className="py-4 relative">
-              <label class="mb-2 text-md text-yellow-800" for="password">
+              <label className="mb-2 text-md text-yellow-800" htmlFor="password">
                 Password:
               </label>
 
@@ -61,7 +61,7 @@ export default function Login() {
             </div>
             <div className="flex justify-between w-full py-4">
               <div className="mr-4">
-                <input type="checkbox" name="ch" id="ch" class="mr-2" />
+                <input type="checkbox" name="ch" id="ch" className="mr-2" />
                 <span className="text-md"> remember me</span>
               </div>
               <Link className="font-bold text-md text-yellow-800 hover:underline">
