@@ -4,6 +4,8 @@ import OpenEyeIcon from "../../icons/OpenEyeIcon";
 import { Link, useNavigate } from "react-router-dom";
 import { UsersShemasign } from "../interface/UserShema";
 import axios from "axios";
+import ErrorInput from "../components/ErrorInput";
+import Input from "../components/Input";
 export default function Registration() {
   const [eyePassword, setEyePassword] = useState("password");
   const toggleEyePassword = () => {
@@ -15,31 +17,36 @@ export default function Registration() {
     email: "",
     password: "",
   });
-  const [errorstate, setErrorState] = useState({
+  const [errorState, setErrorState] = useState({
     username: null,
     email: null,
     password: null,
   });
-  const navigate =useNavigate()
+  const navigate = useNavigate();
+
   const Register = async (e) => {
     try {
       e.preventDefault();
       const { error, value } = UsersShemasign.validate(
-        {username:form.username,email:form.email,password:form.password },
+        { username: form.username, email: form.email, password: form.password },
         { abortEarly: false }
       );
-      if(error){
+      if (error) {
         const errors = error.details.reduce((acc, curr) => {
           acc[curr.path[0]] = curr.message;
           return acc;
         }, {});
-        console.log(errors)
+        console.log(errors);
         setErrorState(errors);
-      }else{
+      } else {
         setErrorState({ username: null, email: null, password: null });
         const response = await axios.post(
           "http://localhost:5000/users/register",
-          { username: value.username, email: value.email, password: value.password },
+          {
+            username: value.username,
+            email: value.email,
+            password: value.password,
+          },
           {
             headers: {
               "Content-Type": "application/json",
@@ -47,20 +54,54 @@ export default function Registration() {
           }
         );
         console.log(response.data);
-        navigate('/login', { replace: true })
+        navigate("/login", { replace: true });
       }
-      
-      
     } catch (err) {
       console.error("An error occurred:", err);
+      if (err.response && err.response.data && err.response.data.message) {
+        // Check if the error is about a duplicate email
+        if (err.response.data.message.includes("Invalid Email")) {
+          setErrorState({ ...errorState, email: "This email is already registered." });
+        } else {
+          // Handle other types of errors returned by the server
+          setErrorState({ ...errorState, general: "Registration failed. Please try again." });
+        }
+      } else {
+        // Generic error handling for network issues
+        setErrorState({ ...errorState, general: "A network error occurred. Please try again later." });
+      }
     }
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setForm({ ...form, [name]: value });
+
+    
   };
+ const handleOnBLur=(e)=>{
+  const { name, value } = e.target;
+
+    //setForm({ ...form, [name]: value });
+  const { error } = UsersShemasign.validate(
+    { ...form, [name]: value },
+    { abortEarly: false }
+  );
+
+  if (error) {
+    const errors = error.details.reduce((acc, curr) => {
+      acc[curr.path[0]] = curr.message;
+      return acc;
+    }, {});
+    setErrorState(errors);
+  } else {
+    setErrorState({ ...errorState, [name]: null });
+  }
+  }
+
   return (
-    <div style={{ height: "100vh" }} className="flex justify-center">
+    <div className="flex justify-center items-center">
       <div className="flex items-center justify-center min-h-screen ">
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex flex-col justify-center p-8 md:p-14">
@@ -68,68 +109,118 @@ export default function Registration() {
               {" "}
               Register
             </span>
-            <span className="font-light text-gray-400 mb-8">
+            <span className="font-light text-gray-400 mb-5">
               {" "}
               Create your account. It's free and only take a minute
             </span>
-            <form onSubmit={ Register}>
-              <div className="py-4 relative">
-                <label className="mb-2 text-md text-yellow-800" htmlFor="email">
-                  User Name:
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+            <form onSubmit={Register}>
+              {errorState.username ? (
+                <ErrorInput
+                  value={form.username}
+                  onChanges={handleChange}
+                  Error={errorState.username}
+                  text="User Name"
+                  placeHolder="UserName "
+                  htmlFor="username"
                   name="username"
                   id="username"
-                  placeholder="User Nane"
-                  value={form.username}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="py-4 relative">
-                <label className="mb-2 text-md text-yellow-800" htmlFor="email">
-                  Email:
-                </label>
-                <input
                   type="text"
-                  className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                  onBlur={handleOnBLur}
+                />
+              ) : (
+                <Input
+                  value={form.username}
+                  onChanges={handleChange}
+                  text="User Name"
+                  placeHolder="UserName "
+                  htmlFor="username"
+                  name="username"
+                  id="username"
+                  type="text"
+                  onBlur={handleOnBLur}
+
+                />
+              )}
+              {errorState.email ? (
+                <ErrorInput
+                  value={form.email}
+                  onChanges={handleChange}
+                  Error={errorState.email}
+                  text=" Email"
+                  placeHolder="Email"
+                  htmlFor="email"
                   name="email"
                   id="email"
-                  placeholder="Email"
+                  type="text"
+                  onBlur={handleOnBLur}
+                />
+              ) : (
+                <Input
                   value={form.email}
-                  onChange={handleChange}
+                  onChanges={handleChange}
+                  text=" Email"
+                  placeHolder="Email"
+                  htmlFor="email"
+                  name="email"
+                  id="email"
+                  eyePassword={eyePassword}
+                  type="text"
+                  onBlur={handleOnBLur}
                 />
-              </div>
-              <div className="py-4 relative">
-                <label
-                  className="mb-2 text-md text-yellow-800"
-                  htmlFor="password"
-                >
-                  Password:
-                </label>
+              )}
+              {errorState.password ? (
+                <div className="relative">
+                  <ErrorInput
+                    value={form.password}
+                    onChanges={handleChange}
+                    Error={errorState.password}
+                    text="Password"
+                    placeHolder="Password"
+                    htmlFor="password"
+                    name="password"
+                    id="password"
+                    type={eyePassword}
+                    onBlur={handleOnBLur}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleEyePassword}
+                    className="absolute top-1/2 right-3 transform -translate-y-1"
+                  >
+                    {eyePassword === "password" ? (
+                      <CloseEyeIcon />
+                    ) : (
+                      <OpenEyeIcon />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div className="relative">
+                  <Input
+                    value={form.password}
+                    onChanges={handleChange}
+                    text="Password"
+                    placeHolder="Password"
+                    htmlFor="password"
+                    name="password"
+                    id="password"
+                    type={eyePassword}
+                    onBlur={handleOnBLur}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleEyePassword}
+                    className="absolute top-1/2 right-3 transform translate-y-1"
+                  >
+                    {eyePassword === "password" ? (
+                      <CloseEyeIcon />
+                    ) : (
+                      <OpenEyeIcon />
+                    )}
+                  </button>
+                </div>
+              )}
 
-                <input
-                  type={eyePassword}
-                  className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500  "
-                  name="password"
-                  id="password"
-                  placeholder="Password"
-                  value={form.password}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  onClick={toggleEyePassword}
-                  className="absolute top-1/2 right-3 transform translate-y-1"
-                >
-                  {eyePassword === "password" ? (
-                    <CloseEyeIcon />
-                  ) : (
-                    <OpenEyeIcon />
-                  )}
-                </button>
-              </div>
               <div className="flex  w-full py-4">
                 <div className="mr-4">
                   <input type="checkbox" name="ch" id="ch" className="mr-2" />
