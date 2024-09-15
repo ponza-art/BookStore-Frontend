@@ -9,12 +9,8 @@ function HomePage() {
 
       <HomeHeader />
       </div>
-      <br />
-      <br /><br /><br />
-      <br /><br /><br />
-      <br /><br />
-      <br /><br />
-      <div className="">
+    
+      <div className="mt-20">
         <SearchHome />
       </div>
       <div className="mt-5">
