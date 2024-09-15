@@ -1,17 +1,21 @@
 .parentDev:hover .cartDev {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s ease-in-out;
-    display: flex;
-    justify-content: space-between;
+    
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .parentDev .cartDev {
     opacity: 0;
     visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .parentDev:hover .bodyCard {
-    transform: translateY(-10%);
-    transition: transform 0.2s ease-in-out;
+    transform: translateY(-15%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.parentDev .bodyCard {
+    transition: transform 0.3s ease-in-out;
 }
