@@ -3,19 +3,17 @@ import { IoMdSearch } from "react-icons/io";
 
 export default function SearchBar() {
   return (
-    <div className="form-control ">
-      <div className="input flex  items-center gap-2" style={{ borderRadius: "50px", width: "600px", border: "1px solid #ccc", padding: "5px" }}>
+    <div className="form-control">
+      <div className="input flex items-center gap-2 bg-white border border-gray-300 rounded-full p-1 w-full max-w-md mx-auto">
         <input
           type="text"
-          className=" bg-white p-1 flex-grow"
-          placeholder="Search Articles"
-          style={{ border: "none", outline: "none", borderRadius: "50px", paddingLeft: "10px" }}
+          className="flex-grow bg-white p-2 rounded-full border-none outline-none"
+          placeholder="Search Books"
         />
-        <button className="px-2.5" style={{ borderRadius: "50px", height: "50px", width: "50px", backgroundColor: "#dab26d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button className="flex items-center justify-center w-10 h-10 rounded-full text-black" style={{backgroundColor:"#dab26d"}}>
           <IoMdSearch />
         </button>
       </div>
     </div>
   );
 }
-

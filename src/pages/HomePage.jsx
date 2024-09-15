@@ -2,23 +2,26 @@ import HomeCard from "./HomeCard";
 import SearchHome from "./SearchHome";
 import HomeHeader from "../components/HomeHeader";
 
-
 function HomePage() {
   return (
-    <main >
+    <main>
+      <div className="">
+
       <HomeHeader />
-      <div className="mt-9">
-
-      <SearchHome  />
       </div>
-
-<div className="mt-5">
-
-      <HomeCard />
-</div>
+      <br />
+      <br /><br /><br />
+      <br /><br /><br />
+      <br /><br />
+      <br /><br />
+      <div className="">
+        <SearchHome />
+      </div>
+      <div className="mt-5">
+        <HomeCard />
+      </div>
     </main>
   );
-
 }
 
 export default HomePage;

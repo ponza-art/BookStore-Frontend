@@ -2,12 +2,9 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div
-      className=" navbar px-10"
-      style={{ backgroundColor: "#dab26d" }}
-    >
+    <div className="navbar px-10" style={{ backgroundColor: "#dab26d" }}>
       <div className="navbar-start">
-        <div className="dropdown ">
+        <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +23,7 @@ function Header() {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-80 p-2 shadow gap-4 "
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-80 p-2 shadow gap-4"
           >
             <li>
               <Link
@@ -38,15 +35,15 @@ function Header() {
             </li>
             <li>
               <Link
-                className="font-bold text-xl  hover:text-yellow-600  hover:bg-transparent focus:bg-transparent focus:text-yellow-600 "
+                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
                 to={"#"}
               >
-                Categries
+                Categories
               </Link>
             </li>
             <li>
               <Link
-                className="font-bold text-xl  hover:text-yellow-600  hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
+                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
                 to={"#"}
               >
                 Shop
@@ -54,46 +51,40 @@ function Header() {
             </li>
           </ul>
         </div>
-        <Link className=" bg-inherit  text-xl ps-3" to={"#"}>
-          <img src="bookstore.png" width={"67"} />
+        <Link className="bg-inherit text-xl ps-3" to={"#"}>
+          <img src="bookstore.png" width={"67"} alt="Logo" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="gap-10 menu-horizontal px-1  ">
+        <ul className="gap-10 menu-horizontal px-1">
           <li>
-            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white ">
+            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
               Home
             </Link>
           </li>
           <li>
-            <Link className="font-bold text-xl  hover:bg-transparent hover:text-white focus:text-white  ">
-              Categries
+            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
+              Categories
             </Link>
           </li>
           <li>
-            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white ">
+            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
               Shop
             </Link>
           </li>
         </ul>
       </div>
-
-      <div className="navbar-end font-bold text-xl flex ">
-        <ul className=" flex  gap-8 items-center">
+      <div className="navbar-end font-bold text-xl flex">
+        <ul className="flex gap-8 items-center">
           <li>
-            {" "}
-            <Link
-              className="hover:text-white focus:text-white active:text-white"
-              to={"#"}
-            >
+            <Link className="hover:text-white focus:text-white active:text-white" to={"#"}>
               Log in
-            </Link>{" "}
+            </Link>
           </li>
-          <div className="dropdown dropdown-end " tabIndex={0} role="button">
-            <li className=" font-serif text-xl w-10 h-10 flex items-center justify-center rounded-full bg-white text-black px-3 avatar">
+          <div className="dropdown dropdown-end" tabIndex={0} role="button">
+            <li className="font-serif text-xl w-10 h-10 flex items-center justify-center rounded-full bg-white text-black px-3 avatar">
               S
             </li>
-
             <ul
               tabIndex={0}
               className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
@@ -103,12 +94,8 @@ function Header() {
               </li>
             </ul>
           </div>
-        </ul>{" "}
+        </ul>
       </div>
-
-      {
-        //////
-      }
     </div>
   );
 }
