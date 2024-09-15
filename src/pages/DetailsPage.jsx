@@ -31,7 +31,7 @@ function DetailsPage() {
       <section className="py-14">
         <div className="px-6 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 md:items-center lg:grid-cols-4">
           <div className="justify-self-center">
-            <div className="carousel w-64">لاع
+            <div className="carousel w-64">
               <div id="item1" className="carousel-item w-full">
                 <img src="/book-1.jpg" className="w-full" alt="Book Image" />
               </div>

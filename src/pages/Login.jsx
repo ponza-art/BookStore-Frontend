@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OpenEyeIcon from "../../icons/OpenEyeIcon";
 import CloseEyeIcon from "../../icons/CloseEyeIcon";
@@ -6,9 +6,11 @@ import { UsersShemalogin } from "../interface/UserShema";
 import Input from "../components/Input";
 import ErrorInput from "../components/ErrorInput";
 import axios from "axios";
+import { UserContext } from "../hooks/UserContext";
 
 export default function Login() {
   const [eyePassword, useEyePassword] = useState("password");
+  const { setUserInfo } = useContext(UserContext);
   const toggleEyePassword = () => {
     useEyePassword(eyePassword === "password" ? "text" : "password");
   };
@@ -62,6 +64,13 @@ export default function Login() {
 
           // Handle successful login response
           console.log(response.data);
+          const Data = response.data.data;
+          localStorage.setItem("token", Data.user.token);
+          localStorage.setItem("user", JSON.stringify(Data.user));
+
+          const userData = JSON.parse(localStorage.getItem("user"));
+
+          setUserInfo(userData);
           navigate("/", { replace: true });
         } catch (err) {
           // Handle backend errors
@@ -72,7 +81,10 @@ export default function Login() {
             if (
               err.response.data.message.includes("Incorrect Email or Password")
             ) {
-              setErrorState({ email: "Email not found", password: "Password not Correct" });
+              setErrorState({
+                email: "Email not found",
+                password: "Password not Correct",
+              });
             } else {
               setErrorState({
                 email: "Login failed. Please try again.",
