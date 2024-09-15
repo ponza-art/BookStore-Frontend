@@ -77,7 +77,11 @@ function Header() {
       <div className="navbar-end font-bold text-xl flex">
         <ul className="flex gap-8 items-center">
           <li>
-            <Link className="hover:text-white focus:text-white active:text-white" to={"#"}>
+            {" "}
+            <Link
+              className="hover:text-white focus:text-white active:text-white"
+              to={"/login"}
+            >
               Log in
             </Link>
           </li>

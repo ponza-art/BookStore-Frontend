@@ -1,14 +1,19 @@
 import { Fragment } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Root() {
+  const location =useLocation()
+ const hideHeader =
+  location.pathname === "/" ||
+  location.pathname.includes("/books")||
+  location.pathname.includes("/details") 
   return (
     <Fragment>
-      <Header />
+      {hideHeader && <Header />}
       <Outlet />
-      <Footer />
+      {hideHeader && <Footer />}
     </Fragment>
   );
 }
