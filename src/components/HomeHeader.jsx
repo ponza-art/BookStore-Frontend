@@ -60,7 +60,7 @@ export default function HomeHeader() {
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-11.jpg"
             />
           </div>
-          <div className=" h-28 col-span-4 relative z-10 transition-transform duration-1000 ease-in-out hover:-translate-y-4 ">
+          <div className=" h-28 col-span-4 relative z-10 transition-transform duration-1000 ease-in-out hover:-translate-y-4 mb-60">
             <img
               className="relative "
               src="https://authore.g5plus.net/wp-content/uploads/2023/07/slider-01-2.png"
