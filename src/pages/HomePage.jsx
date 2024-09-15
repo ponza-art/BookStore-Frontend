@@ -1,5 +1,14 @@
+import HomeCard from "./HomeCard";
+import SearchHome from "./SearchHome";
+
 function HomePage() {
-  return <main style={{ height:"100vh" }}>Home Page</main>;
+  return (
+    <main>
+      <SearchHome/>
+      
+      <HomeCard />
+    </main>
+  );
 }
 
 export default HomePage;

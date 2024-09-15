@@ -1,0 +1,19 @@
+
+.parentDev:hover .cartDev {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content:space-between;
+}
+
+
+ 
+
+.parentDev:hover .bodyCard {
+    transform: translateY(-40px);
+    transition: transform 0.3s ease-in-out;
+}
+.iconBody{
+    /* justify-self :flex-end; */
+    /* margin-left: */
+} 
