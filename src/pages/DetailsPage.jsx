@@ -13,7 +13,9 @@ function DetailsPage() {
 
   const fetchBook = async (id) => {
     try {
-      const res = await axios.get(`http://localhost:5000/books/${id}`);
+      const res = await axios.get(
+        `https://book-store-backend-sigma-one.vercel.app/book/${id}`
+      );
       console.log(res.data);
 
       setBook(res.data);
@@ -52,23 +54,19 @@ function DetailsPage() {
 
           <div className="flex flex-col gap-7 md:col-span-2">
             <div className="flex flex-col gap-4">
-              <h1 className="font-medium text-3xl max-w-xl">
-                The Lost Colony (The Long Winter Trilogy Book 3)
-                {/* {book.title} */}
-              </h1>
-              <p className="text-md max-w-xl">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris nisi ut Excepteur sint occaecat.
-                {/* {book.description} */}
-              </p>
+              <h1 className="font-medium text-3xl max-w-xl">{book.title}</h1>
+              <p className="text-md max-w-xl">{book.description}</p>
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
               <button className="btn rounded-none px-8">View</button>
-              <button className="btn btn-neutral rounded-none px-8">
+              <a
+                href={book.sourcePath}
+                download
+                className="btn btn-neutral rounded-none px-8"
+              >
                 Download
-              </button>
+              </a>
             </div>
           </div>
 
