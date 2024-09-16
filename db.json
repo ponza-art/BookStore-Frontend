@@ -1,14 +1,13 @@
 {
   "books": [
-    {
-      "id": "1",
-      "title": "Harry Potter",
-      "description": "Harry Potter is a film series based on the Harry Potter series of novels by J. K. Rowling."
-    },
-    {
-      "id": "2",
-      "title": "The Lord of the Rings",
-      "description": "The Lord of the Rings is an epic[1] high fantasy novel[a] by the English author and scholar J. R. R. Tolkien."
-    }
+    { "id": 1, "title": "All You Can Ever Know", "author": "Nicole Chung", "price": "29.95", "imageUrl": "./book-1.jpg" },
+    { "id": 2, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 3, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 4, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 5, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 6, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 7, "title": "", "author": "", "price": "", "imageUrl": "" },
+    { "id": 8, "title": "", "author": "", "price": "", "imageUrl": "" }
   ]
 }
+

@@ -33,10 +33,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+
 ]);
 
 function App() {
+  // console.log("samah");
   return <RouterProvider router={router} />;
+  
 }
 
 export default App;

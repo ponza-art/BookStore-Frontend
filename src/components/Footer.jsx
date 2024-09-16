@@ -4,6 +4,7 @@ import TwitterIcon from "../../icons/TwitterIcon";
 import YoutupeIcon from "../../icons/YoutupeIcon";
 
 function Footer() {
+  
   return (
     <footer className="footer footer-center bg-base-200 text-base-content rounded p-9 w-full" style={{ backgroundColor: "#dab26d" }}>
       <nav>
