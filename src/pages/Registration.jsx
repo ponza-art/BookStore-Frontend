@@ -8,6 +8,7 @@ import ErrorInput from "../components/ErrorInput";
 import Input from "../components/Input";
 export default function Registration() {
   const [eyePassword, setEyePassword] = useState("password");
+  const [load, setload] = useState(false);
   const toggleEyePassword = () => {
     setEyePassword(eyePassword === "password" ? "text" : "password");
   };
@@ -40,8 +41,9 @@ export default function Registration() {
         setErrorState(errors);
       } else {
         setErrorState({ username: null, email: null, password: null });
+        setload(true);
         const response = await axios.post(
-          "http://localhost:5000/users/register",
+          "https://book-store-backend-sigma-one.vercel.app/users/register",
           {
             username: value.username,
             email: value.email,
@@ -54,21 +56,32 @@ export default function Registration() {
           }
         );
         console.log(response.data);
+        setload(false);
         navigate("/login", { replace: true });
       }
     } catch (err) {
       console.error("An error occurred:", err);
+      setload(false);
       if (err.response && err.response.data && err.response.data.message) {
         // Check if the error is about a duplicate email
         if (err.response.data.message.includes("Invalid Email")) {
-          setErrorState({ ...errorState, email: "This email is already registered." });
+          setErrorState({
+            ...errorState,
+            email: "This email is already registered.",
+          });
         } else {
           // Handle other types of errors returned by the server
-          setErrorState({ ...errorState, general: "Registration failed. Please try again." });
+          setErrorState({
+            ...errorState,
+            general: "Registration failed. Please try again.",
+          });
         }
       } else {
         // Generic error handling for network issues
-        setErrorState({ ...errorState, general: "A network error occurred. Please try again later." });
+        setErrorState({
+          ...errorState,
+          general: "A network error occurred. Please try again later.",
+        });
       }
     }
   };
@@ -77,28 +90,26 @@ export default function Registration() {
     const { name, value } = e.target;
 
     setForm({ ...form, [name]: value });
-
-    
   };
- const handleOnBLur=(e)=>{
-  const { name, value } = e.target;
+  const handleOnBLur = (e) => {
+    const { name, value } = e.target;
 
     //setForm({ ...form, [name]: value });
-  const { error } = UsersShemasign.validate(
-    { ...form, [name]: value },
-    { abortEarly: false }
-  );
+    const { error } = UsersShemasign.validate(
+      { ...form, [name]: value },
+      { abortEarly: false }
+    );
 
-  if (error) {
-    const errors = error.details.reduce((acc, curr) => {
-      acc[curr.path[0]] = curr.message;
-      return acc;
-    }, {});
-    setErrorState(errors);
-  } else {
-    setErrorState({ ...errorState, [name]: null });
-  }
-  }
+    if (error) {
+      const errors = error.details.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {});
+      setErrorState(errors);
+    } else {
+      setErrorState({ ...errorState, [name]: null });
+    }
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -138,7 +149,6 @@ export default function Registration() {
                   id="username"
                   type="text"
                   onBlur={handleOnBLur}
-
                 />
               )}
               {errorState.email ? (
@@ -233,11 +243,23 @@ export default function Registration() {
                   </span>
                 </div>
               </div>
-              <input
-                type="submit"
-                className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
-                value="Register Now"
-              />
+              {load ? (
+                <button
+                  type="submit"
+                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6  opacity-50 bg-white border border-brown-200  "
+                  disabled
+                >
+                
+               <span>Register Now <img src="/loadinglogin.gif" width={"30"} className="inline"/> </span> 
+                </button>
+              ) : (
+                <input
+                  type="submit"
+                  className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  value="Register Now"
+                />
+              )}
+
               <div className="text-center text-gray-400">
                 I already have an account?
                 <Link

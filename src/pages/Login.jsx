@@ -11,6 +11,7 @@ import { UserContext } from "../hooks/UserContext";
 export default function Login() {
   const [eyePassword, useEyePassword] = useState("password");
   const { setUserInfo } = useContext(UserContext);
+  const [load, setload] = useState(false);
   const toggleEyePassword = () => {
     useEyePassword(eyePassword === "password" ? "text" : "password");
   };
@@ -43,14 +44,15 @@ export default function Login() {
         }, {});
         console.log(errors);
         setErrorState(errors);
+        
       } else {
         // Clear validation errors if form is valid
         setErrorState({ email: null, password: null });
-
+        setload(true);
         try {
           // Send data to the backend for login
           const response = await axios.post(
-            "http://localhost:5000/users/login",
+            "https://book-store-backend-sigma-one.vercel.app/users/login",
             {
               email: value.email,
               password: value.password,
@@ -71,11 +73,12 @@ export default function Login() {
           const userData = JSON.parse(localStorage.getItem("user"));
 
           setUserInfo(userData);
+          setload(false);
           navigate("/", { replace: true });
         } catch (err) {
           // Handle backend errors
           console.error("An error occurred:", err);
-
+          setload(false);
           if (err.response && err.response.data && err.response.data.message) {
             // Check if the error is related to invalid email or password
             if (
@@ -238,11 +241,22 @@ export default function Login() {
                   Forget Password
                 </Link>
               </div>
-              <input
-                type="submit"
-                className="w-full text-white p-2 rounded-lg mb-6 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border  hover:text-brown-200 hover:border-brown-200"
-                value="Log in"
-              />
+              {load ? (
+                <button
+                  type="submit"
+                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6  opacity-50 bg-white border border-brown-200  "
+                  disabled
+                >
+                
+               <span>Log in <img src="/loadinglogin.gif" width={"30"} className="inline"/> </span> 
+                </button>
+              ) : (
+                <input
+                  type="submit"
+                  className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  value="Log in"
+                />
+              )}
               <div className="text-center text-gray-400">
                 Don't have an account?
                 <Link
