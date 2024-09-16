@@ -8,8 +8,10 @@ function DetailsPage() {
   const [book, setBook] = useState({});
   console.log(book);
 
+
   const { id } = useParams();
   console.log(id);
+
 
   const fetchBook = async (id) => {
     try {
@@ -27,7 +29,7 @@ function DetailsPage() {
   }, []);
 
   return (
-    <main>
+    <main style={{ marginBottom: "11.1vh" }}>
       <section className="py-14">
         <div className="px-6 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 md:items-center lg:grid-cols-4">
           <div className="justify-self-center">
@@ -65,12 +67,18 @@ function DetailsPage() {
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center">
-              <a className="btn rounded-none px-8" href='https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D' target="_blank"
-                    rel="noreferrer">
-                    View</a>
-              <a className="btn btn-neutral rounded-none px-8" href="https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D">
+              <a className="btn btn-outline rounded-none px-8"
+                href='https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D'
+                target="_blank" rel="noreferrer">
+                View
+              </a>
+
+              <a className="btn btn-neutral rounded-none px-8 text-white"
+                href='https://storage.googleapis.com/iti-final-grad-proj.appspot.com/books/Orwell-1949_1984.pdf?GoogleAccessId=firebase-adminsdk-kwfua%40iti-final-grad-proj.iam.gserviceaccount.com&Expires=16447010400&Signature=NtvtqE79peU%2FklGgQiY%2FRPSlBpu%2F%2Bv2oUNLz%2BawKBpMtnOWtsEDd32BO7hKtwcn7cJriNu2f8jYwZfJlHKtpWlIkC%2BjOZRA4emKro2Lbygv09gW6pUnV4w1lbGMU5B5gUWwQihnyZbqyWBEUBdJ3%2FK5P6qGtvjnQ7kWwdtjWJxOrihZqtTP8U5H0CynxD%2BtcQmrmBlWG7yiVSx5KQFPqlvyfp7MCvFK5PqnuIqAOx4vphr9QF9pgf%2FE8w1%2FRQo3sjxm6CimU0ASwHQewZmDtLwa0DGB4uiBPtdgD4LBfN%2FbwOm9ncejlK5IV3WvWwBnsxyYvBIlArrrT6jESDPS2MQ%3D%3D'
+                download="Orwell-1949_1984.pdf">
                 Download
               </a>
+
             </div>
           </div>
 
