@@ -6,15 +6,21 @@ import axios from "axios";
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
-
   const [books, setBooks] = useState([]);
-
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const { data } = await axios.get("https://book-store-backend-sigma-one.vercel.app/book");
+        const { data } = await axios.get(
+          "https://book-store-backend-sigma-one.vercel.app/book"
+        );
+
+        // Sort by timestamp and get the latest 6 books
+        const latestBooks = data
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 8);
+
         setTimeout(() => {
-          setBooks(data);
+          setBooks(latestBooks);
           setLoading(false);
         }, 2000);
       } catch (error) {
@@ -28,16 +34,14 @@ function HomePage() {
   return (
     <main className="container mx-auto">
       {loading ? (
-        <div className="flex justify-center items-center   w-60 my-[6.85rem]   mx-auto ">
+        <div className="flex justify-center items-center w-60 my-[6.85rem] mx-auto ">
           <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
         </div>
       ) : (
         <>
-       <div className="mt-15 ">
-        <HomeHeader />
-            
+          <div className="mt-15 ">
+            <HomeHeader />
           </div>
-
           <div className="mt-10">
             <SearchHome />
           </div>

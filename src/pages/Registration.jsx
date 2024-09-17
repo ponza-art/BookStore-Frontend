@@ -61,14 +61,23 @@ export default function Registration() {
       if (err.response && err.response.data && err.response.data.message) {
         // Check if the error is about a duplicate email
         if (err.response.data.message.includes("Invalid Email")) {
-          setErrorState({ ...errorState, email: "This email is already registered." });
+          setErrorState({
+            ...errorState,
+            email: "This email is already registered.",
+          });
         } else {
           // Handle other types of errors returned by the server
-          setErrorState({ ...errorState, general: "Registration failed. Please try again." });
+          setErrorState({
+            ...errorState,
+            general: "Registration failed. Please try again.",
+          });
         }
       } else {
         // Generic error handling for network issues
-        setErrorState({ ...errorState, general: "A network error occurred. Please try again later." });
+        setErrorState({
+          ...errorState,
+          general: "A network error occurred. Please try again later.",
+        });
       }
     }
   };
@@ -77,28 +86,26 @@ export default function Registration() {
     const { name, value } = e.target;
 
     setForm({ ...form, [name]: value });
-
-    
   };
- const handleOnBLur=(e)=>{
-  const { name, value } = e.target;
+  const handleOnBLur = (e) => {
+    const { name, value } = e.target;
 
     //setForm({ ...form, [name]: value });
-  const { error } = UsersShemasign.validate(
-    { ...form, [name]: value },
-    { abortEarly: false }
-  );
+    const { error } = UsersShemasign.validate(
+      { ...form, [name]: value },
+      { abortEarly: false }
+    );
 
-  if (error) {
-    const errors = error.details.reduce((acc, curr) => {
-      acc[curr.path[0]] = curr.message;
-      return acc;
-    }, {});
-    setErrorState(errors);
-  } else {
-    setErrorState({ ...errorState, [name]: null });
-  }
-  }
+    if (error) {
+      const errors = error.details.reduce((acc, curr) => {
+        acc[curr.path[0]] = curr.message;
+        return acc;
+      }, {});
+      setErrorState(errors);
+    } else {
+      setErrorState({ ...errorState, [name]: null });
+    }
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -138,7 +145,6 @@ export default function Registration() {
                   id="username"
                   type="text"
                   onBlur={handleOnBLur}
-
                 />
               )}
               {errorState.email ? (
