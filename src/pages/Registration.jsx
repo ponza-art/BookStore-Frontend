@@ -41,7 +41,7 @@ export default function Registration() {
       } else {
         setErrorState({ username: null, email: null, password: null });
         const response = await axios.post(
-          "https://book-store-backend-sigma-one.vercel.app/users/register",
+          "http://localhost:5000/users/register",
           {
             username: value.username,
             email: value.email,
@@ -235,7 +235,7 @@ export default function Registration() {
               </div>
               <input
                 type="submit"
-                className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                className="w-full text-z p-2 rounded-lg mb-6 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border  hover:text-brown-200 hover:border-brown-200"
                 value="Register Now"
               />
               <div className="text-center text-gray-400">
