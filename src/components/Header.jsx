@@ -4,22 +4,21 @@ import { useContext, useEffect } from "react";
 
 function Header() {
   const { userInfo, setUserInfo } = useContext(UserContext);
-  console.log(userInfo)
   const username = userInfo?.username;
   const logout = () => {
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("user");  
-    setUserInfo(null); 
-    window.location.reload(); 
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUserInfo(null);
+    window.location.reload();
   };
-  
+
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("user")||"{}");
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
     if (userData) {
       setUserInfo(userData);
     }
   }, []);
-  
+
   return (
     <div className="navbar" style={{ backgroundColor: "#dab26d" }}>
       <div className="navbar-start">
@@ -47,7 +46,7 @@ function Header() {
             <li>
               <Link
                 className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600"
-                to={"#"}
+                to={"/"}
               >
                 Home
               </Link>
@@ -55,17 +54,9 @@ function Header() {
             <li>
               <Link
                 className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
-                to={"#"}
+                to={"/books"}
               >
-                Categories
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
-                to={"#"}
-              >
-                Shop
+                Books
               </Link>
             </li>
           </ul>
@@ -77,18 +68,21 @@ function Header() {
       <div className="navbar-center hidden lg:flex">
         <ul className="gap-10 menu-horizontal px-1">
           <li>
-            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
+            <Link
+              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+              style={{ transition: "0.3s ease" }}
+              to={"/"}
+            >
               Home
             </Link>
           </li>
           <li>
-            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
-              Categories
-            </Link>
-          </li>
-          <li>
-            <Link className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white">
-              Shop
+            <Link
+              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+              style={{ transition: "0.3s ease" }}
+              to={"/books"}
+            >
+              Books
             </Link>
           </li>
         </ul>
@@ -101,6 +95,7 @@ function Header() {
                 {" "}
                 <Link
                   className="hover:text-white focus:text-white active:text-white"
+                  style={{ transition: "0.3s ease" }}
                   to={"/login"}
                 >
                   Log in
@@ -108,7 +103,12 @@ function Header() {
               </li>
               <div className="dropdown dropdown-end" tabIndex={0} role="button">
                 <li className="font-serif text-xl w-15 h-12 flex  rounded-full  avatar">
-                  <Link  to={"/login"}><img src="/profileimg.png" className="avatar rounded-full" /></Link>
+                  <Link to={"/login"}>
+                    <img
+                      src="/profileimg.png"
+                      className="avatar rounded-full"
+                    />
+                  </Link>
                 </li>
               </div>
             </>
