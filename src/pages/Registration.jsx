@@ -41,7 +41,7 @@ export default function Registration() {
       } else {
         setErrorState({ username: null, email: null, password: null });
         const response = await axios.post(
-          "http://localhost:5000/users/register",
+          "https://book-store-backend-sigma-one.vercel.app/users/register",
           {
             username: value.username,
             email: value.email,
