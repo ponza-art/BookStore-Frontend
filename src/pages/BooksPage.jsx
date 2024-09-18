@@ -73,7 +73,7 @@ function BooksPage() {
               ))}
             </div>
           ) : (
-            <p className="w-fit my-7 mx-auto " style={{ height:"100vh" }}>No Data Founded</p>
+            <p className="w-fit my-7 mx-auto " style={{ height:"56.9vh" }}>No Data Founded</p>
           )}
         </>
       )}
