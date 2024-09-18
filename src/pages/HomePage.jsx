@@ -3,10 +3,15 @@ import SearchHome from "./SearchHome";
 import HomeHeader from "../components/HomeHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSearchParams, useNavigate } from "react-router-dom"; // Import necessary hooks
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("search") || ""; // Get query from search params
+  const navigate = useNavigate(); // To navigate on search submit
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -31,19 +36,27 @@ function HomePage() {
     fetchBooks();
   }, []);
 
+  const handleSearchSubmit = (inputValue) => {
+    // Navigate to the books page with the search query
+    if (inputValue.trim()) {
+      navigate(`/books?search=${encodeURIComponent(inputValue)}`);
+    }
+  };
+
   return (
     <main className="container mx-auto">
       {loading ? (
-         <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.85rem] mx-auto ">
-         <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
-       </div>
+        <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.85rem] mx-auto ">
+          <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+        </div>
       ) : (
         <>
           <div className="mt-15 ">
             <HomeHeader />
           </div>
           <div className="mt-10">
-            <SearchHome />
+            {/* Pass the query and handleSearchSubmit to the Search component */}
+            <SearchHome initialQuery={query} onSearch={handleSearchSubmit} />
           </div>
           <div className="mt-5 ">
             <HomeCard books={books} />

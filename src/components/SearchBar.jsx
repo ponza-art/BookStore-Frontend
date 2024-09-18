@@ -1,21 +1,14 @@
-/* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
-import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function SearchBar() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+export default function SearchBar({ initialQuery, onSearch }) {
+  const [searchTerm, setSearchTerm] = useState(initialQuery); // Initialize with the query
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const inputValue = e.target[0].value;
-    searchParams.set("search", e.target[0].value);
-    if (inputValue.trim()) {
-      navigate(`/books?search=${encodeURIComponent(inputValue)}`);
-    }
-    // setSearchParams(searchParams);
+    onSearch(searchTerm); // Call the parent handler with the search term
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-control">
@@ -24,6 +17,8 @@ export default function SearchBar() {
             type="text"
             className="flex-grow bg-white p-2 rounded-full border-none outline-none"
             placeholder="Search Books"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update the search term on input change
           />
           <button
             className="flex items-center justify-center w-10 h-10 rounded-full text-black"

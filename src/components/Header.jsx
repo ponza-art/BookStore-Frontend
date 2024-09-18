@@ -104,10 +104,10 @@ function Header() {
               <div className="dropdown dropdown-end" tabIndex={0} role="button">
                 <li className="font-serif text-xl w-15 h-12 flex  rounded-full  avatar">
                   <Link to={"/login"}>
-                    <img
+                    {/* <img
                       src="/profileimg.png"
                       className="avatar rounded-full"
-                    />
+                    /> */}
                   </Link>
                 </li>
               </div>

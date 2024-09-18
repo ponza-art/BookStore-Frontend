@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 function BooksPage() {
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("search");
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("search") || ""; // Get search query
+  const navigate = useNavigate(); // Use to navigate between pages
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -25,7 +27,6 @@ function BooksPage() {
                 )
               : res.data;
             setBooks(data);
-            console.log(books);
             setLoading(false);
           })
           .catch((err) => {
@@ -40,6 +41,12 @@ function BooksPage() {
     fetchBooks();
   }, [query]);
 
+  const handleSearchSubmit = (inputValue) => {
+    if (inputValue.trim()) {
+      navigate(`/books?search=${encodeURIComponent(inputValue)}`);
+    }
+  };
+
   return (
     <main className="mh-[60vh]">
       {loading ? (
@@ -49,9 +56,9 @@ function BooksPage() {
       ) : (
         <>
           <div className="mt-12">
-            <SearchBar />
+            {/* Pass the query and handleSearchSubmit to the SearchBar component */}
+            <SearchBar initialQuery={query} onSearch={handleSearchSubmit} />
           </div>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"> */}
           {books.length > 0 ? (
             <div className="flex flex-wrap px-12 pt-7 pb-14 gap-6 justify-evenly">
               {books.map((book, index) => (

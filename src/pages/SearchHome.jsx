@@ -1,7 +1,18 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 const SearchHome = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const query = searchParams.get("search") || ""; // Get the current search query from URL
+
+  const handleSearch = (inputValue) => {
+    if (inputValue.trim()) {
+      navigate(`/books?search=${encodeURIComponent(inputValue)}`); // Navigate to books page with search query
+    }
+  };
+
   return (
     <div className="p-6 container mx-auto flex flex-col lg:flex-row items-center justify-between rounded-lg" style={{ backgroundColor: "#dab26d" }}>
       <div className="lg:w-1/2 mb-4 lg:mb-0 flex flex-col items-center lg:items-start">
@@ -9,8 +20,8 @@ const SearchHome = () => {
           Find Books Fast.
         </h2>
         <div className="lg:w-96">
-
-        <SearchBar />
+          {/* Pass query and handleSearch to SearchBar */}
+          <SearchBar initialQuery={query} onSearch={handleSearch} />
         </div>
       </div>
       <div className="lg:w-1/2 flex justify-center lg:justify-end">
