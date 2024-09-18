@@ -61,7 +61,7 @@ function Header() {
             </li>
           </ul>
         </div>
-        <Link className="bg-inherit text-xl ps-3" to={"#"}>
+        <Link className="bg-inherit text-xl ps-3" to={"/"}>
           <img src="bookstore.png" width={"67"} alt="Logo" />
         </Link>
       </div>

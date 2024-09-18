@@ -48,7 +48,7 @@ function BooksPage() {
   };
 
   return (
-    <main className="mh-[60vh]">
+    <main className="container mx-auto mh-[60vh]">
       {loading ? (
         <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.85rem] mx-auto ">
           <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
@@ -60,7 +60,7 @@ function BooksPage() {
             <SearchBar initialQuery={query} onSearch={handleSearchSubmit} />
           </div>
           {books.length > 0 ? (
-            <div className="flex flex-wrap px-12 pt-7 pb-14 gap-6 justify-evenly">
+            <div className="flex flex-wrap px-6 pt-7 pb-14 gap-6 justify-evenly">
               {books.map((book, index) => (
                 <BookCard
                   _id={book._id}

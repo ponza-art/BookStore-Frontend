@@ -7,6 +7,7 @@ import Input from "../components/Input";
 import ErrorInput from "../components/ErrorInput";
 import axios from "axios";
 import { UserContext } from "../hooks/UserContext";
+import { MdHome } from "react-icons/md";
 
 export default function Login() {
   const [eyePassword, useEyePassword] = useState("password");
@@ -44,7 +45,6 @@ export default function Login() {
         }, {});
         console.log(errors);
         setErrorState(errors);
-        
       } else {
         // Clear validation errors if form is valid
         setErrorState({ email: null, password: null });
@@ -142,6 +142,9 @@ export default function Login() {
       <div className="flex items-center justify-center min-h-screen ">
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex flex-col justify-center p-8 md:p-14">
+            <Link to={"/"} className="absolute top-5 left-5">
+              <MdHome className="size-6 text-brown-200" />
+            </Link>
             <span className="mb-3 text-4xl font-bold  text-yellow-800 ">
               {" "}
               Welcome Back
@@ -178,7 +181,6 @@ export default function Login() {
                   onBlur={handleOnBLur}
                 />
               )}
-
               {errorState.password ? (
                 <div className="relative">
                   <ErrorInput
@@ -231,39 +233,34 @@ export default function Login() {
                   </button>
                 </div>
               )}
-              <div className="flex justify-between w-full py-4">
-                <div className="mr-4">
-                  <input type="checkbox" name="ch" id="ch" className="mr-2" />
-                  <span className="text-md"> remember me</span>
-                </div>
-                <Link className="font-bold text-md text-yellow-800 hover:underline">
-                  {" "}
-                  Forget Password
-                </Link>
-              </div>
               {load ? (
                 <button
                   type="submit"
-                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6  opacity-50 bg-white border border-brown-200  "
+                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6 opacity-50 bg-white border border-brown-200"
                   disabled
                 >
-                
-               <span>Log in <img src="/loadinglogin.gif" width={"30"} className="inline"/> </span> 
+                  <span>
+                    Log in{" "}
+                    <img
+                      src="/loadinglogin.gif"
+                      width={"30"}
+                      className="inline"
+                    />{" "}
+                  </span>
                 </button>
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  className="w-full text-black p-2 rounded-lg mb-6 mt-5 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
                   value="Log in"
                 />
               )}
               <div className="text-center text-gray-400">
-                Don't have an account?
+                Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-bold  text-yellow-800 hover:underline"
+                  className="font-bold inline-block text-yellow-800 hover:underline"
                 >
-                  {" "}
                   Sign up for free
                 </Link>
               </div>
