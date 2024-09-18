@@ -23,7 +23,7 @@ export default function SearchBar() {
           <input
             type="text"
             className="flex-grow bg-white p-2 rounded-full border-none outline-none"
-            placeholder="Search Books"
+            placeholder={"Search Books"}
           />
           <button
             className="flex items-center justify-center w-10 h-10 rounded-full text-black"

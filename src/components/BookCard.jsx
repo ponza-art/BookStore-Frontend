@@ -20,17 +20,17 @@ const BookCard = ({ _id, title, author, price, imageUrl }) => {
           className="w-40 mt-6 h-48 mx-auto"
         />
       </div>
-      <div className="card-body flex-grow-0 ps-8  bodyCard  ">
+      <div className="card-body flex-grow-0 ps-8 bodyCard">
         <p className="text-red-600 uppercase mb-0 pb-0 ">Paperback</p>
         <h3 className="card-title text-xl font-bold mt-0 pt-0">{title}</h3>
         <p className="text-gray-700">ahmed</p>
         <p className="text-xl font-sans font-bold">$90</p>
-        <div className="card-title  cartDev">
+        <div className="card-title cartDev flex justify-between">
           {/* <span className=" font-semibold">
           Add to Cart
         </span> */}
           <Link to={`/books/${_id}`}>show details</Link>
-          <FaRegHeart className=" cursor-pointer iconBody " />
+          <FaRegHeart className="cursor-pointer iconBody" />
         </div>
       </div>
     </div>

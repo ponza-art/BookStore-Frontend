@@ -6,6 +6,8 @@ import { UsersShemasign } from "../interface/UserShema";
 import axios from "axios";
 import ErrorInput from "../components/ErrorInput";
 import Input from "../components/Input";
+import { MdHome } from "react-icons/md";
+
 export default function Registration() {
   const [eyePassword, setEyePassword] = useState("password");
   const [load, setload] = useState(false);
@@ -63,21 +65,18 @@ export default function Registration() {
       console.error("An error occurred:", err);
       setload(false);
       if (err.response && err.response.data && err.response.data.message) {
-        // Check if the error is about a duplicate email
         if (err.response.data.message.includes("Invalid Email")) {
           setErrorState({
             ...errorState,
             email: "This email is already registered.",
           });
         } else {
-          // Handle other types of errors returned by the server
           setErrorState({
             ...errorState,
             general: "Registration failed. Please try again.",
           });
         }
       } else {
-        // Generic error handling for network issues
         setErrorState({
           ...errorState,
           general: "A network error occurred. Please try again later.",
@@ -115,7 +114,10 @@ export default function Registration() {
     <div className="flex justify-center items-center">
       <div className="flex items-center justify-center min-h-screen ">
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-          <div className="flex flex-col justify-center p-8 md:p-14">
+          <div className="flex relative flex-col justify-center p-8 md:p-14">
+            <Link to={"/"} className="absolute top-5 left-5">
+              <MdHome className="size-6 text-brown-200" />
+            </Link>
             <span className="mb-3 text-4xl font-bold  text-yellow-800 ">
               {" "}
               Register
@@ -230,43 +232,35 @@ export default function Registration() {
                   </button>
                 </div>
               )}
-
-              <div className="flex  w-full py-4">
-                <div className="mr-4">
-                  <input type="checkbox" name="ch" id="ch" className="mr-2" />
-                  <span className="text-md">
-                    {" "}
-                    I accept the{" "}
-                    <Link to="#" className="text-yellow-800">
-                      Terms of use & Privacy Policy
-                    </Link>{" "}
-                  </span>
-                </div>
-              </div>
               {load ? (
                 <button
                   type="submit"
                   className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6  opacity-50 bg-white border border-brown-200  "
                   disabled
                 >
-                
-               <span>Register Now <img src="/loadinglogin.gif" width={"30"} className="inline"/> </span> 
+                  <span>
+                    Register Now{" "}
+                    <img
+                      src="/loadinglogin.gif"
+                      width={"30"}
+                      className="inline"
+                    />{" "}
+                  </span>
                 </button>
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-black p-2 rounded-lg mb-6 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  className="w-full text-black p-2 rounded-lg mb-6 mt-5 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border hover:text-black hover:border-brown-200"
                   value="Register Now"
                 />
               )}
 
               <div className="text-center text-gray-400">
-                I already have an account?
+                I already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-bold  text-yellow-800 hover:underline"
+                  className="font-bold inline-block text-yellow-800 hover:underline"
                 >
-                  {" "}
                   Log in
                 </Link>
               </div>

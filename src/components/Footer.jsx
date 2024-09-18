@@ -4,11 +4,15 @@ import TwitterIcon from "../../icons/TwitterIcon";
 import YoutupeIcon from "../../icons/YoutupeIcon";
 
 function Footer() {
-  
   return (
-    <footer className="footer footer-center bg-base-200 text-base-content rounded p-9 w-full" style={{ backgroundColor: "#dab26d" }}>
+    <footer
+      className="footer footer-center gap-5 bg-base-200 text-base-content rounded py-6 w-full"
+      style={{ backgroundColor: "#dab26d" }}
+    >
       <nav>
-        <img src="bookstore.png" width={"80"} alt="Logo" />
+        <Link to={"/"}>
+          <img src="bookstore.png" width={"80"} alt="Logo" />
+        </Link>
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
@@ -24,7 +28,10 @@ function Footer() {
         </div>
       </nav>
       <aside>
-        <p>Copyright © {new Date().getFullYear()} - All rights reserved by Book Store</p>
+        <p>
+          Copyright © {new Date().getFullYear()} - All rights reserved by Book
+          Store
+        </p>
       </aside>
     </footer>
   );
