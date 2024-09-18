@@ -6,7 +6,8 @@ import { FaRegHeart } from "react-icons/fa";
 const BookCard = ({ _id, title, author, price, imageUrl }) => {
   return (
     <div
-      className="card bg-white relative shadow-xl hover:border hover:border-red-600q parentDev"
+      // className="card bg-white relative  border  hover:border-red-600 parentDev"
+      className="card bg-white relative  shadow-xl hover:border  hover:border-black parentDev"
       style={{
         height: "430px",
         width: "280px",

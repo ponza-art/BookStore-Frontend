@@ -62,7 +62,7 @@ function Header() {
           </ul>
         </div>
         <Link className="bg-inherit text-xl ps-3" to={"/"}>
-          <img src="bookstore.png" width={"67"} alt="Logo" />
+          <img src="logo-removebg.png" width={"100"} alt="Logo" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

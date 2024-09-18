@@ -17,6 +17,8 @@ export default function SearchBar({ initialQuery, onSearch }) {
             type="text"
             className="flex-grow bg-white p-2 rounded-full border-none outline-none"
             placeholder="Search Books"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update the search term on input change
           />
           <button
             className="flex items-center justify-center w-10 h-10 rounded-full text-black"

@@ -31,7 +31,7 @@ function DetailsPage() {
   }, []);
 
   return (
-    <main style={{ marginBottom: "11.1vh" }}>
+    <main className='my-[9vh]' >
       <section className="py-14">
         <div className="px-6 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 md:items-center lg:grid-cols-4">
           <div className="justify-self-center">
@@ -66,7 +66,7 @@ function DetailsPage() {
                 target="_blank" rel="noreferrer">
                 View
               </a>
-
+              
               <a
                 href={book.sourcePath}
                 download

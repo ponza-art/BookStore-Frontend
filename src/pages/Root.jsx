@@ -13,7 +13,7 @@ function Root() {
     <Fragment>
       {hideHeader && <Header />}
       <Outlet />
-      {hideHeader && <Footer />}
+      {hideHeader && <Footer classname=""/>}
     </Fragment>
   );
 }
