@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OpenEyeIcon from "../../icons/OpenEyeIcon";
-// import CloseEyeIcon from "../../icons/CloseEyeIcon";
 import { UsersShemalogin } from "../interface/UserShema";
 import Input from "../components/Input";
 import ErrorInput from "../components/ErrorInput";
 import axios from "axios";
 import { UserContext } from "../hooks/UserContext";
 import { MdHome } from "react-icons/md";
+import CloseEyeIcon from './../../icons/CloseEyeicon';
 
 export default function Login() {
   const [eyePassword, useEyePassword] = useState("password");
