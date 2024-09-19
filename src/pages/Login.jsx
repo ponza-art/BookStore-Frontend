@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OpenEyeIcon from "../../icons/OpenEyeIcon";
-import CloseEyeIcon from "../../icons/CloseEyeIcon";
+// import CloseEyeIcon from "../../icons/CloseEyeIcon";
 import { UsersShemalogin } from "../interface/UserShema";
 import Input from "../components/Input";
 import ErrorInput from "../components/ErrorInput";
