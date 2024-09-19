@@ -24,10 +24,8 @@ function HomePage() {
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 8);
 
-        setTimeout(() => {
           setBooks(latestBooks);
           setLoading(false);
-        }, 2000);
       } catch (error) {
         setLoading(false);
         console.error("Error fetching books:", error);
