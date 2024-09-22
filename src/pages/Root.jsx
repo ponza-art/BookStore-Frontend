@@ -4,16 +4,18 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Root() {
-  const location =useLocation()
- const hideHeader =
-  location.pathname === "/" ||
-  location.pathname.includes("/books")||
-  location.pathname.includes("/details") 
+  const location = useLocation();
+  const hideHeader =
+    location.pathname === '/' ||
+    location.pathname.includes('/books') ||
+    location.pathname.includes('/details') ||
+    location.pathname.includes('/cart');
+
   return (
     <Fragment>
       {hideHeader && <Header />}
       <Outlet />
-      {hideHeader && <Footer classname=""/>}
+      {hideHeader && <Footer />}
     </Fragment>
   );
 }

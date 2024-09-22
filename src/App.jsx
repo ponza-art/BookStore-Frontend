@@ -5,6 +5,7 @@ import BooksPage from './pages/BooksPage';
 import DetailsPage from './pages/DetailsPage';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
+import CartPage from './pages/CartPage';
 import NotFound from './NotFound';
 
 const router = createBrowserRouter([
@@ -30,22 +31,23 @@ const router = createBrowserRouter([
       },
       {
         path: '/signup',
-        element: <Registration/>,
+        element: <Registration />,
+      },
+      {
+        path: '/cart',
+        element: <CartPage />,
       },
       {
         path: '*',
-        element: <NotFound/>,
+        element: <NotFound />,
       },
     ],
   },
-
-
 ]);
 
 function App() {
   // console.log("samah");
   return <RouterProvider router={router} />;
-  
 }
 
 export default App;
