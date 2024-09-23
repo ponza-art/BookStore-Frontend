@@ -8,7 +8,8 @@ function Root() {
  const hideHeader =
   location.pathname === "/" ||
   location.pathname.includes("/books")||
-  location.pathname.includes("/details") 
+  location.pathname.includes("/details") ||
+  location.pathname.includes("/favorite") 
   return (
     <Fragment>
       {hideHeader && <Header />}

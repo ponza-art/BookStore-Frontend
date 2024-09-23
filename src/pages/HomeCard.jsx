@@ -2,7 +2,12 @@
 import BookCard from "../components/BookCard";
 import { Link } from "react-router-dom";
 
-const HomeCard = ({ books }) => {
+const HomeCard = ({
+  books,
+  favoriteBooks,
+  addToFavorites,
+  removeFromFavorites,
+}) => {
   return (
     <div className="p-6 container mx-auto">
       <div className="flex justify-between items-center mb-4">
@@ -19,8 +24,13 @@ const HomeCard = ({ books }) => {
               title={book.title}
               author={book.author}
               price={book.price}
-              imageUrl={book.imageUrl}
+              imageUrl={book.coverImage}
               _id={book._id}
+              addToFavorites={() => addToFavorites(book)}
+              removeFromFavorites={() => removeFromFavorites(book._id)}
+              isFavorite={Boolean(
+                favoriteBooks?.find((favBook) => favBook.bookId && favBook.bookId._id === book._id)
+              )}
             />
           ))}
         </div>
@@ -32,3 +42,4 @@ const HomeCard = ({ books }) => {
 };
 
 export default HomeCard;
+

@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FaRegHeart } from "react-icons/fa";
 
 function Header() {
   const { userInfo, setUserInfo } = useContext(UserContext);
   const username = userInfo?.username;
+
+  const [favoriteCount, setFavoriteCount] = useState(0);
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -87,12 +91,24 @@ function Header() {
           </li>
         </ul>
       </div>
-      <div className="navbar-end font-bold text-xl flex">
+      <div className="navbar-end font-bold text-xl flex items-center gap-4">
+        {localStorage.getItem("token") ? (
+          <Link
+            to={"/favorite"}
+            className="relative flex items-center "
+          >
+            <FaRegHeart  className="text-2xl transition-colors duration-300" />
+            {favoriteCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+                {favoriteCount}
+              </span>
+            )}
+          </Link>
+        ) : null}
         <ul className="flex gap-8 items-center">
           {!username && (
             <>
               <li>
-                {" "}
                 <Link
                   className="hover:text-white focus:text-white active:text-white"
                   style={{ transition: "0.3s ease" }}
