@@ -37,10 +37,7 @@ function DetailsPage() {
           <div className="justify-self-center">
             <div className="carousel w-64">
               <div id="item1" className="carousel-item w-full">
-                <img src="/book-1.jpg" className="w-full" alt="Book Image" />
-              </div>
-              <div id="item2" className="carousel-item w-full">
-                <img src="/book-2.jpg" className="w-full" alt="Book Image" />
+                <img src={book.coverImage} className="w-full" alt="Book Image" />
               </div>
             </div>
 
@@ -48,9 +45,7 @@ function DetailsPage() {
               <a href="#item1" className="btn btn-xs">
                 1
               </a>
-              <a href="#item2" className="btn btn-xs">
-                2
-              </a>
+             
             </div>
           </div>
 
