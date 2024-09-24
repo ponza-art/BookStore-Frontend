@@ -46,11 +46,11 @@ export const FavoritesProvider = ({ children }) => {
 
   const removeFromFavorites = async (bookId, isFromAddFavComp) => {
     setFavoriteBooks((prevFavorites) =>
-      prevFavorites.filter((favBook) => favBook.bookId._id !== bookId)
+      prevFavorites.filter((favBook) => favBook.bookId && favBook.bookId._id !== bookId)
     );
-
+  
     if (isFromAddFavComp) return;
-
+  
     try {
       await axios.delete(
         `https://book-store-backend-sigma-one.vercel.app/favorites/remove-item`,
@@ -63,6 +63,7 @@ export const FavoritesProvider = ({ children }) => {
       console.log(error.message);
     }
   };
+  
 
   return (
     <FavoritesContext.Provider value={{ favoriteBooks, addToFavorites, removeFromFavorites }}>
