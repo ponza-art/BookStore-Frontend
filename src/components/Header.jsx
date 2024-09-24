@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import { useContext, useEffect } from "react";
 
 function Header() {
+  const navigate =useNavigate()
   const { userInfo, setUserInfo } = useContext(UserContext);
   const username = userInfo?.username;
+  const userImage = userInfo?.image;
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUserInfo(null);
-    window.location.reload();
+    navigate('/');
   };
 
   useEffect(() => {
@@ -114,19 +116,45 @@ function Header() {
             </>
           )}
           {username && (
-            <div className="dropdown dropdown-end" tabIndex={0} role="button">
-              <li className="font-serif text-xl w-10 h-10 flex items-center justify-center rounded-full bg-white text-black px-3 avatar">
-                {username.slice(0, 1).toUpperCase()}
-              </li>
-              <ul
-                tabIndex={0}
-                className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-              >
-                <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
-                  <button onClick={logout}>Logout</button>
-                </li>
-              </ul>
-            </div>
+            <>
+              {userImage ? (
+                <div
+                  className="dropdown dropdown-end"
+                  tabIndex={0}
+                  role="button"
+                >
+                  <li className=" w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white ">
+                    <img src={userImage} alt={username} className="w-full h-full object-cover "/>
+                  </li>
+                  <ul
+                    tabIndex={0}
+                    className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  >
+                    <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
+                      <button onClick={logout}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <div
+                  className="dropdown dropdown-end"
+                  tabIndex={0}
+                  role="button"
+                >
+                  <li className="font-serif text-xl w-12 h-12 flex items-center overflow-hidden justify-center rounded-full outline shadow-lg bg-white text-black px-3 avatar">
+                    {username.slice(0, 1).toUpperCase()}
+                  </li>
+                  <ul
+                    tabIndex={0}
+                    className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  >
+                    <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
+                      <button onClick={logout}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </>
           )}
         </ul>
       </div>

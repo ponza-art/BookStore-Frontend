@@ -8,6 +8,7 @@ import axios from "axios";
 import { UserContext } from "../hooks/UserContext";
 import { MdHome } from "react-icons/md";
 import CloseEyeIcon from './../../icons/CloseEyeicon';
+import LoginWithgoogle from "../components/LoginWithgoogle";
 
 export default function Login() {
   const [eyePassword, useEyePassword] = useState("password");
@@ -263,6 +264,9 @@ export default function Login() {
                 >
                   Sign up for free
                 </Link>
+                <p className="mt-5 mb-2 text-black">or</p>
+                <hr/>
+                <LoginWithgoogle/>
               </div>
             </form>
           </div>
