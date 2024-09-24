@@ -12,7 +12,7 @@ function CartProvider({ children }) {
 
   const getUserCartItems = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/cart', {
+      const res = await axios.get('https://book-store-backend-sigma-one.vercel.app/cart', {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -29,7 +29,7 @@ function CartProvider({ children }) {
   const deleteBookById = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/cart/remove-item/`,
+        `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

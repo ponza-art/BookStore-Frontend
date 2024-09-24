@@ -11,6 +11,8 @@ function CartPage() {
 
   useEffect(() => {
     getUserCartItems();
+    console.log(    getUserCartItems()  );
+    
   }, []);
 
   const renderedItems = cartItems.map((book) => {
