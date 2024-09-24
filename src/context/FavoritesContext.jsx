@@ -53,7 +53,7 @@ export const FavoritesProvider = ({ children }) => {
 
     try {
       await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/favorites`,
+        `https://book-store-backend-sigma-one.vercel.app/favorites/remove-item`,
         {
           data: { bookId },
           headers: { Authorization: "Bearer " + token },

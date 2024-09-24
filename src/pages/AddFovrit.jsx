@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
+import { useFavorites } from "../context/FavoritesContext"; // Import useFavorites from context
 
-const AddFovrit = ({ removeFromFavorites }) => {
-  const [books, setBooks] = useState([]);
+const AddFovrit = () => {
+  const { favoriteBooks, removeFromFavorites } = useFavorites(); // Get favorites and removal function from context
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
@@ -18,10 +19,9 @@ const AddFovrit = ({ removeFromFavorites }) => {
           `https://book-store-backend-sigma-one.vercel.app/favorites`,
           { headers: { Authorization: "Bearer " + token } }
         );
-        setBooks(favBooks);
+        setLoading(false);
       } catch (error) {
         console.log(error);
-      } finally {
         setLoading(false);
       }
     };
@@ -30,14 +30,11 @@ const AddFovrit = ({ removeFromFavorites }) => {
 
   const deleteFav = async (bookId) => {
     if (!bookId) return;
-    removeFromFavorites(bookId, true);
-
-    const newBooks = books.filter((book) => book.bookId?._id !== bookId);
-    setBooks(newBooks);
+    removeFromFavorites(bookId, true); // Call removeFromFavorites from context
 
     try {
       await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/favorites`,
+        `https://book-store-backend-sigma-one.vercel.app/favorites/remove-item`,
         {
           data: { bookId },
           headers: { Authorization: "Bearer " + token },
@@ -57,8 +54,8 @@ const AddFovrit = ({ removeFromFavorites }) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {books.length ? (
-            books.map((book) => (
+          {favoriteBooks.length ? (
+            favoriteBooks.map((book) => (
               <div
                 key={book._id}
                 className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center hover:shadow-2xl transition-shadow duration-300 relative"
@@ -83,7 +80,6 @@ const AddFovrit = ({ removeFromFavorites }) => {
                   </p>
                 </div>
                 <div className="mt-auto">
-                 
                   <button
                     className="flex items-center space-x-1 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition-colors duration-300"
                     onClick={() => deleteFav(book.bookId?._id)}
