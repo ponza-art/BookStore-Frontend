@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { CreditCard, BadgeCheck, MessageCircleQuestion } from 'lucide-react';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import { CreditCard, BadgeCheck, MessageCircleQuestion } from "lucide-react";
+import { PiFileArrowDownDuotone } from "react-icons/pi";
 
 function DetailsPage() {
   const [book, setBook] = useState({});
   console.log(book);
 
-
   const { id } = useParams();
   console.log(id);
-
 
   const fetchBook = async (id) => {
     try {
@@ -22,7 +21,7 @@ function DetailsPage() {
 
       setBook(res.data);
     } catch (error) {
-      console.log('There is an error loading data...', error);
+      console.log("There is an error loading data...", error);
     }
   };
 
@@ -31,45 +30,49 @@ function DetailsPage() {
   }, []);
 
   return (
-    <main className='my-[9vh]' >
+    <main className="my-[9vh]">
       <section className="py-14">
         <div className="px-6 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 md:items-center lg:grid-cols-4">
           <div className="justify-self-center">
             <div className="carousel w-64">
               <div id="item1" className="carousel-item w-full">
                 <img src={book.coverImage} className="w-full" alt="Book Image" />
+                <img
+                  src={book.coverImage}
+                  className="w-full"
+                  alt="Book Image"
+                />
               </div>
-            </div>
-
-            <div className="flex w-full justify-center gap-2 py-2">
-              <a href="#item1" className="btn btn-xs">
-                1
-              </a>
-             
             </div>
           </div>
 
           <div className="flex flex-col gap-7 md:col-span-2">
             <div className="flex flex-col gap-4">
               <h1 className="font-medium text-3xl max-w-xl">{book.title}</h1>
-              <p className="text-md max-w-xl">{book.description}</p>
-            </div>
+              {/* <BadgeCheck className=" h-5 w-5 text-green-500" /> */}
+              <span className="badge bg-yellow-600 text-lg ">{book.category}</span>
 
-            <div className="flex flex-col gap-4 md:flex-row md:items-center">
-              <a className="btn btn-outline rounded-none px-8"
-                href={book.sourcePath}
-                target="_blank" rel="noreferrer">
-                View
-              </a>
-              
-              <a
-                href={book.sourcePath}
-                download
-                className="btn btn-neutral rounded-none px-8"
+              <p className="text-md max-w-xl">{book.description}</p>
+              <p className="text-gray-700">{book.author} </p>
+
+              <p className="text-xl font-sans font-bold">{book.price}$</p>
+            </div>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
+              <Link
+                to={book.sourcePath}
+                target="_blank"
+                className="flex items-center justify-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
               >
                 Download
-              </a>
+                <PiFileArrowDownDuotone size={28} />
+              </Link>
 
+              <Link
+                to="/cart"
+                className="flex items-center justify-center gap-2 bg-yellow-600 text-white rounded-md px-6 py-2 hover:bg-[#946B3C] transition-all duration-300"
+              >
+                Add to Cart
+              </Link>
             </div>
           </div>
 
