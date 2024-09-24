@@ -2,14 +2,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { FaOpencart } from "react-icons/fa"; // Import cart icon
 
 function Header() {
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const { userInfo, setUserInfo } = useContext(UserContext);
   const username = userInfo?.username;
   const userImage = userInfo?.image;
 
   const [favoriteCount, setFavoriteCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0); // State for cart count
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -95,17 +97,24 @@ function Header() {
       </div>
       <div className="navbar-end font-bold text-xl flex items-center gap-4">
         {localStorage.getItem("token") ? (
-          <Link
-            to={"/favorite"}
-            className="relative flex items-center "
-          >
-            <FaRegHeart  className="text-2xl transition-colors duration-300" />
-            {favoriteCount > 0 && (
-              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
-                {favoriteCount}
-              </span>
-            )}
-          </Link>
+          <>
+            <Link to={"/favorite"} className="relative flex items-center">
+              <FaRegHeart className="text-2xl transition-colors duration-300" />
+              {favoriteCount > 0 && (
+                <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+                  {favoriteCount}
+                </span>
+              )}
+            </Link>
+            <Link to={"/cart"} className="relative flex items-center">
+              <FaOpencart className="text-2xl transition-colors duration-300" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          </>
         ) : null}
         <ul className="flex gap-8 items-center">
           {!username && (
@@ -120,12 +129,9 @@ function Header() {
                 </Link>
               </li>
               <div className="dropdown dropdown-end" tabIndex={0} role="button">
-                <li className="font-serif text-xl w-15 h-12 flex  rounded-full  avatar">
+                <li className="font-serif text-xl w-15 h-12 flex rounded-full avatar">
                   <Link to={"/login"}>
-                    {/* <img
-                      src="/profileimg.png"
-                      className="avatar rounded-full"
-                    /> */}
+                    {/* <img src="/profileimg.png" className="avatar rounded-full" /> */}
                   </Link>
                 </li>
               </div>
@@ -134,13 +140,9 @@ function Header() {
           {username && (
             <>
               {userImage ? (
-                <div
-                  className="dropdown dropdown-end"
-                  tabIndex={0}
-                  role="button"
-                >
-                  <li className=" w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white ">
-                    <img src={userImage} alt={username} className="w-full h-full object-cover "/>
+                <div className="dropdown dropdown-end" tabIndex={0} role="button">
+                  <li className="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white ">
+                    <img src={userImage} alt={username} className="w-full h-full object-cover " />
                   </li>
                   <ul
                     tabIndex={0}
@@ -152,11 +154,7 @@ function Header() {
                   </ul>
                 </div>
               ) : (
-                <div
-                  className="dropdown dropdown-end"
-                  tabIndex={0}
-                  role="button"
-                >
+                <div className="dropdown dropdown-end" tabIndex={0} role="button">
                   <li className="font-serif text-xl w-12 h-12 flex items-center overflow-hidden justify-center rounded-full outline shadow-lg bg-white text-black px-3 avatar">
                     {username.slice(0, 1).toUpperCase()}
                   </li>

@@ -1,24 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { CreditCard, BadgeCheck, MessageCircleQuestion } from "lucide-react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
+import toast from "react-hot-toast";
+import CartContext from "../context/cartContext"; // Import CartContext
 
 function DetailsPage() {
   const [book, setBook] = useState({});
-  console.log(book);
-
+  const [isLoading, setIsLoading] = useState(false); // Loading state for the add to cart button
   const { id } = useParams();
-  console.log(id);
+  
+  // Access cart items and methods from CartContext
+  const { cartItems, getUserCartItems } = useContext(CartContext);
 
+  // Fetch book details from API
   const fetchBook = async (id) => {
     try {
       const res = await axios.get(
         `https://book-store-backend-sigma-one.vercel.app/book/${id}`
       );
-      console.log(res.data);
-
       setBook(res.data);
     } catch (error) {
       console.log("There is an error loading data...", error);
@@ -27,7 +29,40 @@ function DetailsPage() {
 
   useEffect(() => {
     fetchBook(id);
-  }, []);
+    getUserCartItems(); // Ensure cart items are loaded when this component is mounted
+  }, [id]);
+
+  // Check if the book is already in the cart
+  const isInCart = cartItems.some((item) => item.bookId === id);
+
+  const addToCart = async () => {
+    setIsLoading(true);
+
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const res = await axios.post(
+        "https://book-store-backend-sigma-one.vercel.app/cart/", 
+        { bookId: id },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      if (res.status === 201) {
+        toast.success("Book added to cart successfully!");
+        getUserCartItems(); // Update cart after adding the book
+      } else {
+        toast.error("Failed to add book to cart.");
+      }
+    } catch (error) {
+      console.log("Error adding book to cart:", error);
+      toast.error("There was an error adding the book to the cart.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <main className="my-[9vh]">
@@ -37,11 +72,6 @@ function DetailsPage() {
             <div className="carousel w-64">
               <div id="item1" className="carousel-item w-full">
                 <img src={book.coverImage} className="w-full" alt="Book Image" />
-                <img
-                  src={book.coverImage}
-                  className="w-full"
-                  alt="Book Image"
-                />
               </div>
             </div>
           </div>
@@ -49,14 +79,12 @@ function DetailsPage() {
           <div className="flex flex-col gap-7 md:col-span-2">
             <div className="flex flex-col gap-4">
               <h1 className="font-medium text-3xl max-w-xl">{book.title}</h1>
-              {/* <BadgeCheck className=" h-5 w-5 text-green-500" /> */}
               <span className="badge bg-yellow-600 text-lg ">{book.category}</span>
-
               <p className="text-md max-w-xl">{book.description}</p>
-              <p className="text-gray-700">{book.author} </p>
-
+              <p className="text-gray-700">{book.author}</p>
               <p className="text-xl font-sans font-bold">{book.price}$</p>
             </div>
+
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
               <Link
                 to={book.sourcePath}
@@ -67,12 +95,17 @@ function DetailsPage() {
                 <PiFileArrowDownDuotone size={28} />
               </Link>
 
-              <Link
-                to="/cart"
-                className="flex items-center justify-center gap-2 bg-yellow-600 text-white rounded-md px-6 py-2 hover:bg-[#946B3C] transition-all duration-300"
+              <button
+                onClick={addToCart}
+                disabled={isInCart || isLoading} // Disable button if book is in cart or loading
+                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
+                  isInCart || isLoading
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-yellow-600 text-white hover:bg-[#946B3C]"
+                }`}
               >
-                Add to Cart
-              </Link>
+                {isInCart ? "Already in Cart" : isLoading ? "Adding to Cart..." : "Add to Cart"}
+              </button>
             </div>
           </div>
 

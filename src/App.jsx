@@ -9,8 +9,11 @@ import NotFound from "./NotFound";
 import AddFovrit from "./pages/AddFovrit";
 import CartPage from "./pages/CartPage";
 import { FavoritesProvider } from "./context/FavoritesContext"; // Import the context provider
+import { Toaster } from "react-hot-toast";
+
 
 function createAppRouter() {
+
   return createBrowserRouter([
     {
       path: "/",
@@ -57,9 +60,13 @@ function App() {
   const router = createAppRouter();
 
   return (
-    <FavoritesProvider>
-      <RouterProvider router={router} />
-    </FavoritesProvider>
+    <>
+      <Toaster />
+
+      <FavoritesProvider>
+        <RouterProvider router={router} />
+      </FavoritesProvider>
+    </>
   );
 }
 
