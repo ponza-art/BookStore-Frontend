@@ -3,6 +3,7 @@ import { UserContext } from "../hooks/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaOpencart } from "react-icons/fa"; // Import cart icon
+import useCartContext from "../hooks/use-cart-context";
 
 function Header() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function Header() {
 
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [cartCount, setCartCount] = useState(0); // State for cart count
-
+  const { cartItems, setCartItems,getUserCartItems } = useCartContext();
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -22,8 +23,12 @@ function Header() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    const cartData = JSON.parse(localStorage.getItem("cart") || "{}");
     if (userData) {
       setUserInfo(userData);
+      getUserCartItems()
+
+      
     }
   }, []);
 
