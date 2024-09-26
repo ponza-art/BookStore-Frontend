@@ -21,8 +21,10 @@ function DetailsPage() {
   const fetchBook = async (id) => {
     try {
       setDetailsLoading(true)
+      const token = localStorage.getItem('token')
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const res = await axios.get(
-        `https://book-store-backend-sigma-one.vercel.app/book/${id}`
+        `https://book-store-backend-sigma-one.vercel.app/book/${id}`,{ headers}
       );
       setDetailsLoading(false)
       setBook(res.data);

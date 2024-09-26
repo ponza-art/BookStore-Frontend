@@ -34,10 +34,10 @@ function BooksPage() {
         });
         window.scrollTo(0, 0);
         const data = query
-          ? res.data.books.filter((b) =>
+          ? res.data.booksDataWithoutSourcePath.filter((b) =>
               b.title.toLowerCase().includes(query.toLowerCase())
             )
-          : res.data.books;
+          : res.data.booksDataWithoutSourcePath;
         
         setBooks(data);
         setTotalPages(res.data.totalPages);  // Set total pages from backend
@@ -111,7 +111,7 @@ function BooksPage() {
             </div>
           </div>
 
-          {books.length ? (
+          {books?.length ? (
             <>
               <div className="flex flex-wrap px-6 pt-7 pb-14 gap-6 justify-evenly">
                 {books.map((book, index) => (
