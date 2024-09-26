@@ -1,83 +1,113 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default function LibraryComponent({ orderData, booksDetails }) {
-    
-  return (<div>
-    <h1 className="text-2xl font-bold  w-fit my-7 mx-auto">Library</h1>
-    {orderData.length>0 ?(<div className="p-4">
-        <div className="flex flex-wrap start">
+export default function LibraryComponent() {
+  const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.get(
+          "http://localhost:5000/orders",
+          config
+        );
+
+        setOrderData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to load orders.");
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) {
+    return <p>Loading orders...</p>;
+  }
+
+  if (error) {
+    return <p className="text-red-500">{error}</p>;
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center mb-8">Library</h1>
+      {orderData.length > 0 ? (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {orderData.map((order, orderIndex) => (
             <div
               key={orderIndex}
-              className="border shadow-2xl flex flex-col rounded-md m-2 p-4"
+              className="hero bg-base-200 rounded-lg shadow-lg p-6"
             >
-              <p className="text-xl font-bold">Order {orderIndex + 1}</p>
-              <span className="text-gray-600 text-sm">
-                Ordered at:{" "}
-                <span className="ml-1">
-                  {new Date(order.createdAt).toLocaleDateString()}
-                </span>
-              </span>
-  
-              <div className="flex flex-wrap justify-center mt-4">
-                {order.books.map((book, bookIndex) => {
-                  const bookDetails = booksDetails[book.bookId];
-  
-                  return (
-                    <div
-                      key={bookIndex}
-                      className="border border-gray-600 flex flex-row rounded-md m-2 shadow-lg"
-                    >
-                      <div className="h-40">
-                        {bookDetails ? (
+                <div className="text-center ">
+                  <h1 className="text-3xl font-bold">Order {orderIndex + 1}</h1>
+                  <p className="text-sm text-gray-600">
+                    Ordered at:{" "}
+                    <span className="ml-1">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </span>
+                  </p>
+
+                <div className="flex flex-col space-y-4">
+                  {order.books.map((book, bookIndex) => {
+                    const { bookId } = book;
+
+                    return (
+                      <div
+                        key={bookIndex}
+                        className="card lg:card-side bg-white shadow-xl flex flex-col"
+                      >
+                        <figure className="w-full lg:w-48 bg-gray-100">
                           <img
-                            src={bookDetails.coverImage}
-                            className="h-full rounded-md"
-                            alt={`Book ${bookDetails.title}`}
+                            src={bookId.coverImage}
+                            alt={bookId.title}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src =
+                                "https://via.placeholder.com/150?text=No+Image";
+                            }}
                           />
-                        ) : (
-                          <p>Loading image...</p>
-                        )}
+                        </figure>
+                        <div className="card-body">
+                          <h2 className="card-title text-xl font-bold">
+                            {bookId.title}
+                          </h2>
+                          <p className="text-gray-500">Price: {bookId.price}</p>
+                          <div className="card-actions justify-end">
+                            <Link
+                              to={bookId.sourcePath || "#"}
+                              target="_blank"
+                              className="btn btn-primary flex items-center gap-2"
+                            >
+                              Download <PiFileArrowDownDuotone size={24} />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <div className="ml-5 mt-5 ">
-                        {bookDetails ? (
-                          <>
-                            <p className="text-md font-bold">
-                              {bookDetails.title}
-                            </p>
-                            <p className="text-gray-500">
-                              Price: {bookDetails.price}
-                            </p>
-                          </>
-                        ) : (
-                          <p>Loading details...</p>
-                        )}
-                      </div>
-  
-                      <div className="flex items-end mb-2">
-                        {bookDetails ? (
-                          <Link
-                            to={bookDetails.sourcePath || "#"}
-                            target="_blank"
-                            className="flex items-center justify-center gap-2 font-semibold bg-transparent border-2 bg-yellow-600 text-white rounded-md px-4 py-2 mr-2 hover:border-yellow-600 hover:bg-white hover:text-[#4A2C2A] transition-all duration-300"
-                          >
-                            Download
-                            <PiFileArrowDownDuotone size={28} />
-                          </Link>
-                        ) : (
-                          <p>Loading download link...</p>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           ))}
         </div>
-      </div>):(<p className="w-fit my-7 mx-auto">You don't have any book</p>)}
+      ) : (
+        <p className="text-center text-gray-500">You don't have any books</p>
+      )}
     </div>
   );
 }
