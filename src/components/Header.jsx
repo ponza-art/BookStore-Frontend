@@ -13,13 +13,13 @@ function Header() {
 
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [cartCount, setCartCount] = useState(0); // State for cart count
-  const { cartItems, setCartItems,getUserCartItems } = useCartContext();
-  
+  const { cartItems, setCartItems, getUserCartItems } = useCartContext();
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("orderData");
-    localStorage.removeItem("bookDetails")
+    localStorage.removeItem("bookDetails");
     setUserInfo(null);
     navigate('/');
   };
@@ -29,9 +29,7 @@ function Header() {
     const cartData = JSON.parse(localStorage.getItem("cart") || "{}");
     if (userData) {
       setUserInfo(userData);
-      getUserCartItems()
-
-      
+      getUserCartItems();
     }
   }, []);
 
@@ -75,6 +73,14 @@ function Header() {
                 Books
               </Link>
             </li>
+            <li>
+              <Link
+                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
+                to={"/authors"} // New Authors link
+              >
+                Authors
+              </Link>
+            </li>
           </ul>
         </div>
         <Link className="bg-inherit text-xl ps-3" to={"/"}>
@@ -99,6 +105,15 @@ function Header() {
               to={"/books"}
             >
               Books
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+              style={{ transition: "0.3s ease" }}
+              to={"/authors"} // New Authors link
+            >
+              Authors
             </Link>
           </li>
         </ul>
@@ -176,9 +191,8 @@ function Header() {
                     <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
                       <button onClick={logout}>Logout</button>
                     </li>
-                     <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
-                      <Link
-                       to="/library">Library</Link>
+                    <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
+                      <Link to="/library">Library</Link>
                     </li>
                   </ul>
                 </div>

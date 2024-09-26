@@ -20,7 +20,7 @@ export default function LibraryComponent() {
         };
 
         const response = await axios.get(
-          "http://localhost:5000/orders",
+          "https://book-store-backend-sigma-one.vercel.app/orders",
           config
         );
 

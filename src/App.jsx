@@ -15,10 +15,12 @@ import { Toaster } from "react-hot-toast";
 
 import OrderPage from "./pages/OrderPage";
 import LibraryPage from "./pages/LibraryPage";
+import AuthorsPage from "./pages/AuthorsPage";
+import AuthorDetailsPage from "./pages/AuthorDetailsPage";
 
 
 function createAppRouter() {
- // const {orders,setIsNewOrderAdded}=UseOrder()
+  // const {orders,setIsNewOrderAdded}=UseOrder()
   return createBrowserRouter([
     {
       path: "/",
@@ -58,11 +60,19 @@ function createAppRouter() {
         },
         {
           path: "/orders",
-          element: <OrderPage  />,
+          element: <OrderPage />,
         },
         {
           path: "/library",
-          element: <LibraryPage  />,
+          element: <LibraryPage />,
+        }, 
+        {
+          path: "/authors",
+          element: <AuthorsPage />,
+        },
+        {
+          path: "/authors/:id",
+          element: <AuthorDetailsPage />, 
         },
       ],
     },
