@@ -36,7 +36,11 @@ export default function LibraryComponent() {
   }, []);
 
   if (loading) {
-    return <p>Loading orders...</p>;
+    return (
+      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
+        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+      </div>
+    );
   }
 
   if (error) {
@@ -87,7 +91,9 @@ export default function LibraryComponent() {
                             <h2 className="card-title text-xl font-bold">
                               {bookId.title}
                             </h2>
-                            <p className="text-gray-500">Price: {bookId.price}</p>
+                            <p className="text-gray-500">
+                              Price: {bookId.price}
+                            </p>
                             <div className="card-actions justify-end">
                               <Link
                                 to={bookId.sourcePath || "#"}
