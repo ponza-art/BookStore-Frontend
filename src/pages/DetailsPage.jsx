@@ -6,56 +6,76 @@ import { CreditCard, BadgeCheck, MessageCircleQuestion } from "lucide-react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
 import toast from "react-hot-toast";
 import CartContext from "../context/cartContext"; // Import CartContext
+import useCartContext from "../hooks/use-cart-context";
 
 function DetailsPage() {
   const [book, setBook] = useState({});
   const [isLoading, setIsLoading] = useState(false); // Loading state for the add to cart button
+  const [DetailsLoading,setDetailsLoading]=useState(false)
   const { id } = useParams();
   
   // Access cart items and methods from CartContext
-  const { cartItems, getUserCartItems } = useContext(CartContext);
+  const { cartItems, setCartItems,getUserCartItems} = useCartContext();
 
   // Fetch book details from API
   const fetchBook = async (id) => {
     try {
+      setDetailsLoading(true)
       const res = await axios.get(
         `https://book-store-backend-sigma-one.vercel.app/book/${id}`
       );
+      setDetailsLoading(false)
       setBook(res.data);
+      getUserCartItems();
     } catch (error) {
+      setDetailsLoading(false)
       console.log("There is an error loading data...", error);
     }
   };
 
   useEffect(() => {
     fetchBook(id);
-    getUserCartItems(); // Ensure cart items are loaded when this component is mounted
+     // Ensure cart items are loaded when this component is mounted
   }, [id]);
+  let isInCart
+  if(DetailsLoading){
+    return(<div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
+      <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+    </div>)
 
+  }else{
+      isInCart = cartItems.some((item) => item.bookId === id);
+       //console.log(cartItems)
+       //console.log(isInCart)
+  }
+ 
+  
   // Check if the book is already in the cart
-  const isInCart = cartItems.some((item) => item.bookId === id);
-
+  
+  const token =localStorage.getItem("token")
   const addToCart = async () => {
     setIsLoading(true);
 
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
+      //const user = JSON.parse(localStorage.getItem("user"));
       const res = await axios.post(
         "https://book-store-backend-sigma-one.vercel.app/cart/", 
         { bookId: id },
         {
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-
+       // console.log(res.data.items)
       if (res.status === 201) {
         toast.success("Book added to cart successfully!");
-        getUserCartItems(); // Update cart after adding the book
+      
+        setCartItems(res.data.items); // Update cart after adding the book
       } else {
         toast.error("Failed to add book to cart.");
       }
+     
     } catch (error) {
       console.log("Error adding book to cart:", error);
       toast.error("There was an error adding the book to the cart.");
@@ -63,7 +83,8 @@ function DetailsPage() {
       setIsLoading(false);
     }
   };
-
+  
+ 
   return (
     <main className="my-[9vh]">
       <section className="py-14">
@@ -87,7 +108,8 @@ function DetailsPage() {
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
               <Link
-                to={book.sourcePath}
+                to={book.samplePdf
+                }
                 target="_blank"
                 className="flex items-center justify-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
               >

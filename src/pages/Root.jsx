@@ -10,7 +10,9 @@ function Root() {
     location.pathname.includes('/books') ||
     location.pathname.includes('/details') ||
     location.pathname.includes('/cart') ||
-    location.pathname.includes('/favorite');
+    location.pathname.includes('/favorite')||
+    location.pathname.includes('/orders')||
+    location.pathname.includes('/library');
 
   return (
     <div className="flex flex-col min-h-screen">
