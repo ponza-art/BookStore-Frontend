@@ -53,54 +53,58 @@ export default function LibraryComponent() {
               key={orderIndex}
               className="hero bg-base-200 rounded-lg shadow-lg p-6"
             >
-                <div className="text-center ">
-                  <h1 className="text-3xl font-bold">Order {orderIndex + 1}</h1>
-                  <p className="text-sm text-gray-600">
-                    Ordered at:{" "}
-                    <span className="ml-1">
-                      {new Date(order.createdAt).toLocaleDateString()}
-                    </span>
-                  </p>
+              <div className="text-center">
+                <h1 className="text-3xl font-bold">Order {orderIndex + 1}</h1>
+                <p className="text-sm text-gray-600">
+                  Ordered at:{" "}
+                  <span className="ml-1">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </span>
+                </p>
 
-                <div className="flex flex-col space-y-4">
-                  {order.books.map((book, bookIndex) => {
-                    const { bookId } = book;
+                {order.books.length > 0 ? (
+                  <div className="flex flex-col space-y-4">
+                    {order.books.map((book, bookIndex) => {
+                      const { bookId } = book;
 
-                    return (
-                      <div
-                        key={bookIndex}
-                        className="card lg:card-side bg-white shadow-xl flex flex-col"
-                      >
-                        <figure className="w-full lg:w-48 bg-gray-100">
-                          <img
-                            src={bookId.coverImage}
-                            alt={bookId.title}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src =
-                                "https://via.placeholder.com/150?text=No+Image";
-                            }}
-                          />
-                        </figure>
-                        <div className="card-body">
-                          <h2 className="card-title text-xl font-bold">
-                            {bookId.title}
-                          </h2>
-                          <p className="text-gray-500">Price: {bookId.price}</p>
-                          <div className="card-actions justify-end">
-                            <Link
-                              to={bookId.sourcePath || "#"}
-                              target="_blank"
-                              className="btn btn-primary flex items-center gap-2"
-                            >
-                              Download <PiFileArrowDownDuotone size={24} />
-                            </Link>
+                      return (
+                        <div
+                          key={bookIndex}
+                          className="card lg:card-side bg-white shadow-xl flex flex-col"
+                        >
+                          <figure className="w-full lg:w-48 bg-gray-100">
+                            <img
+                              src={bookId.coverImage}
+                              alt={bookId.title}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                  "https://via.placeholder.com/150?text=No+Image";
+                              }}
+                            />
+                          </figure>
+                          <div className="card-body">
+                            <h2 className="card-title text-xl font-bold">
+                              {bookId.title}
+                            </h2>
+                            <p className="text-gray-500">Price: {bookId.price}</p>
+                            <div className="card-actions justify-end">
+                              <Link
+                                to={bookId.sourcePath || "#"}
+                                target="_blank"
+                                className="btn btn-primary flex items-center gap-2"
+                              >
+                                Download <PiFileArrowDownDuotone size={24} />
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No books in this order</p>
+                )}
               </div>
             </div>
           ))}
