@@ -14,9 +14,12 @@ function Header() {
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [cartCount, setCartCount] = useState(0); // State for cart count
   const { cartItems, setCartItems,getUserCartItems } = useCartContext();
+  
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("orderData");
+    localStorage.removeItem("bookDetails")
     setUserInfo(null);
     navigate('/');
   };
@@ -156,6 +159,9 @@ function Header() {
                     <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
                       <button onClick={logout}>Logout</button>
                     </li>
+                    <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
+                      <Link to="/library">library</Link>
+                    </li>
                   </ul>
                 </div>
               ) : (
@@ -169,6 +175,10 @@ function Header() {
                   >
                     <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
                       <button onClick={logout}>Logout</button>
+                    </li>
+                     <li className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600">
+                      <Link
+                       to="/library">Library</Link>
                     </li>
                   </ul>
                 </div>

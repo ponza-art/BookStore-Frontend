@@ -4,7 +4,7 @@ import useCartContext from "../hooks/use-cart-context";
 import axios from "axios";
 
 function CartItem(props) {
-  const {key,book}=props
+  const {book}=props
   // console.log(book);
   const { cartItems, setCartItems } = useCartContext();
   const token = localStorage.getItem("token");
@@ -32,8 +32,8 @@ function CartItem(props) {
     
   {
     return cartItems.length > 0 ? (
-
-      <li key={key} className="relative h-52 flex  gap-x-5 mb-5 border shadow-2xl bg-white rounded-md ">
+     <div key={book.bookId}>
+      <li key={book.bookId} className="relative h-52 flex  gap-x-5 mb-5 border shadow-2xl bg-white rounded-md ">
         <Link to={`/books/${book.bookId._id}`} className="w-32 h-36">
           <div className="relative w-full h-full rounded-md shadow-2xl ">
             <img
@@ -70,8 +70,10 @@ function CartItem(props) {
           </button>
         </div>
       </li>
+      </div>
     ) : (
-      <p className="w-fit my-7 mx-auto">No Data Found</p>
+    <p className="w-fit my-7 mx-auto">No Data Found</p>
+      
     );
   }
 }

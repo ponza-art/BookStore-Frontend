@@ -11,9 +11,14 @@ import CartPage from "./pages/CartPage";
 import { FavoritesProvider } from "./context/FavoritesContext"; // Import the context provider
 import { Toaster } from "react-hot-toast";
 
+//import UseOrder from "./hooks/UseOrder";
+
+import OrderPage from "./pages/OrderPage";
+import LibraryPage from "./pages/LibraryPage";
+
 
 function createAppRouter() {
-
+ // const {orders,setIsNewOrderAdded}=UseOrder()
   return createBrowserRouter([
     {
       path: "/",
@@ -50,6 +55,14 @@ function createAppRouter() {
         {
           path: "/cart",
           element: <CartPage />,
+        },
+        {
+          path: "/orders",
+          element: <OrderPage  />,
+        },
+        {
+          path: "/library",
+          element: <LibraryPage  />,
         },
       ],
     },

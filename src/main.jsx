@@ -6,6 +6,7 @@ import { UserContextProvider } from "./hooks/UserContext.jsx";
 import { CartProvider } from "./context/cartContext.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+
 const clientId = import.meta.env.VITE_CLIENT_ID;
 if (!clientId) {
   console.error(
@@ -16,7 +17,9 @@ createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={clientId}>
     <UserContextProvider>
       <CartProvider>
-        <App />
+        
+          <App />
+        
       </CartProvider>
     </UserContextProvider>
   </GoogleOAuthProvider>

@@ -57,7 +57,7 @@ export default function Registration() {
             },
           }
         );
-        console.log(response.data);
+       // console.log(response.data);
         setload(false);
         navigate("/login", { replace: true });
       }

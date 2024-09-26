@@ -45,8 +45,8 @@ function DetailsPage() {
 
   }else{
       isInCart = cartItems.some((item) => item.bookId === id);
-       console.log(cartItems)
-       console.log(isInCart)
+       //console.log(cartItems)
+       //console.log(isInCart)
   }
  
   
@@ -67,7 +67,7 @@ function DetailsPage() {
           },
         }
       );
-        console.log(res.data.items)
+       // console.log(res.data.items)
       if (res.status === 201) {
         toast.success("Book added to cart successfully!");
       
@@ -108,7 +108,8 @@ function DetailsPage() {
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
               <Link
-                to={book.sourcePath}
+                to={book.samplePdf
+                }
                 target="_blank"
                 className="flex items-center justify-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
               >

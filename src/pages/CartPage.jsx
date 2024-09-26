@@ -6,15 +6,16 @@ import CartItem from "../components/CartItem";
 import { UserContext } from "../hooks/UserContext";
 import useCartContext from "../hooks/use-cart-context";
 import axios from "axios";
+import OrderComponents from "../components/OrderComponents";
 
 function CartPage() {
   const { getUserCartItems, cartItems, setCartItems, isloading,setLoading } =
     useCartContext();
   const { userInfo, setUserInfo } = useContext(UserContext);
-  console.log(userInfo);
+  //console.log(userInfo);
   const userName = userInfo?.username;
 
-  console.log(userName);
+  //console.log(userName);
   useEffect(() => {
     setLoading(true)
     try {
@@ -31,28 +32,30 @@ function CartPage() {
       </div>
     );
   } else {
-    const renderedItems = cartItems.map((book) => {
-      return <CartItem key={book.bookId._id} book={book} />;
+    const renderedItems = cartItems.map((book,index) => {
+      return <CartItem key={index} book={book} />;
     });
-
-    return (
+{
+    return cartItems.length>0 ?(
+      
       <main>
         <div>
           <section className="max-w-screen-md mx-auto px-4 py-14 mb-52">
             <h2 className="mb-10 text-2xl font-semibold">Your cart,</h2>
 
             <ul className="flex flex-col gap-4"> {renderedItems} </ul>
-
             <Link
-              to="/"
-              className="mt-5 btn  px-8  w-40 py-3  rounded-md bg-brown-200 hover:bg-white hover:border-brown-200 "
+              to="/orders"
+              className="  btn  px-8  w-40  rounded-md bg-brown-200 hover:bg-white hover:border-brown-200 "
             >
               Order
             </Link>
+           
           </section>
+          
         </div>
-      </main>
-    );
+      </main>):( <p className="w-fit my-7 mx-auto">No Data Found</p>)
+}
   }
 }
 

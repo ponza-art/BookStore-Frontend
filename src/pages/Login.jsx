@@ -44,7 +44,7 @@ export default function Login() {
           acc[curr.path[0]] = curr.message;
           return acc;
         }, {});
-        console.log(errors);
+       console.log(errors);
         setErrorState(errors);
       } else {
         // Clear validation errors if form is valid
