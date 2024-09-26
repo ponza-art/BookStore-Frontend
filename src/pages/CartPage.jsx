@@ -17,7 +17,7 @@ function CartPage() {
 
   const renderedItems = cartItems.map((book) => {
     return (
-      <CartItem key={book._id} book={book} deleteBookById={deleteBookById} />
+      <CartItem key={book._id } book={book} deleteBookById={deleteBookById} />
     );
   });
 
@@ -26,7 +26,7 @@ function CartPage() {
       <div>
         <section className="max-w-screen-md mx-auto px-4 py-14 mb-52">
           <h2 className="mb-10 text-2xl font-semibold">
-            Your cart, {user.username}
+            Your cart, {user.username || ""}
           </h2>
 
           <ul className="flex flex-col gap-4">{renderedItems}</ul>
