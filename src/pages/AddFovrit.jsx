@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
-import { useFavorites } from "../context/FavoritesContext"; // Import useFavorites from context
+import { useFavorites } from "../context/FavoritesContext"; 
+import { Link } from "react-router-dom";
+import { PiListHeartLight } from "react-icons/pi";
 
 const AddFovrit = () => {
-  const { favoriteBooks, removeFromFavorites } = useFavorites(); // Get favorites and removal function from context
+  const { favoriteBooks, removeFromFavorites } = useFavorites();
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("token");
@@ -19,6 +21,7 @@ const AddFovrit = () => {
           `https://book-store-backend-sigma-one.vercel.app/favorites`,
           { headers: { Authorization: "Bearer " + token } }
         );
+
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -30,7 +33,7 @@ const AddFovrit = () => {
 
   const deleteFav = async (bookId) => {
     if (!bookId) return;
-    removeFromFavorites(bookId, true); // Call removeFromFavorites from context
+    removeFromFavorites(bookId, true);
 
     try {
       await axios.delete(
@@ -46,28 +49,30 @@ const AddFovrit = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 relative">
       <h1 className="text-3xl font-bold mb-4 text-center">My Favorite Books</h1>
       {loading ? (
         <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
           <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favoriteBooks.length ? (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5 relative">
+          {favoriteBooks.length > 0 ? (
             favoriteBooks.map((book) => (
               <div
-                key={book._id}
-                className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center hover:shadow-2xl transition-shadow duration-300 relative"
+                key={book.bookId._id}
+                className="shadow-lg rounded-lg p-6 flex flex-col items-center hover:shadow-2xl border-x-warning-content
+                   transition-colors duration-300 relative"
               >
                 <img
                   src={book.bookId?.coverImage || ""}
-                  alt={book.bookId?.title || "No Image"}
-                  className="w-32 h-40 object-cover rounded-t-md mb-4"
+                  alt={book.bookId?.title || "No title"}
+                  className="w-40 h-44 rounded-md mb-4"
                 />
+
                 <div className="text-center mb-4">
-                  <span className="text-red-500 text-sm font-bold uppercase">
-                    Paperback
+                  <span className="text-red-500 text-lg font-bold">
+                    {book.bookId?.category || ""}
                   </span>
                   <h2 className="text-lg font-semibold mt-2">
                     {book.bookId?.title || "No Title"}
@@ -91,9 +96,27 @@ const AddFovrit = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-600">
-              No favorite books found.
-            </p>
+            <div className="absolute inset-0 my-20 justify-center items-center  w-full" >
+              <div className="flex flex-col justify-center items-center text-center space-y-4">
+                <PiListHeartLight
+                  className="text-black  text-8xl"
+                  // style={{ fontSize: "100px" }}
+                />
+                <p className="text-xl text-gray-700">
+                  Your favorite is currently empty.
+                </p>
+                <p className="text-gray-500">
+                  Add some books to your favorite list by clicking on the heart
+                  icon.
+                </p>
+                <Link
+                  to="/books"
+                  className="mt-6 px-6 py-2 bg-brown-200 hover:bg-white border border-brown-200 rounded-md"
+                >
+                  Return to Books
+                </Link>
+              </div>
+            </div>
           )}
         </div>
       )}

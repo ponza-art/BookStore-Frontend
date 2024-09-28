@@ -9,6 +9,7 @@ function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const token = localStorage.getItem("token");
   const [isloading,setLoading]=useState(false)
+  
   const getUserCartItems = async () => {
     try {
       setLoading(true)
@@ -25,7 +26,7 @@ function CartProvider({ children }) {
       setCartItems(data.items);
       setLoading(false)
     } catch (error) {
-      console.log("There is an error loading data...", error);
+      // console.log("There is an error loading data...", error);
       setLoading(false)
     }
   };
