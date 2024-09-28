@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -36,12 +36,9 @@ export default function LibraryComponent() {
   }, []);
 
   if (loading) {
-    
-    return (
-      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
-        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
-      </div>
-    );
+    return   <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
+    <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+  </div>;
   }
 
   if (error) {
@@ -117,7 +114,13 @@ export default function LibraryComponent() {
           ))}
         </div>
       ) : (
-        <p className="text-center text-gray-500">You don't have any books</p>
+        <div className="flex justify-center items-center my-14 mx-auto">
+        <img
+          src="order3.jpeg" 
+          alt="No Data Available"
+          className="w-72 h-auto " 
+        />
+      </div>
       )}
     </div>
   );

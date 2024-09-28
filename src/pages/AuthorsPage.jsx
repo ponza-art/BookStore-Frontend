@@ -93,8 +93,8 @@ const AuthorsPage = () => {
                             <Link
                                 to={`/authors/${author._id}`}
                             >
-                                <button  className="button" data-text="">
-                                <span  className="actual-text">&nbsp;ViewBooks&nbsp;</span>
+                                <button className="button" data-text="">
+                                <span className="actual-text">&nbsp;ViewBooks&nbsp;</span>
                                 <span aria-hidden="true" className="hover-text ">&nbsp;ViewBooks&nbsp;</span>
                             </button>
                             </Link>
