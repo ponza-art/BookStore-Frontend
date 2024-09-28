@@ -47,7 +47,7 @@ export default function LibraryComponent() {
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
-
+   console.log(orderData)
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">Library</h1>

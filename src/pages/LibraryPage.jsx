@@ -53,7 +53,7 @@ export default function LibraryPage() {
     }
   }, [userInfo]);
 
-  console.log(orderData);
+ // console.log(orderData);
 
   const fetchBookDetails = async (bookId) => {
     try {
@@ -61,7 +61,7 @@ export default function LibraryPage() {
       const res = await axios.get(
         `https://book-store-backend-sigma-one.vercel.app/book/${bookId}`
       );
-      console.log(res.data);
+      //console.log(res.data);
       setIsLoading(false);
       return res.data;
     } catch (error) {
@@ -101,7 +101,7 @@ export default function LibraryPage() {
     }
   }, [orderData]);
 
-  console.log(booksDetails);
+  //console.log(booksDetails);
 
   return (
     <main>
