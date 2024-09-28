@@ -1,76 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import "../css/authorDetailsbtn.css"
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "../css/authorDetailsbtn.css";
 
 const AuthorsPage = () => {
-    const [authors, setAuthors] = useState([]);
-    const [filteredAuthors, setFilteredAuthors] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [selectedLetter, setSelectedLetter] = useState('');
+  const [authors, setAuthors] = useState([]);
+  const [filteredAuthors, setFilteredAuthors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedLetter, setSelectedLetter] = useState("");
 
-    // Fetch authors from the API
-    useEffect(() => {
-        const fetchAuthors = async () => {
-            try {
-                const response = await axios.get('https://book-store-backend-sigma-one.vercel.app/author');
-                setAuthors(response.data);
-                setFilteredAuthors(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching authors', error);
-                setLoading(false);
-            }
-        };
-
-        fetchAuthors();
-    }, []);
-
-    // Function to handle letter click and filter authors
-    const handleLetterClick = (letter) => {
-        setSelectedLetter(letter);
-        const filtered = authors.filter((author) =>
-            author.name.toLowerCase().startsWith(letter.toLowerCase())
+  // Fetch authors from the API
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        const response = await axios.get(
+          "https://book-store-backend-sigma-one.vercel.app/author"
         );
-        setFilteredAuthors(filtered);
+        setAuthors(response.data);
+        setFilteredAuthors(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching authors", error);
+        setLoading(false);
+      }
     };
 
-    // Function to reset the filter
-    const handleResetClick = () => {
-        setSelectedLetter('');
-        setFilteredAuthors(authors);
-    };
+    fetchAuthors();
+  }, []);
 
-    if (loading) {
-        return <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
-            <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
-        </div>
-    }
+  // Function to handle letter click and filter authors
+  const handleLetterClick = (letter) => {
+    setSelectedLetter(letter);
+    const filtered = authors.filter((author) =>
+      author.name.toLowerCase().startsWith(letter.toLowerCase())
+    );
+    setFilteredAuthors(filtered);
+  };
 
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  // Function to reset the filter
+  const handleResetClick = () => {
+    setSelectedLetter("");
+    setFilteredAuthors(authors);
+  };
 
+  if (loading) {
     return (
-        <div className="authors-page container mx-auto my-6 px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
+        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+      </div>
+    );
+  }
 
-            {/* Letter row */}
-            <div className="flex justify-center mb-6 flex-wrap">
-                <button
-                    onClick={handleResetClick}
-                    className={`px-3 py-2 mx-1 mb-2 rounded-full ${selectedLetter === '' ? 'bg-yellow-600 text-white' : 'bg-gray-200'} hover:bg-yellow-400 transition`}
-                >
-                    All
-                </button>
-                {letters.map((letter) => (
-                    <button
-                        key={letter}
-                        onClick={() => handleLetterClick(letter)}
-                        className={`px-3 py-2 mx-1 mb-2 rounded-full ${selectedLetter === letter ? 'bg-yellow-600 text-white' : 'bg-gray-200'} hover:bg-yellow-400 transition`}
-                    >
-                        {letter}
-                    </button>
-                ))}
-            </div>
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+  return (
+    <div className="authors-page container mx-auto my-6 px-4 sm:px-6 lg:px-8">
+      {/* Letter row */}
+      <div className="flex justify-center mb-6 flex-wrap">
+        <button
+          onClick={handleResetClick}
+          className={`px-3 py-2 mx-1 mb-2 rounded-full ${
+            selectedLetter === "" ? "bg-yellow-600 text-white" : "bg-gray-200"
+          } hover:bg-yellow-400 transition`}
+        >
+          All
+        </button>
+        {letters.map((letter) => (
+          <button
+            key={letter}
+            onClick={() => handleLetterClick(letter)}
+            className={`px-3 py-2 mx-1 mb-2 rounded-full ${
+              selectedLetter === letter
+                ? "bg-yellow-600 text-white"
+                : "bg-gray-200"
+            } hover:bg-yellow-400 transition`}
+          >
+            {letter}
+          </button>
+        ))}
+      </div>
 
             {/* Author Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">

@@ -40,7 +40,7 @@ function BooksPage() {
           : res.data.booksDataWithoutSourcePath;
         
         setBooks(data);
-        setTotalPages(res.data.totalPages);  // Set total pages from backend
+        setTotalPages(res.data.totalPages);
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
@@ -58,7 +58,7 @@ function BooksPage() {
   };
 
   const handleFilterSubmit = () => {
-    setPage(1);  // Reset to the first page when applying new filters
+    setPage(1);
     fetchBooks();
   };
 
@@ -140,7 +140,9 @@ function BooksPage() {
                 >
                   Previous
                 </button>
-                <span className="px-4 py-2">Page {page} of {totalPages}</span>
+                <span className="px-4 py-2">
+                  Page {page} of {totalPages}
+                </span>
                 <button
                   disabled={page === totalPages}
                   onClick={() => setPage(page + 1)}

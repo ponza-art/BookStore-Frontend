@@ -21,7 +21,7 @@ function HomePage() {
           "https://book-store-backend-sigma-one.vercel.app/book"
         );
 
-        const latestBooks = data
+        const latestBooks = data.booksDataWithoutSourcePath
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .slice(0, 8);
 

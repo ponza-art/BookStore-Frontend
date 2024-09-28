@@ -11,7 +11,7 @@ function Footer() {
     >
       <nav>
         <Link to={"/"}>
-          <img src="logo-removebg.png" width={"80"} alt="Logo" />
+          <img src="/logo-removebg.png" width={"80"} alt="Logo" />
         </Link>
       </nav>
       <nav>
