@@ -18,7 +18,6 @@ import LibraryPage from "./pages/LibraryPage";
 import AuthorsPage from "./pages/AuthorsPage";
 import AuthorDetailsPage from "./pages/AuthorDetailsPage";
 
-
 function createAppRouter() {
   // const {orders,setIsNewOrderAdded}=UseOrder()
   return createBrowserRouter([
@@ -65,14 +64,14 @@ function createAppRouter() {
         {
           path: "/library",
           element: <LibraryPage />,
-        }, 
+        },
         {
           path: "/authors",
           element: <AuthorsPage />,
         },
         {
           path: "/authors/:id",
-          element: <AuthorDetailsPage />, 
+          element: <AuthorDetailsPage />,
         },
       ],
     },

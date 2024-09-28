@@ -21,7 +21,7 @@ function Header() {
     localStorage.removeItem("orderData");
     localStorage.removeItem("bookDetails");
     setUserInfo(null);
-    navigate('/');
+    navigate("/");
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ function Header() {
           </ul>
         </div>
         <Link className="bg-inherit text-xl ps-3" to={"/"}>
-          <img src="logo-removebg.png" width={"100"} alt="Logo" />
+          <img src="/logo-removebg.png" width={"100"} alt="Logo" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
@@ -163,9 +163,17 @@ function Header() {
           {username && (
             <>
               {userImage ? (
-                <div className="dropdown dropdown-end" tabIndex={0} role="button">
+                <div
+                  className="dropdown dropdown-end"
+                  tabIndex={0}
+                  role="button"
+                >
                   <li className="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white ">
-                    <img src={userImage} alt={username} className="w-full h-full object-cover " />
+                    <img
+                      src={userImage}
+                      alt={username}
+                      className="w-full h-full object-cover "
+                    />
                   </li>
                   <ul
                     tabIndex={0}
@@ -180,7 +188,11 @@ function Header() {
                   </ul>
                 </div>
               ) : (
-                <div className="dropdown dropdown-end" tabIndex={0} role="button">
+                <div
+                  className="dropdown dropdown-end"
+                  tabIndex={0}
+                  role="button"
+                >
                   <li className="font-serif text-xl w-12 h-12 flex items-center overflow-hidden justify-center rounded-full outline shadow-lg bg-white text-black px-3 avatar">
                     {username.slice(0, 1).toUpperCase()}
                   </li>
