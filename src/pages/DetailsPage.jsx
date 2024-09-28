@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -24,17 +23,18 @@ function DetailsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  // Access cart items and methods from CartContext
+
   const { cartItems, setCartItems, getUserCartItems } = useCartContext();
 
   useEffect(() => {
     fetchBook(id);
     getOrderData();
     getUserCartItems();
+    fetchReviews(); 
   }, [id]);
-  
 
-  // Fetch book details from API
+
+
   const fetchBook = async (id) => {
     try {
       setDetailsLoading(true);
@@ -72,24 +72,24 @@ function DetailsPage() {
       if (comment.length > 0 && rating > 0 && rating <= 5) {
         const response = editingReviewId
           ? (await axios.put(
-              `https://book-store-backend-sigma-one.vercel.app/review/${editingReviewId}`,
-              { comment, rating, bookId: id },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            ),
+            `https://book-store-backend-sigma-one.vercel.app/review/${editingReviewId}`,
+            { comment, rating, bookId: id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
             toast.success("Review updated successfully"))
           : (await axios.post(
-              "https://book-store-backend-sigma-one.vercel.app/review",
-              { comment, rating, bookId: id },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            ),
+            "https://book-store-backend-sigma-one.vercel.app/review",
+            { comment, rating, bookId: id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
             toast.success("Review created successfully"));
         fetchReviews();
         resetForm();
@@ -161,7 +161,7 @@ function DetailsPage() {
     }
   };
   const isBookInOrder = orderBookId.includes(book._id);
-  // Check if the book is already in the cart
+
 
   const addToCart = async () => {
     setIsLoading(true);
@@ -180,7 +180,7 @@ function DetailsPage() {
       if (res.status === 201) {
         toast.success("Book added to cart successfully!");
 
-        setCartItems(res.data.items); // Update cart after adding the book
+        setCartItems(res.data.items);
       } else {
         toast.error("Failed to add book to cart.");
       }
@@ -195,12 +195,12 @@ function DetailsPage() {
     if (cartItems) {
       const flattenedCartBooks = cartItems.flat();
       const cartBookIds = flattenedCartBooks.map((book) => book.bookId._id);
-      setIsInCartCheck(cartBookIds?.some(id => id === book._id)); 
+      setIsInCartCheck(cartBookIds?.some(id => id === book._id));
     }
   }, [cartItems, book]);
-  
 
-  let isInCart ;
+
+  let isInCart;
   if (DetailsLoading) {
     return (
       <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
@@ -209,20 +209,7 @@ function DetailsPage() {
     );
   } else {
     isInCart = cartItems.some((item) => item.bookId === id);
-    // if (cartItems) {
-    //   const flattenedCartBooks = cartItems?.flat();
-    //   console.log(flattenedCartBooks);
-    //   const cartBookIds = flattenedCartBooks?.map((book) => {
-    //     return book.bookId._id;
-    //   });
-    //   console.log(cartBookIds);
-    //   isInCart = cartBookIds?.some((id) => {
-    //     id === book._id;
-    //   });
-    //   console.log(isInCart);
-    // }
   }
-  console.log(isInCart);
   return (
     <main className="my-[9vh] mx-auto max-w-screen-xl">
       <section className="container mx-auto pb-6">
@@ -243,9 +230,9 @@ function DetailsPage() {
             <div className="flex flex-col gap-4">
               <h1 className="font-medium text-3xl max-w-xl">{book.title}</h1>
               <span className="badge bg-yellow-600 text-white p-3 text-lg ">
-                
+
                 {book.category}
-              
+
               </span>
               <p className="text-md max-w-xl">
                 {reviews.length !== 1
@@ -269,23 +256,22 @@ function DetailsPage() {
 
               <button
                 onClick={addToCart}
-                disabled={isBookInOrder || isInCart ||isInCartCheck|| isLoading} // Disable button if book is in cart or loading
-                aria-disabled={isBookInOrder || isInCart ||isInCartCheck|| isLoading}
-                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
-                  isBookInOrder || isInCart ||isInCartCheck|| isLoading
-                    ? "bg-gray-400 text-white cursor-not-allowed"
-                    : "bg-yellow-600 text-white hover:bg-[#946B3C]"
-                }`}
+                disabled={isBookInOrder || isInCart || isInCartCheck || isLoading} // Disable button if book is in cart or loading
+                aria-disabled={isBookInOrder || isInCart || isInCartCheck || isLoading}
+                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${isBookInOrder || isInCart || isInCartCheck || isLoading
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-yellow-600 text-white hover:bg-[#946B3C]"
+                  }`}
               >
                 {isBookInOrder
                   ? "Book Already Buy"
                   : isInCart
-                  ? "Already in Cart"
-                  :isInCartCheck
-                  ?"Already in Cart"
-                  : isLoading
-                  ? "Adding to Cart..."
-                  : "Add to Cart"}
+                    ? "Already in Cart"
+                    : isInCartCheck
+                      ? "Already in Cart"
+                      : isLoading
+                        ? "Adding to Cart..."
+                        : "Add to Cart"}
               </button>
             </div>
           </div>
@@ -353,11 +339,10 @@ function DetailsPage() {
                     {[...Array(5)].map((_, index) => (
                       <svg
                         key={index}
-                        className={`w-6 h-6 ${
-                          review.rating > index
-                            ? "text-yellow-500"
-                            : "text-gray-400"
-                        }`}
+                        className={`w-6 h-6 ${review.rating > index
+                          ? "text-yellow-500"
+                          : "text-gray-400"
+                          }`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -370,21 +355,21 @@ function DetailsPage() {
               </div>
               {review.userId._id ===
                 JSON.parse(localStorage?.getItem("user"))?.id && (
-                <div className="flex mt-4">
-                  <button
-                    onClick={() => handleEdit(review)}
-                    className="btn btn-md"
-                  >
-                    <FaRegEdit size={20} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(review._id)}
-                    className="btn btn-error text-white ml-2"
-                  >
-                    <MdOutlineDeleteOutline size={25} />
-                  </button>
-                </div>
-              )}
+                  <div className="flex mt-4">
+                    <button
+                      onClick={() => handleEdit(review)}
+                      className="btn btn-md"
+                    >
+                      <FaRegEdit size={20} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(review._id)}
+                      className="btn btn-error text-white ml-2"
+                    >
+                      <MdOutlineDeleteOutline size={25} />
+                    </button>
+                  </div>
+                )}
             </div>
           ))
         )}
@@ -418,9 +403,8 @@ function DetailsPage() {
                     <svg
                       key={index}
                       onClick={() => setRating(index + 1)}
-                      className={`w-6 h-6 cursor-pointer ${
-                        rating > index ? "text-yellow-500" : "text-gray-400"
-                      }`}
+                      className={`w-6 h-6 cursor-pointer ${rating > index ? "text-yellow-500" : "text-gray-400"
+                        }`}
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
