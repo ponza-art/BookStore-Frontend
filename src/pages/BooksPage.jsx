@@ -22,7 +22,7 @@ function BooksPage() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const res = await axios.get("https://book-store-backend-sigma-one.vercel.app/book", {
+        const res = await axios.get("https://book-store-backend-sigma-one.vercel.app/book/filters", {
           params: {
             query,
             author,
