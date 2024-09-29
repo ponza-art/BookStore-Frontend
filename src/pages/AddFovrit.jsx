@@ -61,7 +61,7 @@ const AddFovrit = () => {
             favoriteBooks.map((book) => (
               <div
                 key={book.bookId._id}
-                className="shadow-lg rounded-lg p-6  flex flex-col items-center hover:shadow-2xl border-x-warning-content
+                className="shadow-lg  p-6  flex flex-col items-center hover:shadow-2xl border-x-warning-content
                    transition-colors duration-300 relative"
               >
                 <img

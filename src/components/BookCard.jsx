@@ -38,7 +38,7 @@ const BookCard = ({
                     {title}
                 </h3>
                 <p className="text-gray-700">{author}</p>
-                <p className="text-xl font-sans font-bold">{price}</p>
+                <p className="text-xl font-sans font-bold">{price} $</p>
                 <div className="card-title cartDev flex justify-between">
                     <Link to={`/books/${_id}`}>Show Details</Link>
                     {localStorage.getItem("token") ? (

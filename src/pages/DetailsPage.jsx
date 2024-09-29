@@ -250,7 +250,7 @@ function DetailsPage() {
                 target="_blank"
                 className="flex items-center justify-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
               >
-                Download
+                Preview / Download
                 <PiFileArrowDownDuotone size={28} />
               </Link>
 
@@ -259,12 +259,12 @@ function DetailsPage() {
                 disabled={isBookInOrder || isInCart || isInCartCheck || isLoading} // Disable button if book is in cart or loading
                 aria-disabled={isBookInOrder || isInCart || isInCartCheck || isLoading}
                 className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${isBookInOrder || isInCart || isInCartCheck || isLoading
-                  ? "bg-gray-400 text-white cursor-not-allowed"
-                  : "bg-yellow-600 text-white hover:bg-[#946B3C]"
+                  ? "bg-slate-700 text-white cursor-not-allowed"
+                  : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
                   }`}
               >
                 {isBookInOrder
-                  ? "Book Already Buy"
+                  ? "Book Already Bought"
                   : isInCart
                     ? "Already in Cart"
                     : isInCartCheck
@@ -276,23 +276,23 @@ function DetailsPage() {
             </div>
           </div>
 
-          <div className="md:hidden lg:block">
-            <div className="border-l border-t border-r p-4">
+          <div className="md:hidden mt-10 lg:block">
+            <div className="border-l rounde-lg bg-zinc-950 text-white border-t border-r p-4">
               <CreditCard size={24} />
               <p className="text-md">Secure Payment</p>
-              <p className="text-sm text-gray-500">PayPal, Credit Card</p>
+              <p className="text-sm ">PayPal, Credit Card</p>
             </div>
-            <div className="border-l border-t border-r p-4">
+            <div className="border-l mt-3 rounded-lg border-t bg-zinc-950 text-white border-r p-4">
               <MessageCircleQuestion size={24} />
               <p className="text-md">Ask a Question</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm ">
                 Got a question? We're here to help!
               </p>
             </div>
-            <div className="border-l border-y border-r p-4">
+            <div className="border-l rounded-lg mt-3 bg-zinc-950 text-white border-y border-r p-4">
               <BadgeCheck size={24} />
               <p className="text-md">Authentic Books</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm ">
                 We guarantee the quality of our books.
               </p>
             </div>
@@ -332,7 +332,7 @@ function DetailsPage() {
                   </p>
                 </div>
                 <div className="md:text-right md:mt-0 text-left mt-3">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm ">
                     {new Date(review.createdAt).toLocaleDateString()}
                   </p>
                   <div className="flex justify-end mt-2">
