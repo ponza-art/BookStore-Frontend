@@ -1,13 +1,20 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { LuDownload } from "react-icons/lu";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/free-mode";
+import { FreeMode, Pagination, Navigation } from "swiper/modules";
+import { RxArrowTopRight } from "react-icons/rx";
 export default function LibraryComponent() {
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  SwiperCore.use([Navigation, Pagination]);
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -36,92 +43,111 @@ export default function LibraryComponent() {
   }, []);
 
   if (loading) {
-    return   <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
-    <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
-  </div>;
+    return (
+      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
+        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+      </div>
+    );
   }
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
-   console.log(orderData)
+
+  const totalBooks = orderData?.reduce(
+    (acc, order) => acc + order.books.length,
+    0
+  );
+  const slidesPerView = totalBooks > 4 ? 3 : totalBooks;
+  
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Library</h1>
-      {orderData.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {orderData.map((order, orderIndex) => (
-            <div
-              key={orderIndex}
-              className="hero bg-base-200 rounded-lg shadow-lg p-6"
-            >
-              <div className="text-center">
-                <h1 className="text-3xl font-bold">Order {orderIndex + 1}</h1>
-                <p className="text-sm text-gray-600">
-                  Ordered at:{" "}
-                  <span className="ml-1">
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </span>
-                </p>
-
-                {order.books.length > 0 ? (
-                  <div className="flex flex-col space-y-4">
-                    {order.books.map((book, bookIndex) => {
-                      const { bookId } = book;
-
-                      return (
-                        <div
-                          key={bookIndex}
-                          className="card lg:card-side bg-white shadow-xl flex flex-col"
-                        >
-                          <figure className="w-full lg:w-48 bg-gray-100">
-                            <img
-                              src={bookId.coverImage}
-                              alt={bookId.title}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src =
-                                  "https://via.placeholder.com/150?text=No+Image";
-                              }}
-                            />
-                          </figure>
-                          <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">
-                              {bookId.title}
-                            </h2>
-                            <p className="text-gray-500">
-                              Price: {bookId.price}
-                            </p>
-                            <div className="card-actions justify-end">
-                              <Link
-                                to={bookId.sourcePath || "#"}
-                                target="_blank"
-                                className="btn btn-primary flex items-center gap-2"
-                              >
-                                Download <PiFileArrowDownDuotone size={24} />
-                              </Link>
+      <h1 className="text-3xl font-bold text-center mb-10">Library</h1>
+      <div className="flex items-center  md:items-start lg:items-center flex-col  ">
+        {orderData.length > 0 ? (
+          <Swiper
+            breakpoints={{
+              300: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+             
+              700: {
+                slidesPerView: slidesPerView,
+                spaceBetween: 15,
+              },
+            }}
+            freeMode={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[FreeMode, Pagination]}
+            className="max-w-[90%] lg:max-w-[80%]"
+          >
+            <div>
+              {orderData.map((order, orderIndex) => (
+                <div key={orderIndex}>
+                  {order.books.length > 0 ? (
+                    <div>
+                      {order.books.map((book, bookIndex) => {
+                        const { bookId } = book;
+                        return (
+                          <SwiperSlide key={`${orderIndex}-${bookIndex}`}>
+                            <div className=" ml-16 md:ml-0 w-[215px] mb-20 relative flex flex-col gap-6 group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  lg:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden ">
+                              <div
+                                className="absolute inset-0 bg-cover bg-center"
+                                style={{
+                                  backgroundImage: `url(${bookId.coverImage})`,
+                                }}
+                              ></div>
+                              <div className="absolute w-full h-full top-0 opacity-100 transform lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100 transition-all duration-700  ">
+                                <div className="absolute inset-0 bg-gray-950 opacity-50 w-full h-full top-0"></div>
+                                <div className=" flex flex-col gap-3 absolute top-0 w-full h-full justify-between">
+                                  <div className=" absolute bottom-5 right-5  group-hover:text-brown-200">
+                                    <Link
+                                      to={bookId.sourcePath || "#"}
+                                      target="_blank"
+                                    >
+                                    <LuDownload size={"30px"} color="white" />
+                                    </Link>
+                                    
+                                  </div>
+                                  <div>
+                                    <h1 className="m-2 font-bold text-white text-xl lg:text-2xl">
+                                      {bookId.title}
+                                    </h1>
+                                    <p className="m-2 font-bold text-white lg:text-[18px]">
+                                      order at:{" "}
+                                      {new Date(
+                                        order.createdAt
+                                      ).toLocaleDateString()}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-brown-200 group-hover:rotate-45 duration-100" />
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p className="text-gray-500">No books in this order</p>
-                )}
-              </div>
+                          </SwiperSlide>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No books in this order</p>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex justify-center items-center my-14 mx-auto">
-        <img
-          src="order3.jpeg" 
-          alt="No Data Available"
-          className="w-72 h-auto " 
-        />
+          </Swiper>
+        ) : (
+          <div className="flex justify-center items-center my-14 mx-auto">
+            <img
+              src="/order3.jpeg"
+              alt="No Data Available"
+              className="w-72 h-auto "
+            />
+          </div>
+        )}
       </div>
-      )}
     </div>
   );
 }

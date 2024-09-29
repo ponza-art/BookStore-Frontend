@@ -5,10 +5,12 @@ import { UserContext } from "../hooks/UserContext";
 import Swal from "sweetalert2";
 import axios from "axios";
 import OrderComponents from "../components/OrderComponents";
+import { useState } from "react";
 
 export default function OrderPage() {
   const { getUserCartItems, cartItems } = useCartContext();
   const { userInfo } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userName = userInfo?.username;
   useEffect(() => {
@@ -30,6 +32,7 @@ export default function OrderPage() {
       return;
     }
     try {
+      setIsLoading(true);
       const res = await axios.post(
         "https://book-store-backend-sigma-one.vercel.app/orders",
         {},
@@ -40,6 +43,7 @@ export default function OrderPage() {
 
       if (res.status === 201) {
         try {
+          setIsLoading(false);
           Swal.fire({
             title: "succed",
             text: "Order success !",
@@ -55,12 +59,15 @@ export default function OrderPage() {
         }
       }
     } catch (err) {
+      setIsLoading(false);
       Swal.fire({
         title: "failed",
         text: "Order failed !",
         icon: "error",
       });
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,6 +80,7 @@ export default function OrderPage() {
         calculateTotalPrice={calculateTotalPrice}
         createOrder={createOrder}
         handleClick={handleClick}
+        isLoading={isLoading}
       />
     </div>
   );
