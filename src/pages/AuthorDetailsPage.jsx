@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import BookCard from '../components/BookCard'; // Ensure the path is correct for your project structure
+import BookCard from '../components/BookCard';
+import { useFavorites } from '../context/FavoritesContext';      
 
 const AuthorDetailsPage = () => {
     const { id } = useParams();
+    const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
     const [author, setAuthor] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -35,25 +37,26 @@ const AuthorDetailsPage = () => {
 
     return (
         <div className="author-details-page container mx-auto my-6">
-
-
             <h2 className="text-2xl font-semibold mb-4">Books by {author.name}</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {author.books.length > 0 ? (
-                    author.books.map((book) => (
-                        <BookCard
-                            key={book.bookId._id}
-                            _id={book.bookId._id}
-                            title={book.bookId.title}
-                            author={author.name}
-                            price={book.bookId.price}
-                            imageUrl={book.bookId.coverImage}
-                            isFavorite={false} // Set default or pass actual data if needed
-                            addToFavorites={() => console.log('Add to Favorites')} // Replace with actual function
-                            removeFromFavorites={() => console.log('Remove from Favorites')} // Replace with actual function
-                        />
-                    ))
+                    author.books.map((book) => {
+                        const isFavorite = favoriteBooks.some(fav => fav.bookId._id === book.bookId._id); 
+                        return (
+                            <BookCard
+                                key={book.bookId._id}
+                                _id={book.bookId._id}
+                                title={book.bookId.title}
+                                author={author.name}
+                                price={book.bookId.price}
+                                imageUrl={book.bookId.coverImage}
+                                isFavorite={isFavorite} 
+                                addToFavorites={() => addToFavorites(book.bookId)}
+                                removeFromFavorites={() => removeFromFavorites(book.bookId._id)}
+                            />
+                        );
+                    })
                 ) : (
                     <div>No books found</div>
                 )}
