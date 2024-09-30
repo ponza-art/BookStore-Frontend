@@ -10,7 +10,7 @@ function CartProvider({ children }) {
   const token = localStorage.getItem("token");
   const [isloading,setLoading]=useState(false)
   
-  const getUserCartItems = async () => {
+  const getUserCartItems = async () => {    
     try {
       setLoading(true)
       const res = await axios.get(
@@ -26,7 +26,23 @@ function CartProvider({ children }) {
       setCartItems(data.items);
       setLoading(false)
     } catch (error) {
-      // console.log("There is an error loading data...", error);
+      setLoading(false)
+    }
+    try {
+      setLoading(true)
+      const res = await axios.get(
+        "https://book-store-backend-sigma-one.vercel.app/cart",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+     
+      const data = res.data;
+      setCartItems(data.items);
+      setLoading(false)
+    } catch (error) {
       setLoading(false)
     }
   };
