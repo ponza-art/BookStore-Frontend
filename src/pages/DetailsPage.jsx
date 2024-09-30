@@ -137,15 +137,12 @@ function DetailsPage() {
     setMessage(null);
   };
 
-  
   const getOrderData = async () => {
-  if ((JSON.parse(localStorage?.getItem("userId"))?.id)) {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-
     const res = await axios.get(
       "https://book-store-backend-sigma-one.vercel.app/orders",
       config
@@ -163,10 +160,6 @@ function DetailsPage() {
       setOrderBookId(bookIds);
     }
   };
-  
-}
-
-
   const isBookInOrder = orderBookId.includes(book._id);
 
 
