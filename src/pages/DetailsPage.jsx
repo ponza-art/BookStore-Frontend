@@ -240,8 +240,8 @@ function DetailsPage() {
                   : `${reviews.length} review`}
               </p>
               <p className="text-md max-w-xl">{book.description}</p>
-              <p className="text-gray-700">{book.author}</p>
-              <p className="text-xl font-sans font-bold">{book.price}$</p>
+              <p className="text-red-600 uppercase">{book.author}</p>
+              <p className="text-xl font-sans font-bold">{book.price} $</p>
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
@@ -277,19 +277,19 @@ function DetailsPage() {
           </div>
 
           <div className="md:hidden mt-10 lg:block">
-            <div className="border-l rounde-lg bg-zinc-950 text-white border-t border-r p-4">
+            <div className="border-l rounde-lg bg-slate-700 text-white border-t border-r p-4">
               <CreditCard size={24} />
               <p className="text-md">Secure Payment</p>
               <p className="text-sm ">PayPal, Credit Card</p>
             </div>
-            <div className="border-l mt-3 rounded-lg border-t bg-zinc-950 text-white border-r p-4">
+            <div className="border-l mt-3 rounded-lg border-t bg-slate-700 text-white border-r p-4">
               <MessageCircleQuestion size={24} />
               <p className="text-md">Ask a Question</p>
               <p className="text-sm ">
                 Got a question? We're here to help!
               </p>
             </div>
-            <div className="border-l rounded-lg mt-3 bg-zinc-950 text-white border-y border-r p-4">
+            <div className="border-l rounded-lg mt-3 bg-slate-700 text-white border-y border-r p-4">
               <BadgeCheck size={24} />
               <p className="text-md">Authentic Books</p>
               <p className="text-sm ">
