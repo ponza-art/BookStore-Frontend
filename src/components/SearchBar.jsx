@@ -11,8 +11,8 @@ export default function SearchBar({ initialQuery, onSearch }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-control">
-        <div className="input flex items-center gap-2 bg-white border border-gray-300 rounded-full p-1 w-full max-w-md mx-auto">
+      <div className="form-control w-[100%]">
+        <div className="input flex items-center gap-2 bg-white border border-gray-300 rounded-full p-1 w-full mx-auto">
           <input
             type="text"
             className="flex-grow bg-white p-2 rounded-full border-none outline-none"

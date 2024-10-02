@@ -13,12 +13,13 @@ export default function OrderPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const userName = userInfo?.username;
+
   useEffect(() => {
-    try {
-      if (userName) {
-        getUserCartItems();
-      }
-    } catch (err) {}
+    // try {
+    if (userName) {
+      getUserCartItems();
+    }
+    // } catch (err) {}
   }, []);
 
   const calculateTotalPrice = () => {
@@ -40,7 +41,6 @@ export default function OrderPage() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
       if (res.status === 201) {
         try {
           setIsLoading(false);
@@ -70,7 +70,6 @@ export default function OrderPage() {
       setIsLoading(false);
     }
   };
-
   const handleClick = () => {
     navigate("/cart");
   };

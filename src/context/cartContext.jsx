@@ -8,11 +8,11 @@ function CartProvider({ children }) {
   // const user = JSON.parse(localStorage.getItem('user'));
   const [cartItems, setCartItems] = useState([]);
   const token = localStorage.getItem("token");
-  const [isloading,setLoading]=useState(false)
-  
-  const getUserCartItems = async () => {    
+  const [isloading, setLoading] = useState(false);
+
+  const getUserCartItems = async () => {
     try {
-      setLoading(true)
+      // setLoading(true);
       const res = await axios.get(
         "https://book-store-backend-sigma-one.vercel.app/cart",
         {
@@ -21,35 +21,34 @@ function CartProvider({ children }) {
           },
         }
       );
-     
       const data = res.data;
       setCartItems(data.items);
-      setLoading(false)
     } catch (error) {
-      setLoading(false)
-    }
-    try {
-      setLoading(true)
-      const res = await axios.get(
-        "https://book-store-backend-sigma-one.vercel.app/cart",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-     
-      const data = res.data;
-      setCartItems(data.items);
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
-  
+
+  useEffect(() => {
+    if (token) {
+      getUserCartItems();
+      setLoading(false);
+    }
+  }, [token]);
 
   return (
-    <CartContext.Provider value={{cartItems,setCartItems,getUserCartItems,isloading,setLoading}}>{children}</CartContext.Provider>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        getUserCartItems,
+        isloading,
+        setLoading,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
 }
 

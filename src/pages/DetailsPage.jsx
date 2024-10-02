@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -30,10 +29,8 @@ function DetailsPage() {
     fetchBook(id);
     getOrderData();
     getUserCartItems();
-    fetchReviews(); 
+    fetchReviews();
   }, [id]);
-
-
 
   const fetchBook = async (id) => {
     try {
@@ -72,24 +69,24 @@ function DetailsPage() {
       if (comment.length > 0 && rating > 0 && rating <= 5) {
         const response = editingReviewId
           ? (await axios.put(
-            `https://book-store-backend-sigma-one.vercel.app/review/${editingReviewId}`,
-            { comment, rating, bookId: id },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          ),
+              `https://book-store-backend-sigma-one.vercel.app/review/${editingReviewId}`,
+              { comment, rating, bookId: id },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            ),
             toast.success("Review updated successfully"))
           : (await axios.post(
-            "https://book-store-backend-sigma-one.vercel.app/review",
-            { comment, rating, bookId: id },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          ),
+              "https://book-store-backend-sigma-one.vercel.app/review",
+              { comment, rating, bookId: id },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            ),
             toast.success("Review created successfully"));
         fetchReviews();
         resetForm();
@@ -162,7 +159,6 @@ function DetailsPage() {
   };
   const isBookInOrder = orderBookId.includes(book._id);
 
-
   const addToCart = async () => {
     setIsLoading(true);
     const token = localStorage.getItem("token");
@@ -195,10 +191,9 @@ function DetailsPage() {
     if (cartItems) {
       const flattenedCartBooks = cartItems.flat();
       const cartBookIds = flattenedCartBooks.map((book) => book.bookId._id);
-      setIsInCartCheck(cartBookIds?.some(id => id === book._id));
+      setIsInCartCheck(cartBookIds?.some((id) => id === book._id));
     }
   }, [cartItems, book]);
-
 
   let isInCart;
   if (DetailsLoading) {
@@ -230,9 +225,7 @@ function DetailsPage() {
             <div className="flex flex-col gap-4">
               <h1 className="font-medium text-3xl max-w-xl">{book.title}</h1>
               <span className="badge bg-yellow-600 text-white p-3 text-lg ">
-
                 {book.category}
-
               </span>
               <p className="text-md max-w-xl">
                 {reviews.length !== 1
@@ -256,22 +249,27 @@ function DetailsPage() {
 
               <button
                 onClick={addToCart}
-                disabled={isBookInOrder || isInCart || isInCartCheck || isLoading} // Disable button if book is in cart or loading
-                aria-disabled={isBookInOrder || isInCart || isInCartCheck || isLoading}
-                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${isBookInOrder || isInCart || isInCartCheck || isLoading
-                  ? "bg-slate-700 text-white cursor-not-allowed"
-                  : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
-                  }`}
+                disabled={
+                  isBookInOrder || isInCart || isInCartCheck || isLoading
+                } // Disable button if book is in cart or loading
+                aria-disabled={
+                  isBookInOrder || isInCart || isInCartCheck || isLoading
+                }
+                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
+                  isBookInOrder || isInCart || isInCartCheck || isLoading
+                    ? "bg-slate-700 text-white cursor-not-allowed"
+                    : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                }`}
               >
                 {isBookInOrder
                   ? "Book Already Bought"
                   : isInCart
-                    ? "Already in Cart"
-                    : isInCartCheck
-                      ? "Already in Cart"
-                      : isLoading
-                        ? "Adding to Cart..."
-                        : "Add to Cart"}
+                  ? "Already in Cart"
+                  : isInCartCheck
+                  ? "Already in Cart"
+                  : isLoading
+                  ? "Adding to Cart..."
+                  : "Add to Cart"}
               </button>
             </div>
           </div>
@@ -285,16 +283,12 @@ function DetailsPage() {
             <div className="border-l mt-3 rounded-lg border-t bg-slate-700 text-white border-r p-4">
               <MessageCircleQuestion size={24} />
               <p className="text-md">Ask a Question</p>
-              <p className="text-sm ">
-                Got a question? We're here to help!
-              </p>
+              <p className="text-sm ">Got a question? We're here to help!</p>
             </div>
             <div className="border-l rounded-lg mt-3 bg-slate-700 text-white border-y border-r p-4">
               <BadgeCheck size={24} />
               <p className="text-md">Authentic Books</p>
-              <p className="text-sm ">
-                We guarantee the quality of our books.
-              </p>
+              <p className="text-sm ">We guarantee the quality of our books.</p>
             </div>
           </div>
         </div>
@@ -339,10 +333,11 @@ function DetailsPage() {
                     {[...Array(5)].map((_, index) => (
                       <svg
                         key={index}
-                        className={`w-6 h-6 ${review.rating > index
-                          ? "text-yellow-500"
-                          : "text-gray-400"
-                          }`}
+                        className={`w-6 h-6 ${
+                          review.rating > index
+                            ? "text-yellow-500"
+                            : "text-gray-400"
+                        }`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
@@ -355,21 +350,21 @@ function DetailsPage() {
               </div>
               {review.userId._id ===
                 JSON.parse(localStorage?.getItem("user"))?.id && (
-                  <div className="flex mt-4">
-                    <button
-                      onClick={() => handleEdit(review)}
-                      className="btn btn-md"
-                    >
-                      <FaRegEdit size={20} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(review._id)}
-                      className="btn btn-error text-white ml-2"
-                    >
-                      <MdOutlineDeleteOutline size={25} />
-                    </button>
-                  </div>
-                )}
+                <div className="flex mt-4">
+                  <button
+                    onClick={() => handleEdit(review)}
+                    className="btn btn-md"
+                  >
+                    <FaRegEdit size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(review._id)}
+                    className="btn btn-error text-white ml-2"
+                  >
+                    <MdOutlineDeleteOutline size={25} />
+                  </button>
+                </div>
+              )}
             </div>
           ))
         )}
@@ -403,8 +398,9 @@ function DetailsPage() {
                     <svg
                       key={index}
                       onClick={() => setRating(index + 1)}
-                      className={`w-6 h-6 cursor-pointer ${rating > index ? "text-yellow-500" : "text-gray-400"
-                        }`}
+                      className={`w-6 h-6 cursor-pointer ${
+                        rating > index ? "text-yellow-500" : "text-gray-400"
+                      }`}
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
