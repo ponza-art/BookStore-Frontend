@@ -13,6 +13,7 @@ function Root() {
     location.pathname.includes("/favorite") ||
     location.pathname.includes("/orders") ||
     location.pathname.includes("/library") ||
+    location.pathname.includes("/checkout") ||
     location.pathname.includes("/authors");
 
   return (

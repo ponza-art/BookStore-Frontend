@@ -5,7 +5,7 @@ import App from './App.jsx';
 import { UserContextProvider } from './hooks/UserContext.jsx';
 import { CartProvider } from './context/cartContext.jsx';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-const clientId = import.meta.env.VITE_CLIENT_ID;;
+const clientId = import.meta.env.VITE_CLIENT_ID;
 if (!clientId) {
   console.error('Google Client ID is not defined! Please check your .env file.');
 }

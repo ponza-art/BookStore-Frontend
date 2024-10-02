@@ -74,6 +74,14 @@ function createAppRouter() {
           path: "/authors/:id",
           element: <AuthorDetailsPage />,
         },
+        {
+          path: "/checkout-success",
+          element: <LibraryPage/>,
+        },
+        {
+          path: "/checkout-cancel",
+          element: <CartPage/>,
+        },
         
       ],
     },

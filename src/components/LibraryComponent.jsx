@@ -58,12 +58,12 @@ export default function LibraryComponent() {
     (acc, order) => acc + order.books.length,
     0
   );
-  const slidesPerView = totalBooks > 4 ? 3 : totalBooks;
+  const slidesPerView = totalBooks > 3 ? 3 : totalBooks;
   
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-10">Library</h1>
-      <div className="flex items-center  md:items-start lg:items-center flex-col  ">
+      <div className="flex items-center  md:items-center lg:items-center flex-col  ">
         {orderData.length > 0 ? (
           <Swiper
             breakpoints={{
@@ -72,10 +72,12 @@ export default function LibraryComponent() {
                 spaceBetween: 10,
               },
              
+           
               700: {
                 slidesPerView: slidesPerView,
-                spaceBetween: 15,
+                spaceBetween: 10,
               },
+             
             }}
             freeMode={true}
             pagination={{
@@ -93,7 +95,7 @@ export default function LibraryComponent() {
                         const { bookId } = book;
                         return (
                           <SwiperSlide key={`${orderIndex}-${bookIndex}`}>
-                            <div className=" ml-16 md:ml-0 w-[215px] mb-20 relative flex flex-col gap-6 group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  lg:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden ">
+                            <div className=" ml-5  w-[215px] mb-20 relative flex flex-col gap-6 group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  md:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden ">
                               <div
                                 className="absolute inset-0 bg-cover bg-center"
                                 style={{

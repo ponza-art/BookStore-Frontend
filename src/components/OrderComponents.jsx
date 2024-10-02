@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import useCartContext from "../hooks/use-cart-context";
+import PayButton from "./PayButton";
 export default function OrderComponents({
   calculateTotalPrice,
   // handleClick,
@@ -46,17 +47,8 @@ export default function OrderComponents({
           </dd>
         </dl>
       </div>
-      <button
-        onClick={createOrder}
-        disabled={isLoading}
-        className={`btn px-8 w-full font-bold rounded-md ${
-          isLoading
-            ? "bg-slate-700 text-white cursor-not-allowed"
-            : "bg-brown-200 hover:bg-white hover:border-brown-200"
-        }`}
-      >
-        {isLoading ? "CheckoutLoading..." : "Proceed to Checkout"}
-      </button>
+      
+      <PayButton/>
       <div className="flex items-center justify-center gap-2">
         <span className="text-sm font-normal text-gray-500"> or </span>
         <Link
