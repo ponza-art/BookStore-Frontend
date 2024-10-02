@@ -85,16 +85,39 @@ function BooksPage() {
     }
   };
 
-  // const handleFilterSubmit = () => {
-  //   setPage(1);
-  //   // fetchBooks();
-  // };
+  // Skeleton loader while books are loading
+  const SkeletonCard = () => (
+    <div className="card bg-gray-200 animate-pulse shadow-xl" style={{ height: "430px", width: "280px" }}>
+      <div className="w-40 h-48 mx-auto bg-gray-300 mt-6"></div>
+      <div className="card-body flex-grow-0 p-8">
+        <div className="h-6 bg-gray-300 mb-2 w-3/4"></div>
+        <div className="h-4 bg-gray-300 mb-2 w-1/2"></div>
+        <div className="h-4 bg-gray-300 w-1/3"></div>
+      </div>
+    </div>
+  );
+
+  // Skeleton loader for search and filters
+  const SkeletonFilters = () => (
+    <div className="flex flex-col gap-4 p-4">
+      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
+      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
+      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
+      <div className="flex gap-4">
+        <div className="h-10 bg-gray-300 w-1/2 animate-pulse"></div>
+        <div className="h-10 bg-gray-300 w-1/2 animate-pulse"></div>
+      </div>
+    </div>
+  );
 
   return (
     <main className="container mx-auto mh-[60vh]">
       {loading ? (
-        <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto">
-          <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+        <div className="flex flex-wrap px-6 pt-7 pb-14 gap-6 justify-evenly">
+          {/* Display multiple skeleton cards while loading */}
+          {Array(8).fill(0).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
         </div>
       ) : (
         <>
@@ -103,13 +126,17 @@ function BooksPage() {
             <div className="drawer container mx-auto flex md:justify-evenly gap-3 justify-center flex-wrap">
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
               <div className="min-w-[40%]">
-                <SearchBar initialQuery={query} onSearch={handleSearchSubmit} />
+                {loading ? (
+                  <SkeletonFilters /> // Show skeleton for search and filters
+                ) : (
+                  <SearchBar initialQuery={query} onSearch={handleSearchSubmit} />
+                )}
               </div>
               <div className="drawer-content">
                 {/* Page content here */}
                 <label
                   htmlFor="my-drawer"
-                  className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-brown-200 text-white hover:bg-[#946B3C] drawer-button"
+                  className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-brown-200 text-black hover:bg-[#946B3C] drawer-button"
                 >
                   Filters
                 </label>
@@ -121,67 +148,68 @@ function BooksPage() {
                   className="drawer-overlay"
                 ></label>
                 <ul className="menu bg-white text-base-content min-h-full w-[100%] sm:w-[50%] md:w-[40%] lg:w-[30%] p-4">
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-xl font-bold">Filters</h2>
-                    {/* Close button */}
-                    <label
-                      htmlFor="my-drawer"
-                      className="btn btn-sm btn-ghost hover:bg-white"
-                    >
-                      ✕
-                    </label>
-                  </div>
-                  <div className="filters mt-6 flex flex-col gap-4 w-full">
-                    <label htmlFor="">Author</label>
-                    <select
-                      id="author"
-                      className="select select-bordered w-full"
-                      value={author}
-                      onChange={(e) => setAuthor(e.target.value)}
-                    >
-                      <option value={""}>all</option>
-                      {filterAuthor.map((aut) => (
-                        <option key={aut._id}>{aut.name}</option>
-                      ))}
-                    </select>
-                    <hr />
-                    <label htmlFor="category">Category</label>
-                    <select
-                      id="category"
-                      className="select select-bordered w-full"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                    >
-                      <option value={""}>all</option>
-                      {filterCatigory.map((cat) => (
-                        <option key={cat._id}>{cat.title}</option>
-                      ))}
-                    </select>
-                    <hr />
-                    <label htmlFor="category">Price</label>
-                    <div className="flex flex-wrap md:flex-nowrap w-[100%] gap-4">
-                      <input
-                        type="number"
-                        placeholder="Min Price"
-                        value={minPrice}
-                        onChange={(e) => setMinPrice(e.target.value)}
-                        className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
-                      />
-                      <input
-                        type="number"
-                        placeholder="Max Price"
-                        value={maxPrice}
-                        onChange={(e) => setMaxPrice(e.target.value)}
-                        className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
-                      />
-                    </div>
-                    {/* <button
-                      onClick={handleFilterSubmit}
-                      className="bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                      Apply Filters
-                    </button> */}
-                  </div>
+                  {/* Filter UI */}
+                  {loading ? (
+                    <SkeletonFilters /> // Show skeleton for filter options
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-center mb-2">
+                        <h2 className="text-xl font-bold">Filters</h2>
+                        {/* Close button */}
+                        <label
+                          htmlFor="my-drawer"
+                          className="btn btn-sm btn-ghost hover:bg-white"
+                        >
+                          ✕
+                        </label>
+                      </div>
+                      <div className="filters mt-6 flex flex-col gap-4 w-full">
+                        <label htmlFor="">Author</label>
+                        <select
+                          id="author"
+                          className="select select-bordered w-full"
+                          value={author}
+                          onChange={(e) => setAuthor(e.target.value)}
+                        >
+                          <option value={""}>all</option>
+                          {filterAuthor.map((aut) => (
+                            <option key={aut._id}>{aut.name}</option>
+                          ))}
+                        </select>
+                        <hr />
+                        <label htmlFor="category">Category</label>
+                        <select
+                          id="category"
+                          className="select select-bordered w-full"
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                        >
+                          <option value={""}>all</option>
+                          {filterCatigory.map((cat) => (
+                            <option key={cat._id}>{cat.title}</option>
+                          ))}
+                        </select>
+                        <hr />
+                        <label htmlFor="category">Price</label>
+                        <div className="flex flex-wrap md:flex-nowrap w-[100%] gap-4">
+                          <input
+                            type="number"
+                            placeholder="Min Price"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)}
+                            className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Max Price"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                            className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </ul>
               </div>
             </div>
@@ -208,24 +236,18 @@ function BooksPage() {
               </div>
 
               {/* Pagination Controls */}
-              <div className="pagination mt-6 flex justify-center">
-                <button
-                  disabled={page === 1}
-                  onClick={() => setPage(page - 1)}
-                  className="px-4 py-2 mx-2 bg-gray-200 rounded"
-                >
-                  Previous
-                </button>
-                <span className="px-4 py-2">
-                  Page {page} of {totalPages}
-                </span>
-                <button
-                  disabled={page === totalPages}
-                  onClick={() => setPage(page + 1)}
-                  className="px-4 py-2 mx-2 bg-gray-200 rounded"
-                >
-                  Next
-                </button>
+              <div className="pagination my-3 flex justify-center items-center">
+                <div className="join">
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index + 1}
+                      onClick={() => setPage(index + 1)}
+                      className={`join-item btn bg-brown-200 btn-lg ${page === index + 1 ? 'btn-active' : ''}`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
               </div>
             </>
           ) : (
