@@ -34,7 +34,7 @@ function Header() {
   }, []);
 
   return (
-    <div className="navbar" style={{ backgroundColor: "#dab26d" }}>
+    <div className="navbar " style={{  backgroundColor: "#dab26d" }}>
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -83,7 +83,7 @@ function Header() {
             </li>
           </ul>
         </div>
-        <Link className="bg-inherit text-xl ps-3" to={"/"}>
+        <Link className="bg-inherit text-xl " to={"/"}>
           <img src="/logo-removebg.png" width={"100"} alt="Logo" />
         </Link>
       </div>

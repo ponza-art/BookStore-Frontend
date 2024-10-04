@@ -17,6 +17,7 @@ function Root() {
     location.pathname.includes("/authors");
 
   return (
+
     <div className="flex flex-col min-h-screen">
       {hideHeader && <Header className="sticky top-0 z-50" />}
       <div className="flex-grow">
