@@ -94,7 +94,7 @@ export default function LibraryComponent() {
                     <div>
                       {order.books.map((book, bookIndex) => {
                         const { bookId } = book;
-                        console.log(bookId)
+                       // console.log(bookId)
                         return (
                           <SwiperSlide  key={`${orderIndex}-${bookIndex}`}>
                             <div className="w-[215px] mb-20 relative flex flex-col  group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  md:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden  ">

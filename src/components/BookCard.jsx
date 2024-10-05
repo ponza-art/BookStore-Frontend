@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/BookCard.model.css";
 import { FaRegHeart, FaHeart, FaBook } from "react-icons/fa";
 import { MdAddShoppingCart } from "react-icons/md";
-import { BsCartCheck, BsFillCartCheckFill } from "react-icons/bs";
-import axios from "axios";
- 
+import { BsFillCartCheckFill } from "react-icons/bs";
+import { useOrder } from "../context/OrderContext";
+
 const BookCard = ({
   _id,
   title,
@@ -16,15 +16,13 @@ const BookCard = ({
   addToFavorites,
   removeFromFavorites,
   addToCart,
-  deleteBookById,
   InCart,
   isloading,
-  isBookInOrder
-
+  isBookInOrder,
+  isDownloadLoading
 }) => {
-   console.log( isBookInOrder);
   
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   return (
     <div
       className="card bg-white relative shadow-xl hover:border hover:border-black parentDev"
@@ -39,7 +37,9 @@ const BookCard = ({
       </div>
       <div className="card-body flex-grow-0 ps-8 bodyCard">
         <p className="text-red-600 uppercase mb-0 pb-0 ">Paperback</p>
-        <h3 className="card-title text-xl font-bold mt-0 pt-0 overflow-hidden line-clamp-1  text-ellipsis">{title}</h3>
+        <h3 className="card-title text-xl font-bold mt-0 pt-0 overflow-hidden line-clamp-1  text-ellipsis">
+          {title}
+        </h3>
         <p className="text-gray-700">{author}</p>
         <p className="text-xl font-sans font-bold">{price} EGP</p>
         <div className="card-title cartDev flex justify-between">
@@ -59,34 +59,33 @@ const BookCard = ({
           ) : null}
 
           {localStorage.getItem("token") ? (
-            InCart ?
-             (
-              <BsFillCartCheckFill
-                className="  iconBody"
-                
-              />
-            ):isBookInOrder?
-            (
-              <button onClick={()=>navigate("/library")} disabled={isloading}>
-              <FaBook
-               className= {` ${isloading ?"cursor-not-allowed":"cursor-pointer iconBody"}`}
-               
-             />
-             </button>
-            ):(
-              <button onClick={addToCart} disabled={isloading}>
-               <MdAddShoppingCart
-                className= {` ${isloading ?"cursor-not-allowed":"cursor-pointer iconBody"}`}
-                
-              />
+            InCart ? (
+              <BsFillCartCheckFill className="  iconBody" />
+            ) : isBookInOrder ? (
+              <button onClick={() => navigate("/library")} disabled={isDownloadLoading}>
+                <FaBook
+                  className={` ${
+                    isDownloadLoading ? "cursor-not-allowed" : "cursor-pointer iconBody"
+                  }`}
+                />
               </button>
-             
+            ) : (
+              <button onClick={addToCart} disabled={isloading}>
+                <MdAddShoppingCart
+                  className={` ${
+                    isloading ? "cursor-not-allowed" : "cursor-pointer iconBody"
+                  }`}
+                />
+              </button>
             )
-          ) : <MdAddShoppingCart
-          className="cursor-pointer iconBody"
-          onClick={()=>{navigate("/login")}}
-        />}
-         
+          ) : (
+            <MdAddShoppingCart
+              className="cursor-pointer iconBody"
+              onClick={() => {
+                navigate("/login");
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

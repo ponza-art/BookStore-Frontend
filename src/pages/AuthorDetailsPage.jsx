@@ -4,10 +4,12 @@ import axios from 'axios';
 import BookCard from '../components/BookCard';
 import { useFavorites } from '../context/FavoritesContext';      
 import useCartContext from '../hooks/use-cart-context';
+import { useOrder } from '../context/OrderContext';
 
 const AuthorDetailsPage = () => {
     const { id } = useParams();
     const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
+    const { orderBookId,isDownloadLoading } = useOrder();
     const [author, setAuthor] = useState(null);
     const [loading, setLoading] = useState(true);
     const {  cartItems,addToCart,deleteBookById ,isloading} = useCartContext();
@@ -61,6 +63,8 @@ const AuthorDetailsPage = () => {
                                   cartItems.find((cart) => cart.bookId._id === book.bookId._id)
                                 )}
                                   isloading={isloading}
+                                  isBookInOrder = {Boolean(orderBookId?.includes(book.bookId._id))}
+                                  isDownloadLoading={isDownloadLoading}
                             />
                         );
                     })

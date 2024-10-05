@@ -9,7 +9,8 @@ const HomeCard = ({
   addToFavorites,
   removeFromFavorites,
 }) => {
-  const {  cartItems,addToCart,deleteBookById ,isloading} = useCartContext();
+  const {  cartItems,addToCart ,isloading} = useCartContext();
+  const { orderBookId,isDownloadLoading } = useOrder()
   return (
     <div className="p-6 container mx-auto">
       <div className="flex justify-between items-center mb-4">
@@ -40,6 +41,8 @@ const HomeCard = ({
                 cartItems.find((cart) => cart.bookId._id === book._id)
               )}
               isloading={isloading}
+              isBookInOrder = {Boolean(orderBookId?.includes(book._id))}
+              isDownloadLoading={isDownloadLoading}
             />
           ))}
         </div>

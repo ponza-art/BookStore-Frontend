@@ -25,6 +25,7 @@ function CartProvider({ children }) {
       );
       const data = res.data;
       setCartItems(data.items);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     } finally {
@@ -32,40 +33,39 @@ function CartProvider({ children }) {
     }
   };
 
-
   const addToCart = async (book) => {
-   setLoading(true);
-   console.log(book)
-    
+    setLoading(true);
+   // console.log(book);
+
     try {
       const res = await axios.post(
         "https://book-store-backend-sigma-one.vercel.app/cart/",
-        { bookId:book },
+        { bookId: book },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-       console.log(res)
+      //console.log(res);
       if (res.status === 201) {
         toast.success("Book added to cart successfully!");
-        setCartItems((prevCartItem) => [...prevCartItem, { bookId:book  }]);
+        setCartItems((prevCartItem) => [...prevCartItem, { bookId: book }]);
         //setCartItems(res.data.items);
-        setLoading(false)
+        setLoading(false);
       } else {
         toast.error("Failed to add book to cart.");
       }
     } catch (error) {
       console.log("Error adding book to cart:", error);
       toast.error("There was an error adding the book to the cart.");
-      setLoading(false)
+      setLoading(false);
     } finally {
       setLoading(false);
     }
   };
   const deleteBookById = async (id) => {
-      setCartItems(cartItems.filter((item) => item.bookId._id != id));
+    setCartItems(cartItems.filter((item) => item.bookId._id != id));
     try {
       const res = await axios.delete(
         `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
@@ -78,11 +78,13 @@ function CartProvider({ children }) {
           },
         }
       );
-      
+
       setCartItems((prevCartItem) =>
-        prevCartItem.filter((cartBook) => cartBook.bookId && cartBook.bookId._id !== id)
+        prevCartItem.filter(
+          (cartBook) => cartBook.bookId && cartBook.bookId._id !== id
+        )
       );
-   
+
       toast.success("Book deleted from cart successfully!");
     } catch (error) {
       console.log("Error deleting item:", error);
@@ -106,7 +108,7 @@ function CartProvider({ children }) {
         isloading,
         setLoading,
         addToCart,
-        deleteBookById
+        deleteBookById,
       }}
     >
       {children}

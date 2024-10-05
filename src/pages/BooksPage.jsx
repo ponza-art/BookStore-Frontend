@@ -8,8 +8,8 @@ import useCartContext from "../hooks/use-cart-context";
 import { useOrder } from "../context/OrderContext";
 function BooksPage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
-  const { orderBookId, setOrderBookId,getOrderData } = useOrder();
-  const { getUserCartItems, cartItems,addToCart,deleteBookById,isloading } = useCartContext(); // Use the context
+  const { orderBookId,isDownloadLoading } = useOrder();
+  const {  cartItems,addToCart,isloading } = useCartContext(); // Use the context
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -23,7 +23,7 @@ function BooksPage() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -240,7 +240,8 @@ function BooksPage() {
                       cartItems.find((cart) => cart.bookId._id === book._id)
                     )}
                       isloading={isloading}
-                     isBookInOrder = {Boolean(orderBookId.includes(book._id))}
+                     isBookInOrder = {Boolean(orderBookId?.includes(book._id))}
+                     isDownloadLoading={isDownloadLoading}
                   />
                 ))}
               </div>
