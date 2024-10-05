@@ -243,7 +243,7 @@ export default function Login() {
                   <span>
                     Log in{" "}
                     <img
-                      src="/loadinglogin.gif"
+                      src="/loader.gif"
                       width={"30"}
                       className="inline"
                     />{" "}

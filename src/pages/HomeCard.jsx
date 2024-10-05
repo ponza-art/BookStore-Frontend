@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import BookCard from "../components/BookCard";
 import { Link } from "react-router-dom";
+import useCartContext from "../hooks/use-cart-context";
 
 const HomeCard = ({
   books,
@@ -8,6 +9,7 @@ const HomeCard = ({
   addToFavorites,
   removeFromFavorites,
 }) => {
+  const {  cartItems,addToCart,deleteBookById ,isloading} = useCartContext();
   return (
     <div className="p-6 container mx-auto">
       <div className="flex justify-between items-center mb-4">
@@ -30,7 +32,14 @@ const HomeCard = ({
               removeFromFavorites={() => removeFromFavorites(book._id)}
               isFavorite={Boolean(
                 favoriteBooks?.find((favBook) => favBook.bookId && favBook.bookId._id === book._id)
+                
               )}
+              addToCart={()=>addToCart(book)}  
+              
+               InCart={Boolean(
+                cartItems.find((cart) => cart.bookId._id === book._id)
+              )}
+              isloading={isloading}
             />
           ))}
         </div>

@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/BookCard.model.css";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaBook } from "react-icons/fa";
+import { MdAddShoppingCart } from "react-icons/md";
+import { BsCartCheck, BsFillCartCheckFill } from "react-icons/bs";
 import axios from "axios";
-
+ 
 const BookCard = ({
   _id,
   title,
@@ -13,10 +15,16 @@ const BookCard = ({
   isFavorite,
   addToFavorites,
   removeFromFavorites,
-}) => {
-  // console.log(isFavorite);
-  
+  addToCart,
+  deleteBookById,
+  InCart,
+  isloading,
+  isBookInOrder
 
+}) => {
+   console.log( isBookInOrder);
+  
+  const navigate=useNavigate()
   return (
     <div
       className="card bg-white relative shadow-xl hover:border hover:border-black parentDev"
@@ -49,6 +57,36 @@ const BookCard = ({
               />
             )
           ) : null}
+
+          {localStorage.getItem("token") ? (
+            InCart ?
+             (
+              <BsFillCartCheckFill
+                className="  iconBody"
+                
+              />
+            ):isBookInOrder?
+            (
+              <button onClick={()=>navigate("/library")} disabled={isloading}>
+              <FaBook
+               className= {` ${isloading ?"cursor-not-allowed":"cursor-pointer iconBody"}`}
+               
+             />
+             </button>
+            ):(
+              <button onClick={addToCart} disabled={isloading}>
+               <MdAddShoppingCart
+                className= {` ${isloading ?"cursor-not-allowed":"cursor-pointer iconBody"}`}
+                
+              />
+              </button>
+             
+            )
+          ) : <MdAddShoppingCart
+          className="cursor-pointer iconBody"
+          onClick={()=>{navigate("/login")}}
+        />}
+         
         </div>
       </div>
     </div>

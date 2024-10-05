@@ -4,9 +4,12 @@ import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext"; // Import the context
-
+import useCartContext from "../hooks/use-cart-context";
+import { useOrder } from "../context/OrderContext";
 function BooksPage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); // Use the context
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
+  const { orderBookId, setOrderBookId,getOrderData } = useOrder();
+  const { getUserCartItems, cartItems,addToCart,deleteBookById,isloading } = useCartContext(); // Use the context
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
@@ -84,7 +87,7 @@ function BooksPage() {
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
     }
   };
-
+ 
   // Skeleton loader while books are loading
   const SkeletonCard = () => (
     <div className="card bg-gray-200 animate-pulse shadow-xl" style={{ height: "430px", width: "280px" }}>
@@ -231,6 +234,13 @@ function BooksPage() {
                     isFavorite={Boolean(
                       favoriteBooks.find((fav) => fav.bookId._id === book._id)
                     )}
+                    addToCart={()=>addToCart(book)}  
+                    
+                     InCart={Boolean(
+                      cartItems.find((cart) => cart.bookId._id === book._id)
+                    )}
+                      isloading={isloading}
+                     isBookInOrder = {Boolean(orderBookId.includes(book._id))}
                   />
                 ))}
               </div>
