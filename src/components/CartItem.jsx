@@ -8,31 +8,31 @@ import { FaTrash } from "react-icons/fa";
 function CartItem(props) {
   const { book } = props;
   // console.log(book);
-  const { cartItems, setCartItems } = useCartContext();
+  const { cartItems, setCartItems,deleteBookById } = useCartContext();
   const token = localStorage.getItem("token");
   // console.log(cartItems);
-  const deleteBookById = async (id) => {
-    try {
-      const res = await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: {
-            bookId: id,
-          },
-        }
-      );
-      setCartItems(cartItems.filter((item) => item.bookId._id != id));
-    } catch (error) {
-      console.log("Error deleting item:", error);
-    }
-  };
+  // const deleteBookById = async (id) => {
+  //   try {
+  //     const res = await axios.delete(
+  //       `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         data: {
+  //           bookId: id,
+  //         },
+  //       }
+  //     );
+  //     setCartItems(cartItems.filter((item) => item.bookId._id != id));
+  //   } catch (error) {
+  //     console.log("Error deleting item:", error);
+  //   }
+  // };
   // console.log(book);
 
   {
-    return cartItems.length > 0 ? (
+    return cartItems?.length > 0 ? (
       <div
         key={book.bookId}
         className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm md:p-6"

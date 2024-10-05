@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LuDownload } from "react-icons/lu";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,6 +14,7 @@ export default function LibraryComponent() {
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate= useNavigate()
   SwiperCore.use([Navigation, Pagination]);
   useEffect(() => {
     const fetchOrders = async () => {
@@ -58,7 +59,7 @@ export default function LibraryComponent() {
     (acc, order) => acc + order.books.length,
     0
   );
-  const slidesPerView = totalBooks > 3 ? 3 : totalBooks;
+  const slidesPerView = totalBooks > 4 ? 3 : totalBooks;
   
   return (
     <div className="container mx-auto p-4">
@@ -93,18 +94,20 @@ export default function LibraryComponent() {
                     <div>
                       {order.books.map((book, bookIndex) => {
                         const { bookId } = book;
+                       // console.log(bookId)
                         return (
-                          <SwiperSlide key={`${orderIndex}-${bookIndex}`}>
-                            <div className=" ml-5  w-[215px] mb-20 relative flex flex-col gap-6 group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  md:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden ">
+                          <SwiperSlide  key={`${orderIndex}-${bookIndex}`}>
+                            <div className="w-[215px] mb-20 relative flex flex-col  group shadow-lg text-white shadow-gray-500  h-[250px] lg:h-[400px]  md:w-[250px] xl:w-[290px] cursor-pointer overflow-hidden  ">
                               <div
-                                className="absolute inset-0 bg-cover bg-center"
+                                className="absolute inset-0 bg-cover bg-center "
+                                
                                 style={{
                                   backgroundImage: `url(${bookId.coverImage})`,
                                 }}
                               ></div>
                               <div className="absolute w-full h-full top-0 opacity-100 transform lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100 transition-all duration-700  ">
-                                <div className="absolute inset-0 bg-gray-950 opacity-50 w-full h-full top-0"></div>
-                                <div className=" flex flex-col gap-3 absolute top-0 w-full h-full justify-between">
+                                <div className="absolute inset-0 bg-gray-950 opacity-50 w-full h-full top-0"   ></div>
+                                <div className=" flex flex-col gap-3 absolute top-0 w-full h-full justify-between" onClick={() => window.location.href = bookId.sourcePath || "#"}>
                                   <div className=" absolute bottom-5 right-5  group-hover:text-brown-200">
                                     <Link
                                       to={bookId.sourcePath || "#"}
@@ -127,7 +130,7 @@ export default function LibraryComponent() {
                                   </div>
                                 </div>
                               </div>
-                              <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-brown-200 group-hover:rotate-45 duration-100" />
+                              <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-brown-200 group-hover:rotate-45 duration-100" onClick={() => navigate(`/books/${bookId._id}`)}  />
                             </div>
                           </SwiperSlide>
                         );

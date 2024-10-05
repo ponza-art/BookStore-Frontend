@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext"; // Import the context
+import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); // Use the context
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
+ ;// Use the context
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [searchParams] = useSearchParams();
@@ -61,6 +63,9 @@ function HomePage() {
               favoriteBooks={favoriteBooks}
               addToFavorites={addToFavorites}
               removeFromFavorites={removeFromFavorites}
+              
+
+              
             />
           </div>
         </>

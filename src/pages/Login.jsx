@@ -66,7 +66,7 @@ export default function Login() {
           );
 
           // Handle successful login response
-          console.log(response.data);
+         // console.log(response.data);
           const Data = response.data.data;
           localStorage.setItem("token", Data.user.token);
           localStorage.setItem("user", JSON.stringify(Data.user));
@@ -243,7 +243,7 @@ export default function Login() {
                   <span>
                     Log in{" "}
                     <img
-                      src="/loadinglogin.gif"
+                      src="/loader.gif"
                       width={"30"}
                       className="inline"
                     />{" "}

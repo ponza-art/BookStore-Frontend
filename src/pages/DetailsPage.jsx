@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CreditCard, BadgeCheck, MessageCircleQuestion } from "lucide-react";
 import { PiFileArrowDownDuotone } from "react-icons/pi";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 
 function DetailsPage() {
   const [book, setBook] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+ 
   const [orderBookId, setOrderBookId] = useState([]);
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
@@ -22,8 +22,9 @@ function DetailsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const token = localStorage.getItem("token");
-
-  const { cartItems, setCartItems, getUserCartItems } = useCartContext();
+  const navigate = useNavigate();
+  const { cartItems, setCartItems, getUserCartItems, addToCart,isloading } =
+    useCartContext();
 
   useEffect(() => {
     fetchBook(id);
@@ -159,34 +160,34 @@ function DetailsPage() {
   };
   const isBookInOrder = orderBookId.includes(book._id);
 
-  const addToCart = async () => {
-    setIsLoading(true);
-    const token = localStorage.getItem("token");
-    try {
-      const res = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/cart/",
-        { bookId: id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      // console.log(res.data.items)
-      if (res.status === 201) {
-        toast.success("Book added to cart successfully!");
+  // const addToCart = async () => {
+  //   setIsLoading(true);
+  //   const token = localStorage.getItem("token");
+  //   try {
+  //     const res = await axios.post(
+  //       "https://book-store-backend-sigma-one.vercel.app/cart/",
+  //       { bookId: id },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     // console.log(res.data.items)
+  //     if (res.status === 201) {
+  //       toast.success("Book added to cart successfully!");
 
-        setCartItems(res.data.items);
-      } else {
-        toast.error("Failed to add book to cart.");
-      }
-    } catch (error) {
-      console.log("Error adding book to cart:", error);
-      toast.error("There was an error adding the book to the cart.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //       setCartItems(res.data.items);
+  //     } else {
+  //       toast.error("Failed to add book to cart.");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error adding book to cart:", error);
+  //     toast.error("There was an error adding the book to the cart.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   useEffect(() => {
     if (cartItems) {
       const flattenedCartBooks = cartItems.flat();
@@ -246,31 +247,43 @@ function DetailsPage() {
                 Preview / Download
                 <PiFileArrowDownDuotone size={28} />
               </Link>
-
-              <button
-                onClick={addToCart}
-                disabled={
-                  isBookInOrder || isInCart || isInCartCheck || isLoading
-                } // Disable button if book is in cart or loading
-                aria-disabled={
-                  isBookInOrder || isInCart || isInCartCheck || isLoading
-                }
-                className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
-                  isBookInOrder || isInCart || isInCartCheck || isLoading
-                    ? "bg-slate-700 text-white cursor-not-allowed"
-                    : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
-                }`}
-              >
-                {isBookInOrder
-                  ? "Book Already Bought"
-                  : isInCart
-                  ? "Already in Cart"
-                  : isInCartCheck
-                  ? "Already in Cart"
-                  : isLoading
-                  ? "Adding to Cart..."
-                  : "Add to Cart"}
-              </button>
+              {token ? (
+                <button
+                  onClick={() => {
+                    addToCart(book);
+                  }}
+                  disabled={
+                    isBookInOrder || isInCart || isInCartCheck || isloading
+                  } // Disable button if book is in cart or loading
+                  aria-disabled={
+                    isBookInOrder || isInCart || isInCartCheck || isloading
+                  }
+                  className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
+                    isBookInOrder || isInCart || isInCartCheck || isloading
+                      ? " text-gray cursor-not-allowed"
+                      : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                  }`}
+                >
+                  {isBookInOrder
+                    ? "Book Already Bought"
+                    : isInCart
+                    ? "Already in Cart"
+                    : isInCartCheck
+                    ? "Already in Cart"
+                    : isloading
+                    ? "Adding to Cart..."
+                    : "Add to Cart"}
+                </button>
+              ) : (
+                <button
+                  className=" flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  Add to Cart
+                </button>
+              )}
             </div>
           </div>
 
