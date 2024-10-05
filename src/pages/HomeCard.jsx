@@ -23,7 +23,7 @@ const HomeCard = ({
               key={book._id}
               title={book.title}
               author={book.author}
-              price={book.price}
+              price={book.originalPrice}
               imageUrl={book.coverImage}
               _id={book._id}
               addToFavorites={() => addToFavorites(book)}

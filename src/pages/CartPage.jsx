@@ -27,7 +27,7 @@ function CartPage() {
   }, [userName]);
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.bookId.price, 0);
+    return cartItems.reduce((total, item) => total + item.bookId.originalPrice, 0);
   };
 
   const createOrder = async () => {

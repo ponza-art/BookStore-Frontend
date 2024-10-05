@@ -224,7 +224,7 @@ function BooksPage() {
                     key={index}
                     title={book.title}
                     author={book.author}
-                    price={book.price}
+                    price={book.originalPrice}
                     imageUrl={book.coverImage}
                     addToFavorites={() => addToFavorites(book)}
                     removeFromFavorites={() => removeFromFavorites(book._id)}

@@ -234,7 +234,7 @@ function DetailsPage() {
               </p>
               <p className="text-md max-w-xl">{book.description}</p>
               <p className="text-red-600 uppercase">{book.author}</p>
-              <p className="text-xl font-sans font-bold">{book.price} EGP</p>
+              <p className="text-xl font-sans font-bold">{book.originalPrice} EGP</p>
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
