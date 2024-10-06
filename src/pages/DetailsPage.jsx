@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import { CreditCard, BadgeCheck, MessageCircleQuestion } from "lucide-react";
-import { PiFileArrowDownDuotone } from "react-icons/pi";
-import toast from "react-hot-toast";
-import useCartContext from "../hooks/use-cart-context";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link, useParams } from 'react-router-dom';
+import { CreditCard, BadgeCheck, MessageCircleQuestion } from 'lucide-react';
+import { PiFileArrowDownDuotone } from 'react-icons/pi';
+import toast from 'react-hot-toast';
+import useCartContext from '../hooks/use-cart-context';
+import { FaRegEdit } from 'react-icons/fa';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 function DetailsPage() {
   const [book, setBook] = useState({});
@@ -15,13 +15,13 @@ function DetailsPage() {
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
 
   const { cartItems, setCartItems, getUserCartItems } = useCartContext();
 
@@ -47,7 +47,7 @@ function DetailsPage() {
     } catch (error) {
       setDetailsLoading(false);
       setDetailsLoading(false);
-      console.log("There is an error loading data...", error);
+      console.log('There is an error loading data...', error);
     }
   };
 
@@ -58,13 +58,13 @@ function DetailsPage() {
       );
       setReviews(response.data);
     } catch (error) {
-      console.log(error.response?.data?.message || "Error fetching reviews");
+      console.log(error.response?.data?.message || 'Error fetching reviews');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       if (comment.length > 0 && rating > 0 && rating <= 5) {
         const response = editingReviewId
@@ -77,9 +77,9 @@ function DetailsPage() {
                 },
               }
             ),
-            toast.success("Review updated successfully"))
+            toast.success('Review updated successfully'))
           : (await axios.post(
-              "https://book-store-backend-sigma-one.vercel.app/review",
+              'https://book-store-backend-sigma-one.vercel.app/review',
               { comment, rating, bookId: id },
               {
                 headers: {
@@ -87,16 +87,16 @@ function DetailsPage() {
                 },
               }
             ),
-            toast.success("Review created successfully"));
+            toast.success('Review created successfully'));
         fetchReviews();
         resetForm();
         setIsOpen(false);
       } else {
-        toast.error("Rating and comment are required");
+        toast.error('Rating and comment are required');
       }
     } catch (error) {
-      setMessage("Rating and comment are required");
-      toast.error("Rating and comment are required");
+      setMessage('Rating and comment are required');
+      toast.error('Rating and comment are required');
     }
   };
 
@@ -108,7 +108,7 @@ function DetailsPage() {
   };
 
   const handleDelete = async (reviewId) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(
         `https://book-store-backend-sigma-one.vercel.app/review/${reviewId}`,
@@ -119,16 +119,16 @@ function DetailsPage() {
         }
       );
       setReviews(reviews.filter((rev) => rev._id !== reviewId));
-      toast.success("Review deleted successfully");
+      toast.success('Review deleted successfully');
       fetchReviews();
     } catch (error) {
-      toast.error("Failed to remove review.");
-      console.log(error.response?.data?.message || "Error deleting review");
+      toast.error('Failed to remove review.');
+      console.log(error.response?.data?.message || 'Error deleting review');
     }
   };
 
   const resetForm = () => {
-    setComment("");
+    setComment('');
     setRating(0);
     setEditingReviewId(null);
     setMessage(null);
@@ -141,7 +141,7 @@ function DetailsPage() {
       },
     };
     const res = await axios.get(
-      "https://book-store-backend-sigma-one.vercel.app/orders",
+      'https://book-store-backend-sigma-one.vercel.app/orders',
       config
     );
     if (res.status === 200) {
@@ -161,10 +161,10 @@ function DetailsPage() {
 
   const addToCart = async () => {
     setIsLoading(true);
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       const res = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/cart/",
+        'https://book-store-backend-sigma-one.vercel.app/cart/',
         { bookId: id },
         {
           headers: {
@@ -174,15 +174,15 @@ function DetailsPage() {
       );
       // console.log(res.data.items)
       if (res.status === 201) {
-        toast.success("Book added to cart successfully!");
+        toast.success('Book added to cart successfully!');
 
         setCartItems(res.data.items);
       } else {
-        toast.error("Failed to add book to cart.");
+        toast.error('Failed to add book to cart.');
       }
     } catch (error) {
-      console.log("Error adding book to cart:", error);
-      toast.error("There was an error adding the book to the cart.");
+      console.log('Error adding book to cart:', error);
+      toast.error('There was an error adding the book to the cart.');
     } finally {
       setIsLoading(false);
     }
@@ -234,7 +234,9 @@ function DetailsPage() {
               </p>
               <p className="text-md max-w-xl">{book.description}</p>
               <p className="text-red-600 uppercase">{book.author}</p>
-              <p className="text-xl font-sans font-bold">{book.price} EGP</p>
+              <p className="text-xl font-sans font-bold">
+                {book.originalPrice} EGP
+              </p>
             </div>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
@@ -257,19 +259,19 @@ function DetailsPage() {
                 }
                 className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
                   isBookInOrder || isInCart || isInCartCheck || isLoading
-                    ? "bg-slate-700 text-white cursor-not-allowed"
-                    : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                    ? 'bg-slate-700 text-white cursor-not-allowed'
+                    : 'bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600'
                 }`}
               >
                 {isBookInOrder
-                  ? "Book Already Bought"
+                  ? 'Book Already Bought'
                   : isInCart
-                  ? "Already in Cart"
+                  ? 'Already in Cart'
                   : isInCartCheck
-                  ? "Already in Cart"
+                  ? 'Already in Cart'
                   : isLoading
-                  ? "Adding to Cart..."
-                  : "Add to Cart"}
+                  ? 'Adding to Cart...'
+                  : 'Add to Cart'}
               </button>
             </div>
           </div>
@@ -296,7 +298,7 @@ function DetailsPage() {
 
       <div className="container mx-auto">
         <h2 className="text-xl font-semibold mb-4">Reviews</h2>
-        {JSON.parse(localStorage?.getItem("user"))?.id && (
+        {JSON.parse(localStorage?.getItem('user'))?.id && (
           <button
             onClick={() => {
               setIsOpen(true);
@@ -335,8 +337,8 @@ function DetailsPage() {
                         key={index}
                         className={`w-6 h-6 ${
                           review.rating > index
-                            ? "text-yellow-500"
-                            : "text-gray-400"
+                            ? 'text-yellow-500'
+                            : 'text-gray-400'
                         }`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
@@ -349,7 +351,7 @@ function DetailsPage() {
                 </div>
               </div>
               {review.userId._id ===
-                JSON.parse(localStorage?.getItem("user"))?.id && (
+                JSON.parse(localStorage?.getItem('user'))?.id && (
                 <div className="flex mt-4">
                   <button
                     onClick={() => handleEdit(review)}
@@ -375,7 +377,7 @@ function DetailsPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-bold mb-4">
-              {editingReviewId ? "Edit Review" : "Leave a Review"}
+              {editingReviewId ? 'Edit Review' : 'Leave a Review'}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -399,7 +401,7 @@ function DetailsPage() {
                       key={index}
                       onClick={() => setRating(index + 1)}
                       className={`w-6 h-6 cursor-pointer ${
-                        rating > index ? "text-yellow-500" : "text-gray-400"
+                        rating > index ? 'text-yellow-500' : 'text-gray-400'
                       }`}
                       fill="currentColor"
                       viewBox="0 0 24 24"
@@ -423,7 +425,7 @@ function DetailsPage() {
                   type="submit"
                   className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-yellow-600 text-white hover:bg-[#946B3C]"
                 >
-                  {editingReviewId ? "Update Review" : "Submit Review"}
+                  {editingReviewId ? 'Update Review' : 'Submit Review'}
                 </button>
               </div>
             </form>
