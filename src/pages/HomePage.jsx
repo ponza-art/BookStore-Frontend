@@ -4,7 +4,7 @@ import HomeHeader from "../components/HomeHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useFavorites } from "../context/FavoritesContext"; // Import the context
+import { useFavorites } from "../context/FavoritesContext"; 
 import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
