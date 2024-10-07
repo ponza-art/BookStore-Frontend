@@ -53,9 +53,21 @@ function CartItem(props) {
           </Link>
           <div className="flex items-center justify-between md:order-3 md:justify-end">
             <div className="text-end md:order-4 md:w-32">
-              <p className="text-base font-bold text-gray-900">
-                {book?.bookId?.price} EGP
-              </p>
+              {book?.bookId?.discountPercentage ? (
+                <div className="">
+                  <p className="text-xl font-sans font-bold line-through">
+                    {book?.bookId?.originalPrice} EGP
+                  </p>
+                  <p className="text-xl font-sans font-bold text-green-600">
+                    {" "}
+                    {book?.bookId?.discountedPrice} EGP
+                  </p>
+                </div>
+              ) : (
+                <p className="text-xl font-sans font-bold">
+                  {book?.bookId?.originalPrice} EGP
+                </p>
+              )}
             </div>
           </div>
           <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">

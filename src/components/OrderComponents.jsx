@@ -3,12 +3,14 @@ import useCartContext from "../hooks/use-cart-context";
 import PayButton from "./PayButton";
 export default function OrderComponents({
   calculateTotalPrice,
+  calculateOriginalPrice,
+  calculateTotalSavings,
+  // calculateStorePick,
+  calculateTax,
   // handleClick,
-  createOrder,
   isLoading,
 }) {
   const { getUserCartItems, cartItems } = useCartContext();
-  console.log(calculateTotalPrice().toFixed(2));
 
   return cartItems.length > 0 ? (
     <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
@@ -20,35 +22,39 @@ export default function OrderComponents({
               Original price
             </dt>
             <dd className="text-base font-medium text-gray-900 ">
-              {calculateTotalPrice().toFixed(2)} EGP
+              {calculateOriginalPrice().toFixed(1)} EGP
             </dd>
           </dl>
           <dl className="flex items-center justify-between gap-4">
             <dt className="text-base font-normal text-gray-500">Savings</dt>
             <dd className="text-base font-medium text-green-600">
-              -299.00 EGP
+              -{calculateTotalSavings().toFixed(1)} EGP
             </dd>
           </dl>
-          <dl className="flex items-center justify-between gap-4">
+          {/* <dl className="flex items-center justify-between gap-4">
             <dt className="text-base font-normal text-gray-500">
               Store Pickup
             </dt>
-            <dd className="text-base font-medium text-gray-900 ">99 EGP</dd>
-          </dl>
+            <dd className="text-base font-medium text-gray-900 ">
+              {calculateStorePick().toFixed(1)} EGP
+            </dd>
+          </dl> */}
           <dl className="flex items-center justify-between gap-4">
             <dt className="text-base font-normal text-gray-500">Tax</dt>
-            <dd className="text-base font-medium text-gray-900 ">799 EGP</dd>
+            <dd className="text-base font-medium text-gray-900 ">
+              {calculateTax().toFixed(1)} EGP
+            </dd>
           </dl>
         </div>
         <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
           <dt className="text-base font-bold text-gray-900 ">Total</dt>
           <dd className="text-base font-bold text-gray-900 ">
-            {calculateTotalPrice().toFixed(2)} EGP
+            {calculateTotalPrice().toFixed(1)} EGP
           </dd>
         </dl>
       </div>
-      
-      <PayButton/>
+
+      <PayButton />
       <div className="flex items-center justify-center gap-2">
         <span className="text-sm font-normal text-gray-500"> or </span>
         <Link
