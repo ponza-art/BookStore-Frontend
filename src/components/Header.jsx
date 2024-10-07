@@ -116,6 +116,15 @@ function Header() {
               Authors
             </Link>
           </li>
+          <li>
+            <Link
+              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+              style={{ transition: '0.3s ease' }}
+              to={'/about'} // New Authors link
+            >
+              About Us
+            </Link>
+          </li>
         </ul>
       </div>
       <div className="navbar-end font-bold text-xl flex items-center gap-4">
