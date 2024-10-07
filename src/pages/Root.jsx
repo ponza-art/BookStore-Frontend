@@ -15,6 +15,7 @@ function Root() {
     location.pathname.includes('/library') ||
     location.pathname.includes('/checkout') ||
     location.pathname.includes('/profile') ||
+    location.pathname.includes('/about') ||
     location.pathname.includes('/authors');
 
   return (
