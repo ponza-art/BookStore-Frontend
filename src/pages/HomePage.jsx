@@ -4,10 +4,10 @@ import HomeHeader from "../components/HomeHeader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useFavorites } from "../context/FavoritesContext"; // Import the context
+import { useFavorites } from "../context/FavoritesContext"; 
 
 function HomePage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); // Use the context
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [searchParams] = useSearchParams();
