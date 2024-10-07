@@ -6,6 +6,7 @@ import DetailsPage from './pages/DetailsPage';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
 import ProfilePage from './pages/ProfilePage';
+import AboutPage from './pages/AboutPage';
 import NotFound from './NotFound';
 import AddFovrit from './pages/AddFovrit';
 import CartPage from './pages/CartPage';
@@ -49,6 +50,10 @@ function createAppRouter() {
         {
           path: '/profile',
           element: <ProfilePage />,
+        },
+        {
+          path: '/about',
+          element: <AboutPage />,
         },
         {
           path: '/signup',
