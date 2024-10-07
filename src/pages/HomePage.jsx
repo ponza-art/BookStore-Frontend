@@ -8,8 +8,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
- ;// Use the context
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [searchParams] = useSearchParams();

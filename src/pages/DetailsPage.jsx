@@ -15,9 +15,9 @@ function DetailsPage() {
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
@@ -48,7 +48,7 @@ function DetailsPage() {
     } catch (error) {
       setDetailsLoading(false);
       setDetailsLoading(false);
-      console.log("There is an error loading data...", error);
+      console.log('There is an error loading data...', error);
     }
   };
 
@@ -59,13 +59,13 @@ function DetailsPage() {
       );
       setReviews(response.data);
     } catch (error) {
-      console.log(error.response?.data?.message || "Error fetching reviews");
+      console.log(error.response?.data?.message || 'Error fetching reviews');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       if (comment.length > 0 && rating > 0 && rating <= 5) {
         const response = editingReviewId
@@ -78,9 +78,9 @@ function DetailsPage() {
                 },
               }
             ),
-            toast.success("Review updated successfully"))
+            toast.success('Review updated successfully'))
           : (await axios.post(
-              "https://book-store-backend-sigma-one.vercel.app/review",
+              'https://book-store-backend-sigma-one.vercel.app/review',
               { comment, rating, bookId: id },
               {
                 headers: {
@@ -88,16 +88,16 @@ function DetailsPage() {
                 },
               }
             ),
-            toast.success("Review created successfully"));
+            toast.success('Review created successfully'));
         fetchReviews();
         resetForm();
         setIsOpen(false);
       } else {
-        toast.error("Rating and comment are required");
+        toast.error('Rating and comment are required');
       }
     } catch (error) {
-      setMessage("Rating and comment are required");
-      toast.error("Rating and comment are required");
+      setMessage('Rating and comment are required');
+      toast.error('Rating and comment are required');
     }
   };
 
@@ -109,7 +109,7 @@ function DetailsPage() {
   };
 
   const handleDelete = async (reviewId) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(
         `https://book-store-backend-sigma-one.vercel.app/review/${reviewId}`,
@@ -120,16 +120,16 @@ function DetailsPage() {
         }
       );
       setReviews(reviews.filter((rev) => rev._id !== reviewId));
-      toast.success("Review deleted successfully");
+      toast.success('Review deleted successfully');
       fetchReviews();
     } catch (error) {
-      toast.error("Failed to remove review.");
-      console.log(error.response?.data?.message || "Error deleting review");
+      toast.error('Failed to remove review.');
+      console.log(error.response?.data?.message || 'Error deleting review');
     }
   };
 
   const resetForm = () => {
-    setComment("");
+    setComment('');
     setRating(0);
     setEditingReviewId(null);
     setMessage(null);
@@ -142,7 +142,7 @@ function DetailsPage() {
       },
     };
     const res = await axios.get(
-      "https://book-store-backend-sigma-one.vercel.app/orders",
+      'https://book-store-backend-sigma-one.vercel.app/orders',
       config
     );
     if (res.status === 200) {
@@ -309,7 +309,7 @@ function DetailsPage() {
 
       <div className="container mx-auto">
         <h2 className="text-xl font-semibold mb-4">Reviews</h2>
-        {JSON.parse(localStorage?.getItem("user"))?.id && (
+        {JSON.parse(localStorage?.getItem('user'))?.id && (
           <button
             onClick={() => {
               setIsOpen(true);
@@ -348,8 +348,8 @@ function DetailsPage() {
                         key={index}
                         className={`w-6 h-6 ${
                           review.rating > index
-                            ? "text-yellow-500"
-                            : "text-gray-400"
+                            ? 'text-yellow-500'
+                            : 'text-gray-400'
                         }`}
                         fill="currentColor"
                         viewBox="0 0 24 24"
@@ -362,7 +362,7 @@ function DetailsPage() {
                 </div>
               </div>
               {review.userId._id ===
-                JSON.parse(localStorage?.getItem("user"))?.id && (
+                JSON.parse(localStorage?.getItem('user'))?.id && (
                 <div className="flex mt-4">
                   <button
                     onClick={() => handleEdit(review)}
@@ -388,7 +388,7 @@ function DetailsPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-xl font-bold mb-4">
-              {editingReviewId ? "Edit Review" : "Leave a Review"}
+              {editingReviewId ? 'Edit Review' : 'Leave a Review'}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -412,7 +412,7 @@ function DetailsPage() {
                       key={index}
                       onClick={() => setRating(index + 1)}
                       className={`w-6 h-6 cursor-pointer ${
-                        rating > index ? "text-yellow-500" : "text-gray-400"
+                        rating > index ? 'text-yellow-500' : 'text-gray-400'
                       }`}
                       fill="currentColor"
                       viewBox="0 0 24 24"
@@ -436,7 +436,7 @@ function DetailsPage() {
                   type="submit"
                   className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-yellow-600 text-white hover:bg-[#946B3C]"
                 >
-                  {editingReviewId ? "Update Review" : "Submit Review"}
+                  {editingReviewId ? 'Update Review' : 'Submit Review'}
                 </button>
               </div>
             </form>
