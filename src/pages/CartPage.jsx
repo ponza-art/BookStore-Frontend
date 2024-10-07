@@ -27,57 +27,38 @@ function CartPage() {
   }, [userName]);
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.bookId.originalPrice, 0);
+    return (
+      cartItems.reduce(
+        (total, item) =>
+          item?.bookId?.discountedPrice
+            ? total + item?.bookId?.discountedPrice
+            : total + item?.bookId?.originalPrice,
+        0
+      ) + calculateTax()
+    );
   };
-
-  const createOrder = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("Token is missing or empty");
-      return;
-    }
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/orders",
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (res.status === 201) {
-        try {
-          setLoading(false);
-          Swal.fire({
-            title: "succed",
-            text: "Order success !",
-            icon: "success",
-          });
-          navigate("/library");
-        } catch (err) {
-          Swal.fire({
-            title: "failed",
-            text: "Order failed !",
-            icon: "error",
-          });
-        }
-      }
-    } catch (err) {
-      setLoading(false);
-      Swal.fire({
-        title: "failed",
-        text: "Order failed !",
-        icon: "error",
-      });
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+  const calculateOriginalPrice = () => {
+    return cartItems.reduce(
+      (total, item) => total + item?.bookId?.originalPrice,
+      0
+    );
+  };
+  const calculateTotalSavings = () => {
+    return cartItems.reduce(
+      (total, item) =>
+        total +
+        item?.bookId?.originalPrice * (item?.bookId?.discountPercentage / 100),
+      0
+    );
+  };
+  const calculateTax = () => {
+    return cartItems.reduce(
+      (total, item) => total + item?.bookId?.discountedPrice * (10 / 100),
+      0
+    );
   };
 
   if (isloading) {
-    // console.log(isloading);
     return (
       <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto">
         <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
@@ -101,7 +82,11 @@ function CartPage() {
             <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
               <OrderComponents
                 calculateTotalPrice={calculateTotalPrice}
-                createOrder={createOrder}
+                calculateOriginalPrice={calculateOriginalPrice}
+                calculateTotalSavings={calculateTotalSavings}
+                // calculateStorePick={calculateStorePick}
+                calculateTax={calculateTax}
+                // createOrder={createOrder}
                 // handleClick={handleClick}
                 isLoading={isloading}
               />

@@ -15,12 +15,10 @@ export default function PayButton() {
       console.error("Token is missing or empty");
       return;
     }
-  
     try {
       setIsLoading(true);
-  
       const res = await axios.post(
-        `https://book-store-backend-sigma-one.vercel.app/paymob/`,  // Backend route
+        `https://book-store-backend-sigma-one.vercel.app/paymob/`,
         {
           cartData: cartItems.map((book) => book.bookId),
           userId: userInfo?.id,
@@ -29,15 +27,10 @@ export default function PayButton() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      
-  
       if (res.status === 201) {
         setIsLoading(false);
-        
         const paymentUrl = `https://accept.paymob.com/api/acceptance/iframes/864563?payment_token=${res.data.paymentToken}`;
         console.log(res.data.paymentToken);
-        
-        // Redirect to payment page
         window.location.href = paymentUrl;
       } else {
         setIsLoading(false);
@@ -51,13 +44,12 @@ export default function PayButton() {
       setIsLoading(false);
       Swal.fire({
         title: "Failed",
-        text: "Order failed!",
+        text: "Sorry, You are blocked, please contact us",
         icon: "error",
       });
       console.log(error.message);
     }
   };
-  
 
   return (
     <div>
