@@ -12,6 +12,7 @@ import AddFovrit from './pages/AddFovrit';
 import CartPage from './pages/CartPage';
 import { FavoritesProvider } from './context/FavoritesContext'; // Import the context provider
 import { Toaster } from 'react-hot-toast';
+import Checkout from "./pages/Checkout";
 
 //import UseOrder from "./hooks/UseOrder";
 
@@ -19,6 +20,7 @@ import OrderPage from './pages/OrderPage';
 import LibraryPage from './pages/LibraryPage';
 import AuthorsPage from './pages/AuthorsPage';
 import AuthorDetailsPage from './pages/AuthorDetailsPage';
+
 
 function createAppRouter() {
   // const {orders,setIsNewOrderAdded}=UseOrder()
@@ -87,9 +89,14 @@ function createAppRouter() {
           path: '/checkout-success',
           element: <LibraryPage />,
         },
+       
         {
           path: '/checkout-cancel',
           element: <CartPage />,
+        },
+        {
+          path: '/checkout',
+          element: <Checkout/>,
         },
       ],
     },
