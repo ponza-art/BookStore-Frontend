@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import useCartContext from "../hooks/use-cart-context";
-import PayButton from "./PayButton";
 
 export default function OrderComponents({
   calculateTotalPrice,
