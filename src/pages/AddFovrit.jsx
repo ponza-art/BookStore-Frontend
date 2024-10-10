@@ -121,7 +121,7 @@ const AddFovrit = () => {
                       <td className="py-3 px-6">
                         {isBookInCart(book.bookId._id) ? (
                           <span className="text-blue-500 font-bold">
-                            Added to Cart
+                            Added to Car
                           </span>
                         ) : (
                           <button
