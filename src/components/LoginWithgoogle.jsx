@@ -16,9 +16,9 @@ export default function LoginWithgoogle() {
         const result = await googleAuth(authResult.code);
         console.log("Google Auth Result:", result);
         if (result && result.data) {
-          const { email, name, image } = result.data.user;
+          const { email, username, image,id} = result.data.user;
           const token = result.data.token;
-          const obj = { email, username: name, image };
+          const obj = { email, username, image,id};
           localStorage.setItem("token", token);
           localStorage.setItem("user", JSON.stringify(obj));
           navigate("/", { replace: true });

@@ -179,9 +179,10 @@ function Header() {
                 >
                   <li className="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white">
                     <img
-                      src={userImage}
+                      src={userImage} 
                       alt={username}
                       className="w-full h-full object-cover"
+                      crossOrigin="anonymous"
                     />
                   </li>
                   <ul
@@ -190,6 +191,9 @@ function Header() {
                   >
                     <li className="font-bold text-xl hover:text-yellow-600">
                       <Link to="/library">Library</Link>
+                    </li>
+                    <li className="font-bold text-xl hover:text-yellow-600">
+                      <Link to="/profile">Profile</Link>
                     </li>
                     <li className="font-bold text-xl hover:text-yellow-600">
                       <button onClick={logout}>Logout</button>
