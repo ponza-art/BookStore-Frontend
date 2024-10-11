@@ -17,20 +17,21 @@ import StarIcon from "../components/StarIcon";
 
 function DetailsPage() {
   const [book, setBook] = useState({});
- 
+
   const [orderBookId, setOrderBookId] = useState([]);
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
   const [reviews, setReviews] = useState([]);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();  const { cartItems, setCartItems, getUserCartItems, addToCart,isloading } =
+  const navigate = useNavigate();
+  const { cartItems, setCartItems, getUserCartItems, addToCart, isloading } =
     useCartContext();
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); // Use the context
   const [isFavorite, setIsFavourite] = useState(false);
@@ -60,7 +61,7 @@ function DetailsPage() {
     } catch (error) {
       setDetailsLoading(false);
       setDetailsLoading(false);
-      console.log('There is an error loading data...', error);
+      console.log("There is an error loading data...", error);
     }
   };
   const fetchReviews = async () => {
@@ -78,12 +79,12 @@ function DetailsPage() {
         reviews.length > 0 ? totalRatings / reviews.length : 0;
       setBookRate(averageRating);
     } catch (error) {
-      console.log(error.response?.data?.message || 'Error fetching reviews');
+      console.log(error.response?.data?.message || "Error fetching reviews");
     }
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     try {
       if (comment.length > 0 && rating > 0 && rating <= 5) {
         setIsDisabled(true);
@@ -101,7 +102,7 @@ function DetailsPage() {
               style: { top: "80px", position: "relative" },
             }))
           : (await axios.post(
-              'https://book-store-backend-sigma-one.vercel.app/review',
+              "https://book-store-backend-sigma-one.vercel.app/review",
               { comment, rating, bookId: id },
               {
                 headers: {
@@ -136,7 +137,7 @@ function DetailsPage() {
     setIsOpen(true);
   };
   const handleDelete = async (reviewId) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     try {
       setIsDisabled(true);
       await axios.delete(
@@ -162,7 +163,7 @@ function DetailsPage() {
     }
   };
   const resetForm = () => {
-    setComment('');
+    setComment("");
     setRating(0);
     setEditingReviewId(null);
     setMessage(null);
@@ -174,7 +175,7 @@ function DetailsPage() {
       },
     };
     const res = await axios.get(
-      'https://book-store-backend-sigma-one.vercel.app/orders',
+      "https://book-store-backend-sigma-one.vercel.app/orders",
       config
     );
     if (res.status === 200) {
@@ -228,8 +229,90 @@ function DetailsPage() {
   let isInCart;
   if (DetailsLoading) {
     return (
-      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto">
-        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
+      <div className="my-[9vh] lg:mx-auto max-w-screen-xl md:px-0 px-5 mx-5">
+        <div className="border-b-2 pb-8 max-w-screen-2xl mx-auto grid gap-7 md:grid-cols-3 lg:grid-cols-4">
+          <div className="justify-self-center w-64 h-96 bg-gray-200 animate-pulse rounded-md"></div>
+          <div className="flex flex-col gap-7 md:col-span-2">
+            <div className="flex flex-col gap-4">
+              <div className="w-3/4 h-8 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="w-1/4 h-5 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="w-24 h-8 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="w-1/2 h-5 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="w-full h-24 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="flex gap-4">
+                <div className="w-28 h-7 bg-gray-200 animate-pulse rounded-md"></div>
+                <div className="w-20 h-7 bg-gray-200 animate-pulse rounded-md"></div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
+              <div className="w-48 h-12 bg-gray-200 animate-pulse rounded-md"></div>
+              <div className="w-48 h-12 bg-gray-200 animate-pulse rounded-md"></div>
+            </div>
+          </div>
+          <div className="hidden lg:block space-y-3">
+            <div className="border-l rounded-lg border-y border-r p-4">
+              <div className="w-24 h-6 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-[50%] h-4 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-full h-4 bg-gray-200 animate-pulse rounded-md"></div>
+            </div>
+            <div className="border-l mt-3 rounded-lg border-y border-r p-4">
+              <div className="w-24 h-6 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-[50%] h-4 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-full h-4 bg-gray-200 animate-pulse rounded-md"></div>
+            </div>
+            <div className="border-l rounded-lg mt-3 border-y border-r p-4">
+              <div className="w-24 h-6 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-[50%] h-4 bg-gray-200 animate-pulse rounded-md mb-2"></div>
+              <div className="w-full h-4 bg-gray-200 animate-pulse rounded-md"></div>
+            </div>
+          </div>
+        </div>
+        <div className="container mx-auto mt-8">
+          <div className="flex justify-between items-center mb-2">
+            <div className="w-48 h-6 bg-gray-200 animate-pulse rounded-md"></div>
+            <div className="w-36 h-10 bg-gray-200 animate-pulse rounded-md"></div>
+          </div>
+          <div className="flex flex-col md:flex-row gap-5 lg:mt-7">
+            <div className="md:w-[40%] w-full lg:me-10">
+              <div className="w-32 h-6 bg-gray-200 animate-pulse rounded-md mb-4"></div>
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="w-12 h-10 bg-gray-200 animate-pulse rounded-md"></div>
+                <div className="w-32 h-6 bg-gray-200 animate-pulse rounded-md"></div>
+              </div>
+              <div className="space-y-2">
+                {Array(5)
+                  .fill("")
+                  .map((_, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <div className="w-16 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                      <div className="flex-1 h-4 bg-gray-200 rounded-full overflow-hidden">
+                        <div className="h-full bg-gray-300 animate-pulse rounded-full"></div>
+                      </div>
+                      <div className="w-8 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="md:w-[55%] w-full mt-5 md:mt-0 lg:ps-10 lg:border-s-2 border-t-2 md:border-0 space-y-6">
+              {Array(3)
+                .fill("")
+                .map((_, index) => (
+                  <div key={index} className="border-b pb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-32 h-6 bg-gray-200 animate-pulse rounded-md"></div>
+                      <div className="w-24 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                    </div>
+                    <div className="w-full h-8 mt-2 bg-gray-200 animate-pulse rounded-md"></div>
+                    <div className="flex items-center gap-4 mt-2">
+                      <div className="w-16 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                      <div className="w-12 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                      <div className="w-12 h-4 bg-gray-200 animate-pulse rounded-md"></div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   } else {
