@@ -1,19 +1,23 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useFavorites } from "../context/FavoritesContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PiListHeartLight } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
-import CartContext from "../context/CartContext";
+import CartContext from "../context/CartContext"; 
 import { MdAddShoppingCart } from "react-icons/md";
+import { useOrder } from "../context/OrderContext"; 
 
 const AddFovrit = () => {
   const { favoriteBooks, removeFromFavorites } = useFavorites();
   const [loading, setLoading] = useState(true);
-  const { cartItems } = useContext(CartContext); 
-
+  const { cartItems, addToCart } = useContext(CartContext); 
+  const { orderBookId } = useOrder();
   const token = localStorage.getItem("token");
 
+
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const fetchFavorites = async () => {
       setLoading(true);
@@ -34,6 +38,7 @@ const AddFovrit = () => {
     fetchFavorites();
   }, [token]);
 
+
   const deleteFav = async (bookId) => {
     if (!bookId) return;
     removeFromFavorites(bookId, true);
@@ -51,8 +56,16 @@ const AddFovrit = () => {
     }
   };
 
+
+
+
   const isBookInCart = (bookId) => {
     return cartItems.some((cartItem) => cartItem.bookId._id === bookId);
+  };
+
+  
+  const isBookInOrder = (bookId) => {
+    return orderBookId.includes(bookId);
   };
 
   return (
@@ -83,8 +96,8 @@ const AddFovrit = () => {
                       key={book.bookId._id}
                       className="border-t border-gray-200 hover:bg-gray-100"
                     >
-                      <td className="py-4 px-2 flex justify-center ">
-                        <img
+                      <td className="py-4 px-2 flex justify-center cursor-pointer"  onClick={() => navigate("/books")}   >
+                        <img 
                           src={book.bookId?.coverImage || ""}
                           alt={book.bookId?.title || "No title"}
                           className="w-20 h-24 rounded object-cover"
@@ -92,20 +105,20 @@ const AddFovrit = () => {
                       </td>
 
                       <td className="py-4 px-2">
-                        <p className="text-lg font-semibold text-gray-800">
+                        <p className="text-lg font-semibold text-gray-800  cursor-pointer"    onClick={() => navigate("/books")}    >
                           {book.bookId?.title || "No Title"}
                         </p>
                       </td>
 
                       <td className="py-4 px-2">
-                        <p className="text-gray-800 font-semibold text-lg">
+                        <p className="text-gray-800 font-semibold text-lg  cursor-pointer"   onClick={() => navigate("/authors")}   >
                           {book.bookId?.author || "Unknown Author"}
                         </p>
                       </td>
 
                       <td className="py-4 px-2">
                         <span className="text-gray-700 font-semibold">
-                          ${book.bookId?.price || "0.00"}
+                          {book.bookId?.originalPrice || "0.00"}EGP
                         </span>
                       </td>
 
@@ -118,19 +131,23 @@ const AddFovrit = () => {
                         </button>
                       </td>
 
+                 
                       <td className="py-3 px-6">
-                        {isBookInCart(book.bookId._id) ? (
+                        {isBookInOrder(book.bookId._id) ? (
+                          <span className="text-sky-800 font-bold">
+                            Already Bought
+                          </span> 
+                        ) : isBookInCart(book.bookId._id) ? (
                           <span className="text-blue-500 font-bold">
-                            Added to Car
-                          </span>
+                            Added to Cart
+                          </span> 
                         ) : (
                           <button
                             className="text-blue-400 hover:text-blue-700"
-                            onClick={() => addToCart(book.bookId._id)} 
+                            onClick={() => addToCart(book.bookId._id)}  
                           >
                               <MdAddShoppingCart  size={30}  />
-                         
-                          </button>
+                          </button> 
                         )}
                       </td>
                     </tr>
@@ -160,6 +177,7 @@ const AddFovrit = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
