@@ -297,7 +297,6 @@ function BooksPage() {
         <>
           <div className="bg-white">
             <div>
-              {/* Mobile filter dialog */}
               <Dialog
                 open={mobileFiltersOpen}
                 onClose={setMobileFiltersOpen}
@@ -331,7 +330,6 @@ function BooksPage() {
                       </button>
                     </div>
 
-                    {/* Mobile Filters */}
                     <div className="mt-4 border-t border-gray-200">
                       <div className="min-w-[40%] py-3 px-3 md:hidden">
                         <SearchBar
