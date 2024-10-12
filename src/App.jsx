@@ -5,14 +5,16 @@ import BooksPage from './pages/BooksPage';
 import DetailsPage from './pages/DetailsPage';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/profile/ProfilePage';
+import { profileLoader } from './pages/profile/profileLoader';
+import { profileAction } from './pages/profile/profileAction';
 import AboutPage from './pages/AboutPage';
 import NotFound from './NotFound';
 import AddFovrit from './pages/AddFovrit';
 import CartPage from './pages/CartPage';
 import { FavoritesProvider } from './context/FavoritesContext'; // Import the context provider
 import { Toaster } from 'react-hot-toast';
-import Checkout from "./pages/Checkout";
+import Checkout from './pages/Checkout';
 
 //import UseOrder from "./hooks/UseOrder";
 
@@ -20,7 +22,6 @@ import OrderPage from './pages/OrderPage';
 import LibraryPage from './pages/LibraryPage';
 import AuthorsPage from './pages/AuthorsPage';
 import AuthorDetailsPage from './pages/AuthorDetailsPage';
-
 
 function createAppRouter() {
   // const {orders,setIsNewOrderAdded}=UseOrder()
@@ -52,6 +53,8 @@ function createAppRouter() {
         {
           path: '/profile',
           element: <ProfilePage />,
+          loader: profileLoader,
+          action: profileAction,
         },
         {
           path: '/about',
@@ -89,14 +92,14 @@ function createAppRouter() {
           path: '/checkout-success',
           element: <LibraryPage />,
         },
-       
+
         {
           path: '/checkout-cancel',
           element: <CartPage />,
         },
         {
           path: '/checkout',
-          element: <Checkout/>,
+          element: <Checkout />,
         },
       ],
     },
