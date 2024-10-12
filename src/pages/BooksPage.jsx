@@ -1,18 +1,41 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import BookCard from "../components/BookCard";
 import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useFavorites } from "../context/FavoritesContext"; // Import the context
+import { useFavorites } from "../context/FavoritesContext";
 import useCartContext from "../hooks/use-cart-context";
 import { useOrder } from "../context/OrderContext";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/20/solid";
+
 function BooksPage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
-  const { orderBookId,isDownloadLoading } = useOrder();
-  const {  cartItems,addToCart,isloading } = useCartContext(); // Use the context
+  const { orderBookId, isDownloadLoading } = useOrder();
+  const { cartItems, addToCart, isloading } = useCartContext();
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
+  const [allBooks, setAllBooks] = useState([]);
+  // const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
@@ -23,32 +46,25 @@ function BooksPage() {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const navigate = useNavigate();
- 
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [sortOption, setSortOption] = useState("default");
+  const itemsPerPage = 12;
+  const testPages = Math.ceil(books.length / itemsPerPage);
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const res = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/book/filters",
+          "https://book-store-backend-sigma-one.vercel.app/book",
           {
             params: {
-              query,
-              author,
-              category,
-              minPrice,
-              maxPrice,
               page,
             },
           }
         );
         window.scrollTo(0, 0);
-        const data = query
-          ? res.data.booksDataWithoutSourcePath.filter((b) =>
-              b.title.toLowerCase().includes(query.toLowerCase())
-            )
-          : res.data.booksDataWithoutSourcePath;
-
-        setBooks(data);
-        setTotalPages(res.data.totalPages);
+        setAllBooks(res.data);
+        setBooks(res.data);
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
@@ -80,192 +96,584 @@ function BooksPage() {
     fetchCatigories();
     fetchAuthor();
     fetchBooks();
-  }, [query, author, category, minPrice, maxPrice, page]);
+  }, [page]);
 
   const handleSearchSubmit = (inputValue) => {
     if (inputValue.trim()) {
+      setAuthor("");
+      setCategory("");
+      setMinPrice("");
+      setMaxPrice("");
+      handleSortChange("default");
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
     }
   };
- 
-  // Skeleton loader while books are loading
+
   const SkeletonCard = () => (
-    <div className="card bg-gray-200 animate-pulse shadow-xl" style={{ height: "430px", width: "280px" }}>
-      <div className="w-40 h-48 mx-auto bg-gray-300 mt-6"></div>
-      <div className="card-body flex-grow-0 p-8">
-        <div className="h-6 bg-gray-300 mb-2 w-3/4"></div>
-        <div className="h-4 bg-gray-300 mb-2 w-1/2"></div>
-        <div className="h-4 bg-gray-300 w-1/3"></div>
+    <div
+      className="card animate-pulse bg-gray-200 relative shadow-xl parentDev"
+      style={{
+        height: "430px",
+        width: "280px",
+        transition: "border-color 0.3s ease-in-out",
+      }}
+    >
+      <div className="w-40 h-48 mt-6 mx-auto bg-slate-300 rounded-md"></div>
+      <div className="card-body flex-grow-0 ps-8 bodyCard">
+        <div className="w-24 h-4 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="w-40 h-6 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="w-32 h-4 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="w-20 h-6 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="flex justify-between">
+          <div className="w-24 h-8 bg-slate-300 rounded-md"></div>
+          <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
+          <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
+        </div>
       </div>
     </div>
   );
 
-  // Skeleton loader for search and filters
   const SkeletonFilters = () => (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
-      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
-      <div className="h-10 bg-gray-300 mb-2 w-1/2 animate-pulse"></div>
-      <div className="flex gap-4">
-        <div className="h-10 bg-gray-300 w-1/2 animate-pulse"></div>
-        <div className="h-10 bg-gray-300 w-1/2 animate-pulse"></div>
+    <div className="w-full lg:w-[20%] hidden lg:block bg-white animate-pulse py-4 space-y-6 rounded-md">
+      {[...Array(2)].map((_, idx) => (
+        <div key={idx} className="space-y-3">
+          <div className="h-6 w-2/3 bg-gray-200 rounded"></div>
+          <div className="space-y-2">
+            {[...Array(4)].map((_, optionIdx) => (
+              <div key={optionIdx} className="flex items-center space-x-3">
+                <div className="h-4 w-4 bg-gray-200 rounded"></div>
+                <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  const SkeletonHeader = () => (
+    <div className="flex justify-between animate-pulse items-center mt-24 border-b-2 pb-6 ">
+      <div className="w-1/6 h-8 bg-gray-200 rounded-md"></div>
+      <div className="flex items-center space-x-4">
+        <div className="h-8 w-52 bg-gray-200 rounded-full p-5"></div>
+        <div className="h-8 w-20 bg-gray-200 rounded-md"></div>
       </div>
     </div>
+  );
+
+  const filters = [
+    {
+      id: "author",
+      name: "Author",
+      options: [
+        {
+          id: "All",
+          value: "",
+          label: "All",
+          checked: true,
+        },
+        ...filterAuthor.map((auth) => {
+          return {
+            id: auth._id,
+            value: auth.name,
+            label: auth.name,
+            checked: false,
+          };
+        }),
+      ],
+    },
+    {
+      id: "category",
+      name: "Category",
+      options: [
+        { id: "all", value: "", label: "All", checked: true },
+        ...filterCatigory.map((cat) => {
+          return {
+            id: cat._id,
+            value: cat.title,
+            label: cat.title,
+            checked: false,
+          };
+        }),
+      ],
+    },
+    {
+      id: "price",
+      name: "Price",
+      options: [{ id: "priceFilter", value: "priceFilter" }],
+    },
+  ];
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  const sortBooks = (books, sortedOption) => {
+    switch (sortedOption) {
+      case "oldest":
+        return [...books].sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+      case "newest":
+        return [...books].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+      case "on-sale":
+        return [...books].filter((book) => book.discountPercentage > 0);
+      case "price-low-to-high":
+        return [...books].sort((a, b) => a.originalPrice - b.originalPrice);
+      case "price-high-to-low":
+        return [...books].sort((a, b) => b.originalPrice - a.originalPrice);
+      default:
+        return books;
+    }
+  };
+
+  const handleSortChange = (sortValue) => {
+    setSortOption(sortValue);
+    setBooks(sortBooks(books, sortValue));
+  };
+
+  const sortOptions = [
+    { name: "Default", value: "default" },
+    { name: "Oldest", value: "oldest" },
+    { name: "Newest", value: "newest" },
+    { name: "On Sale", value: "on-sale" },
+    { name: "Price: Low to High", value: "price-low-to-high" },
+    { name: "Price: High to Low", value: "price-high-to-low" },
+  ];
+
+  useEffect(() => {
+    let filteredBooks = allBooks;
+    if (author) {
+      filteredBooks = filteredBooks.filter((book) => book.author === author);
+    }
+    if (category) {
+      filteredBooks = filteredBooks.filter(
+        (book) => book.category === category
+      );
+    }
+    if (minPrice) {
+      filteredBooks = filteredBooks.filter(
+        (book) => book.originalPrice >= minPrice
+      );
+    }
+    if (maxPrice) {
+      filteredBooks = filteredBooks.filter(
+        (book) => book.originalPrice <= maxPrice
+      );
+    }
+    if (query) {
+      filteredBooks = filteredBooks.filter((book) =>
+        book.title.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    const sortedBooks = sortBooks(filteredBooks, sortOption);
+    setBooks(sortedBooks);
+  }, [allBooks, author, category, minPrice, maxPrice, query, sortOption]);
+
+  const paginatedBooks = books.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
   );
 
   return (
     <main className="container mx-auto mh-[60vh]">
       {loading ? (
-        <div className="flex flex-wrap px-6 pt-7 pb-14 gap-6 justify-evenly">
-          {/* Display multiple skeleton cards while loading */}
-          {Array(8).fill(0).map((_, index) => (
-            <SkeletonCard key={index} />
-          ))}
+        <div className="container px-5 lg:px-[10%] pt-4 pb-28">
+          <SkeletonHeader />
+          <div className="flex justify-between mt-20">
+            <SkeletonFilters />
+            <div className="flex flex-wrap gap-6 justify-center w-full lg:w-[75%]">
+              {Array(3)
+                .fill(0)
+                .map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))}
+            </div>
+          </div>
         </div>
       ) : (
         <>
-          <div className="mt-12">
-            {/* Drawer for filters */}
-            <div className="drawer container mx-auto flex md:justify-evenly gap-3 justify-center flex-wrap">
-              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="min-w-[40%]">
-                {loading ? (
-                  <SkeletonFilters /> // Show skeleton for search and filters
-                ) : (
-                  <SearchBar initialQuery={query} onSearch={handleSearchSubmit} />
-                )}
-              </div>
-              <div className="drawer-content">
-                {/* Page content here */}
-                <label
-                  htmlFor="my-drawer"
-                  className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-brown-200 text-black hover:bg-[#946B3C] drawer-button"
-                >
-                  Filters
-                </label>
-              </div>
-              <div className="drawer-side z-50 h-full">
-                <label
-                  htmlFor="my-drawer"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                ></label>
-                <ul className="menu bg-white text-base-content min-h-full w-[100%] sm:w-[50%] md:w-[40%] lg:w-[30%] p-4">
-                  {/* Filter UI */}
-                  {loading ? (
-                    <SkeletonFilters /> // Show skeleton for filter options
-                  ) : (
-                    <>
-                      <div className="flex justify-between items-center mb-2">
-                        <h2 className="text-xl font-bold">Filters</h2>
-                        {/* Close button */}
-                        <label
-                          htmlFor="my-drawer"
-                          className="btn btn-sm btn-ghost hover:bg-white"
-                        >
-                          ✕
-                        </label>
+          <div className="bg-white">
+            <div>
+              {/* Mobile filter dialog */}
+              <Dialog
+                open={mobileFiltersOpen}
+                onClose={setMobileFiltersOpen}
+                className="relative z-40 lg:hidden"
+              >
+                <DialogBackdrop
+                  transition
+                  className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+                />
+
+                <div className="fixed inset-0 z-40 flex">
+                  <DialogPanel
+                    transition
+                    className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
+                  >
+                    <div className="flex items-center justify-between px-4">
+                      <h2 className="text-lg font-medium text-gray-900 flex gap-2 items-center">
+                        <FunnelIcon
+                          aria-hidden="true"
+                          className="h-5 w-5 text-gray-400 hover:text-gray-500"
+                        />
+                        Filter by
+                      </h2>
+                      <button
+                        type="button"
+                        onClick={() => setMobileFiltersOpen(false)}
+                        className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                      >
+                        <span className="sr-only">Close menu</span>
+                        <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+                      </button>
+                    </div>
+
+                    {/* Mobile Filters */}
+                    <div className="mt-4 border-t border-gray-200">
+                      <div className="min-w-[40%] py-3 px-3 md:hidden">
+                        <SearchBar
+                          initialQuery={query}
+                          onSearch={handleSearchSubmit}
+                        />
                       </div>
-                      <div className="filters mt-6 flex flex-col gap-4 w-full">
-                        <label htmlFor="">Author</label>
-                        <select
-                          id="author"
-                          className="select select-bordered w-full"
-                          value={author}
-                          onChange={(e) => setAuthor(e.target.value)}
-                        >
-                          <option value={""}>all</option>
-                          {filterAuthor.map((aut) => (
-                            <option key={aut._id}>{aut.name}</option>
-                          ))}
-                        </select>
-                        <hr />
-                        <label htmlFor="category">Category</label>
-                        <select
-                          id="category"
-                          className="select select-bordered w-full"
-                          value={category}
-                          onChange={(e) => setCategory(e.target.value)}
-                        >
-                          <option value={""}>all</option>
-                          {filterCatigory.map((cat) => (
-                            <option key={cat._id}>{cat.title}</option>
-                          ))}
-                        </select>
-                        <hr />
-                        <label htmlFor="category">Price</label>
-                        <div className="flex flex-wrap md:flex-nowrap w-[100%] gap-4">
-                          <input
-                            type="number"
-                            placeholder="Min Price"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                      <form className="mt-4 border-t border-gray-200">
+                        {filters.map((section, index) => (
+                          <Disclosure
+                            key={section.id}
+                            defaultOpen={index == 0 ? true : false}
+                            as="div"
+                            className="border-t border-gray-200 px-4 py-6 max-h-[250px] overflow-auto"
+                          >
+                            <h3 className="-mx-2 -my-3 flow-root  sticky top-[-25px]">
+                              <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  {section.name}
+                                </span>
+                                <span className="ml-6 flex items-center">
+                                  <PlusIcon
+                                    aria-hidden="true"
+                                    className="h-5 w-5 group-data-[open]:hidden"
+                                  />
+                                  <MinusIcon
+                                    aria-hidden="true"
+                                    className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                                  />
+                                </span>
+                              </DisclosureButton>
+                            </h3>
+                            <DisclosurePanel className="pt-6">
+                              <div className="space-y-6">
+                                {section.options.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    {index != 2 ? (
+                                      <>
+                                        <input
+                                          value={option.value}
+                                          checked={
+                                            (index === 0 &&
+                                              author === option.value) ||
+                                            (index === 1 &&
+                                              category === option.value)
+                                          }
+                                          id={`filter-mobile-${section.id}-${optionIdx}`}
+                                          name={`${section.id}[]`}
+                                          type="radio"
+                                          onChange={
+                                            index === 0
+                                              ? () => setAuthor(option.value)
+                                              : () => setCategory(option.value)
+                                          }
+                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        />
+                                        <label
+                                          htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                          className="ml-3 min-w-0 flex-1 text-gray-500"
+                                        >
+                                          {option.label}
+                                        </label>
+                                      </>
+                                    ) : (
+                                      <div
+                                        key={option.id}
+                                        className="flex flex-wrap md:flex-nowrap w-[100%] gap-4"
+                                      >
+                                        <input
+                                          key={option.id}
+                                          value={minPrice}
+                                          id={`filter-${section.id}-${optionIdx}`}
+                                          name={`${section.id}[]`}
+                                          type="number"
+                                          placeholder="Min Price"
+                                          onChange={(e) =>
+                                            setMinPrice(e.target.value)
+                                          }
+                                          className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                                        />
+                                        <input
+                                          key={option.id}
+                                          value={maxPrice}
+                                          id={`filter-${section.id}-${optionIdx}`}
+                                          name={`${section.id}[]`}
+                                          type="number"
+                                          placeholder="Max Price"
+                                          onChange={(e) =>
+                                            setMaxPrice(e.target.value)
+                                          }
+                                          className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                                        />
+                                      </div>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </DisclosurePanel>
+                          </Disclosure>
+                        ))}
+                      </form>
+                    </div>
+                  </DialogPanel>
+                </div>
+              </Dialog>
+
+              <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between border-b border-gray-200 pb-6 pt-24">
+                  <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+                    Books List
+                  </h1>
+
+                  <div className="flex items-center">
+                    <div className="min-w-[40%] me-5 hidden md:block">
+                      <SearchBar
+                        initialQuery={query}
+                        onSearch={handleSearchSubmit}
+                      />
+                    </div>
+
+                    <Menu as="div" className="relative inline-block text-left">
+                      <div>
+                        <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                          Sort
+                          <ChevronDownIcon
+                            aria-hidden="true"
+                            className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                           />
-                          <input
-                            type="number"
-                            placeholder="Max Price"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
-                          />
+                        </MenuButton>
+                      </div>
+
+                      <MenuItems
+                        transition
+                        className="absolute right-0 z-10 mt-3 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                      >
+                        <div className="py-1">
+                          {sortOptions.map((option) => (
+                            <MenuItem key={option.value}>
+                              <button
+                                onClick={() => handleSortChange(option.value)}
+                                className={classNames(
+                                  sortOption === option.value
+                                    ? "font-medium bg-brown-200"
+                                    : "text-gray-500",
+                                  "w-full text-start block px-4 py-2 text-sm data-[focus]:bg-gray-100"
+                                )}
+                              >
+                                {option.name}
+                              </button>
+                            </MenuItem>
+                          ))}
                         </div>
+                      </MenuItems>
+                    </Menu>
+
+                    {/* <button
+                      type="button"
+                      className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
+                    >
+                      <span className="sr-only">View grid</span>
+                      <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
+                    </button> */}
+                    <button
+                      type="button"
+                      onClick={() => setMobileFiltersOpen(true)}
+                      className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                    >
+                      <span className="sr-only">Filters</span>
+                      <FunnelIcon aria-hidden="true" className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <section
+                  aria-labelledby="products-heading"
+                  className="pb-24 pt-6"
+                >
+                  {/* <h2 id="products-heading" className="sr-only">
+                    Products
+                  </h2> */}
+
+                  <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                    {/* Filters */}
+                    <form className="hidden lg:block">
+                      {filters.map((section, index) => (
+                        <Disclosure
+                          defaultOpen={index === 0 ? true : false}
+                          key={section.id}
+                          as="div"
+                          className="border-b border-gray-200 py-6 max-h-[250px] overflow-auto"
+                        >
+                          <h3 className="-my-3 flow-root sticky top-[-25px]">
+                            <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                {section.name}
+                              </span>
+                              <span className="ml-6 flex items-center">
+                                <PlusIcon
+                                  aria-hidden="true"
+                                  className="h-5 w-5 group-data-[open]:hidden"
+                                />
+                                <MinusIcon
+                                  aria-hidden="true"
+                                  className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                                />
+                              </span>
+                            </DisclosureButton>
+                          </h3>
+                          <DisclosurePanel className="pt-6">
+                            <div className="space-y-4">
+                              {section.options.map((option, optionIdx) => (
+                                <div
+                                  key={option.id}
+                                  className="flex items-center"
+                                >
+                                  {index !== 2 ? (
+                                    <>
+                                      <input
+                                        value={option.value}
+                                        checked={
+                                          (index === 0 &&
+                                            author === option.value) ||
+                                          (index === 1 &&
+                                            category === option.value)
+                                        }
+                                        id={`filter-${section.id}-${optionIdx}`}
+                                        name={`${section.id}[]`}
+                                        type="radio"
+                                        onChange={
+                                          index === 0
+                                            ? () => setAuthor(option.value)
+                                            : () => setCategory(option.value)
+                                        }
+                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                      />
+                                      <label
+                                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                                        className="ml-3 text-sm text-gray-600"
+                                      >
+                                        {option.label}
+                                      </label>
+                                    </>
+                                  ) : (
+                                    <div className="flex flex-wrap md:flex-nowrap w-[100%] gap-4">
+                                      <input
+                                        value={minPrice}
+                                        id={`filter-${section.id}-${optionIdx}`}
+                                        name={`${section.id}[]`}
+                                        type="number"
+                                        placeholder="Min Price"
+                                        onChange={(e) =>
+                                          setMinPrice(e.target.value)
+                                        }
+                                        className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                                      />
+                                      <input
+                                        value={maxPrice}
+                                        id={`filter-${section.id}-${optionIdx}`}
+                                        name={`${section.id}[]`}
+                                        type="number"
+                                        placeholder="Max Price"
+                                        onChange={(e) =>
+                                          setMaxPrice(e.target.value)
+                                        }
+                                        className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </DisclosurePanel>
+                        </Disclosure>
+                      ))}
+                    </form>
+
+                    {/* Product grid */}
+                    <div className="lg:col-span-3">
+                      {paginatedBooks.length > 0 ? (
+                        <div className="flex flex-wrap px-2 pt-7 pb-14 gap-4 justify-evenly">
+                          {paginatedBooks.map((book, index) => (
+                            <BookCard
+                              _id={book._id}
+                              key={index}
+                              title={book.title}
+                              author={book.author}
+                              price={book.originalPrice}
+                              imageUrl={book.coverImage}
+                              addToFavorites={() => addToFavorites(book)}
+                              removeFromFavorites={() =>
+                                removeFromFavorites(book._id)
+                              }
+                              isFavorite={Boolean(
+                                favoriteBooks.find(
+                                  (fav) => fav.bookId._id === book._id
+                                )
+                              )}
+                              addToCart={() => addToCart(book)}
+                              InCart={Boolean(
+                                cartItems.find(
+                                  (cart) => cart.bookId._id === book._id
+                                )
+                              )}
+                              isloading={isloading}
+                              isBookInOrder={Boolean(
+                                orderBookId?.includes(book._id)
+                              )}
+                              isDownloadLoading={isDownloadLoading}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-xl text-center mt-10">
+                          No books found. Please try another search term.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  {testPages > 1 && (
+                    <div className="pagination mt-3 flex justify-center items-center">
+                      <div className="join">
+                        {[...Array(testPages)].map((_, index) => (
+                          <button
+                            key={index + 1}
+                            onClick={() => setPage(index + 1)}
+                            className={`join-item btn  btn-lg ${
+                              page === index + 1 ? "bg-brown-200" : ""
+                            }`}
+                          >
+                            {index + 1}
+                          </button>
+                        ))}
                       </div>
-                    </>
+                    </div>
                   )}
-                </ul>
-              </div>
+                </section>
+              </main>
             </div>
           </div>
-
-          {books?.length ? (
-            <>
-              <div className="flex flex-wrap px-6 pt-7 pb-14 gap-6 justify-evenly">
-                {books.map((book, index) => (
-                  <BookCard
-                    _id={book._id}
-                    key={index}
-                    title={book.title}
-                    author={book.author}
-                    price={book.originalPrice}
-                    imageUrl={book.coverImage}
-                    addToFavorites={() => addToFavorites(book)}
-                    removeFromFavorites={() => removeFromFavorites(book._id)}
-                    isFavorite={Boolean(
-                      favoriteBooks.find((fav) => fav.bookId._id === book._id)
-                    )}
-                    addToCart={()=>addToCart(book)}  
-                    
-                     InCart={Boolean(
-                      cartItems.find((cart) => cart.bookId._id === book._id)
-                    )}
-                      isloading={isloading}
-                     isBookInOrder = {Boolean(orderBookId?.includes(book._id))}
-                     isDownloadLoading={isDownloadLoading}
-                  />
-                ))}
-              </div>
-
-              {/* Pagination Controls */}
-              <div className="pagination my-3 flex justify-center items-center">
-                <div className="join">
-                  {[...Array(totalPages)].map((_, index) => (
-                    <button
-                      key={index + 1}
-                      onClick={() => setPage(index + 1)}
-                      className={`join-item btn bg-brown-200 btn-lg ${page === index + 1 ? 'btn-active' : ''}`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className="text-xl text-center mt-10">
-              No books found. Please try another search term.
-            </p>
-          )}
         </>
       )}
     </main>
