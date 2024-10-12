@@ -3,17 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserContext } from "../hooks/UserContext";
 import axios from "axios";
-import '../css/checkout.css'; // Ensure this CSS handles card animations and styling
+import '../css/checkout.css'; 
 
 export default function Checkout() {
   const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
   
-  // State for saved cards
   const [savedCards, setSavedCards] = useState([]);
   const [selectedCardId, setSelectedCardId] = useState("");
   
-  // State for new card details
   const [newCard, setNewCard] = useState({
     part1: "",
     part2: "",
@@ -37,7 +35,6 @@ export default function Checkout() {
 
   const token = localStorage.getItem("token");
 
-  // Fetch saved cards on component mount
   useEffect(() => {
     const fetchSavedCards = async () => {
       if (!token) return;
@@ -61,7 +58,6 @@ export default function Checkout() {
     fetchSavedCards();
   }, [token]);
 
-  // Input change handlers for new card
   const handleNumberChange = (e, part) => {
     const value = e.target.value.replace(/\D/g, "");
     if (value.length <= 4) {
@@ -85,7 +81,6 @@ export default function Checkout() {
     return formatted;
   };
 
-  // Validate inputs for new card
   const validateInputs = () => {
     const cardNumberRegex = /^\d{4}$/;
     const dateRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
@@ -108,7 +103,6 @@ export default function Checkout() {
     return true;
   };
 
-  // Handle payment
   const handleCheckout = async () => {
     if (!token) {
       Swal.fire({ title: "Authorization Error", icon: "error" });
@@ -116,7 +110,6 @@ export default function Checkout() {
     }
 
     if (selectedCardId) {
-      // Use saved card for payment
       try {
         setIsLoading(true);
         const res = await axios.post(
@@ -137,12 +130,10 @@ export default function Checkout() {
         setIsLoading(false);
       }
     } else {
-      // Add new card and process payment
       if (!validateInputs()) return;
 
       try {
         setIsLoading(true);
-        // Replace with your actual payment processing logic
         const paymentRes = await axios.post(
           `https://book-store-backend-sigma-one.vercel.app/paymob/`,
           {
@@ -178,9 +169,7 @@ export default function Checkout() {
 
             if (saveCardRes.status === 201) {
               Swal.fire({ title: "Card Saved Successfully!", icon: "success" });
-              // Update saved cards list
               setSavedCards(prev => [...prev, saveCardRes.data.data.card]);
-              // Reset new card form
               setNewCard({
                 part1: "",
                 part2: "",
@@ -208,7 +197,6 @@ export default function Checkout() {
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center p-8 bg-gray-100 min-h-screen space-y-8 md:space-y-0 md:space-x-8">
-      {/* Card Preview */}
       <div className="relative mb-6 md:mb-0">
         {selectedCardId ? (
           <SavedCardSVG card={savedCards.find(card => card._id === selectedCardId)} />
@@ -224,7 +212,6 @@ export default function Checkout() {
       </div>
 
       <form className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6">
-        {/* Saved Cards Dropdown */}
         <div className="form-control">
           <label className="block mb-2 text-lg font-semibold text-gray-700">Saved Cards</label>
           {savedCards.length === 0 ? (
@@ -245,17 +232,14 @@ export default function Checkout() {
           )}
         </div>
 
-        {/* OR Divider */}
         <div className="flex items-center space-x-2">
           <hr className="flex-1 border-gray-300" />
           <span className="text-gray-500">OR</span>
           <hr className="flex-1 border-gray-300" />
         </div>
 
-        {/* Add New Card */}
         <div>
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Add New Card</h2>
-          {/* Card Number */}
           <div className="form-control mb-4">
             <label className="block mb-2 text-gray-700">Card Number</label>
             <div className="flex space-x-2">
@@ -278,7 +262,6 @@ export default function Checkout() {
             {inputErrors.number && <span id="card-number-error" className="text-red-500 text-sm">Invalid card number.</span>}
           </div>
 
-          {/* Cardholder Name */}
           <div className="form-control mb-4">
             <label className="block mb-2 text-gray-700">Cardholder Name</label>
             <input
@@ -296,7 +279,6 @@ export default function Checkout() {
             {inputErrors.name && <span id="cardholder-name-error" className="text-red-500 text-sm">Invalid name.</span>}
           </div>
 
-          {/* Expiration Date and CVC */}
           <div className="flex flex-col md:flex-row md:space-x-4">
             <div className="form-control mb-4 md:mb-0 md:w-1/2">
               <label className="block mb-2 text-gray-700">Expiration Date</label>
@@ -335,7 +317,6 @@ export default function Checkout() {
           </div>
         </div>
 
-        {/* Save Card Checkbox */}
         <div className="form-control">
           <label className="flex items-center space-x-3">
             <input
@@ -349,7 +330,6 @@ export default function Checkout() {
           </label>
         </div>
 
-        {/* Pay Now Button */}
         <button
           type="button"
           className={`btn w-full ${isLoading ? "loading" : ""} bg-blue-600 text-white font-semibold rounded-lg py-3 hover:bg-blue-700`}
@@ -363,7 +343,6 @@ export default function Checkout() {
   );
 }
 
-// VisaCardSVG Component
 const VisaCardSVG = ({ number = "**** **** **** ****", name = "CARD HOLDER", date = "MM/YY", isCvvFocused = false, cvc = "***" }) => (
   <div className={`card-container ${isCvvFocused ? "flipped" : ""}`}>
     <div className="card">

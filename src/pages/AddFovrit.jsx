@@ -4,7 +4,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { Link } from "react-router-dom";
 import { PiListHeartLight } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
-import CartContext from "../context/CartContext";
+import CartContext from "../context/cartContext";
 import { MdAddShoppingCart } from "react-icons/md";
 
 const AddFovrit = () => {
