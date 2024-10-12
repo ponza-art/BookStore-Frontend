@@ -18,7 +18,7 @@ const BookCard = ({
   addToCart,
   InCart,
   isloading,
-  isBookInOrder,
+  isBookInOrder, 
   isDownloadLoading
 }) => {
   
