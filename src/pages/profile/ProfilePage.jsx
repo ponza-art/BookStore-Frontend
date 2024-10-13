@@ -4,17 +4,16 @@ import { CirclePlus } from 'lucide-react';
 import UpdateUserData from '../../components/UpdateUserData';
 import Cards from '../../components/Cards';
 import AddCreditCard from '../../components/AddCreditCard';
+import ReviewedBook from '../../components/ReviewedBook';
 import Loader from '../../components/Loader';
 
 function ProfilePage() {
-  const navigation = useNavigation();
-  console.log(navigation);
-  const isLoading = navigation.state === 'loading';
-  // const isLoading = true;
-
-  const { userData, creditCards } = useLoaderData();
-  // console.log(userData, creditCards);
+  const { userData, creditCards, userReviews } = useLoaderData();
+  console.log(userReviews);
   const actionData = useActionData();
+
+  const navigation = useNavigation();
+  const isLoading = navigation.state === 'loading';
 
   const [showEdit, setShowEdit] = useState(false);
   const [showAddCreditCard, setShowAddCreditCard] = useState(false);
@@ -136,7 +135,25 @@ function ProfilePage() {
         </div>
       </section>
 
-      <section className="py-16"></section>
+      <section className="py-16">
+        <div className="max-w-screen-lg mx-auto px-6">
+          <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-10">
+            Your Reviews
+          </h2>
+
+          {userReviews.length === 0 ? (
+            <p className="font-poppins text-lg text-gray-500 text-center mb-4">
+              You have not reviewed any book yet.
+            </p>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2">
+              {userReviews.map((review) => {
+                return <ReviewedBook key={review._id} review={review} />;
+              })}
+            </div>
+          )}
+        </div>
+      </section>
     </main>
   );
 }

@@ -73,3 +73,20 @@ export async function addCreditCard(token, data) {
     toast.error('Something went wrong');
   }
 }
+
+export async function getUserReviews(token) {
+  try {
+    const res = await axios.get(
+      'https://book-store-backend-sigma-one.vercel.app/review/user/',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log('There is an error loading data...', error);
+  }
+}
