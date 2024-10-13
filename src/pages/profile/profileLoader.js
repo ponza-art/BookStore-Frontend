@@ -7,9 +7,11 @@ import {
 const token = localStorage.getItem('token');
 
 export async function profileLoader() {
-  const userData = await getUserData(token);
-  const creditCards = await getUserCreditCards(token);
-  const userReviews = await getUserReviews(token);
+  const [userData, creditCards, userReviews] = await Promise.all([
+    getUserData(token),
+    getUserCreditCards(token),
+    getUserReviews(token),
+  ]);
 
   return {
     userData,
@@ -17,3 +19,4 @@ export async function profileLoader() {
     userReviews,
   };
 }
+
