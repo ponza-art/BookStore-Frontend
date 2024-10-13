@@ -25,7 +25,6 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 
 function BooksPage() {
@@ -34,8 +33,8 @@ function BooksPage() {
   const { cartItems, addToCart, isloading } = useCartContext();
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
-  const [allBooks, setAllBooks] = useState([]);
-  // const [totalPages, setTotalPages] = useState(1);
+  // const [allBooks, setAllBooks] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
@@ -48,23 +47,29 @@ function BooksPage() {
   const navigate = useNavigate();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState("default");
-  const itemsPerPage = 12;
-  const testPages = Math.ceil(books.length / itemsPerPage);
 
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const res = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/book",
+          "https://book-store-backend-sigma-one.vercel.app/book/filters",
           {
             params: {
+              search: query,
+              author,
+              category,
+              minPrice,
+              maxPrice,
+              sortBy: sortOption,
               page,
+              limit: 12,
             },
           }
         );
+        console.log(res.data.booksDataWithoutSourcePath);
         window.scrollTo(0, 0);
-        setAllBooks(res.data);
-        setBooks(res.data);
+        setBooks(res.data.booksDataWithoutSourcePath);
+        setTotalPages(res.data.totalPages);
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
@@ -96,18 +101,25 @@ function BooksPage() {
     fetchCatigories();
     fetchAuthor();
     fetchBooks();
-  }, [page]);
+  }, [query, author, category, minPrice, maxPrice, sortOption, page]);
 
   const handleSearchSubmit = (inputValue) => {
     if (inputValue.trim()) {
-      setAuthor("");
-      setCategory("");
-      setMinPrice("");
-      setMaxPrice("");
-      handleSortChange("default");
+      setPage(1);
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
     }
   };
+
+  // const handleSearchSubmit = (inputValue) => {
+  //   if (inputValue.trim()) {
+  //     setAuthor("");
+  //     setCategory("");
+  //     setMinPrice("");
+  //     setMaxPrice("");
+  //     setSortOption("default");
+  //     navigate(`/books?search=${encodeURIComponent(inputValue)}`);
+  //   }
+  // };
 
   const SkeletonCard = () => (
     <div
@@ -208,31 +220,31 @@ function BooksPage() {
     return classes.filter(Boolean).join(" ");
   }
 
-  const sortBooks = (books, sortedOption) => {
-    switch (sortedOption) {
-      case "oldest":
-        return [...books].sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
-      case "newest":
-        return [...books].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-      case "on-sale":
-        return [...books].filter((book) => book.discountPercentage > 0);
-      case "price-low-to-high":
-        return [...books].sort((a, b) => a.originalPrice - b.originalPrice);
-      case "price-high-to-low":
-        return [...books].sort((a, b) => b.originalPrice - a.originalPrice);
-      default:
-        return books;
-    }
-  };
+  // const sortBooks = (books, sortedOption) => {
+  //   switch (sortedOption) {
+  //     case "oldest":
+  //       return [...books].sort(
+  //         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  //       );
+  //     case "newest":
+  //       return [...books].sort(
+  //         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  //       );
+  //     case "on-sale":
+  //       return [...books].filter((book) => book.discountPercentage > 0);
+  //     case "price-low-to-high":
+  //       return [...books].sort((a, b) => a.originalPrice - b.originalPrice);
+  //     case "price-high-to-low":
+  //       return [...books].sort((a, b) => b.originalPrice - a.originalPrice);
+  //     default:
+  //       return books;
+  //   }
+  // };
 
-  const handleSortChange = (sortValue) => {
-    setSortOption(sortValue);
-    setBooks(sortBooks(books, sortValue));
-  };
+  // const handleSortChange = (sortValue) => {
+  //   setSortOption(sortValue);
+  //   setBooks(sortBooks(books, sortValue));
+  // };
 
   const sortOptions = [
     { name: "Default", value: "default" },
@@ -243,39 +255,39 @@ function BooksPage() {
     { name: "Price: High to Low", value: "price-high-to-low" },
   ];
 
-  useEffect(() => {
-    let filteredBooks = allBooks;
-    if (author) {
-      filteredBooks = filteredBooks.filter((book) => book.author === author);
-    }
-    if (category) {
-      filteredBooks = filteredBooks.filter(
-        (book) => book.category === category
-      );
-    }
-    if (minPrice) {
-      filteredBooks = filteredBooks.filter(
-        (book) => book.originalPrice >= minPrice
-      );
-    }
-    if (maxPrice) {
-      filteredBooks = filteredBooks.filter(
-        (book) => book.originalPrice <= maxPrice
-      );
-    }
-    if (query) {
-      filteredBooks = filteredBooks.filter((book) =>
-        book.title.toLowerCase().includes(query.toLowerCase())
-      );
-    }
-    const sortedBooks = sortBooks(filteredBooks, sortOption);
-    setBooks(sortedBooks);
-  }, [allBooks, author, category, minPrice, maxPrice, query, sortOption]);
+  // useEffect(() => {
+  //   let filteredBooks = allBooks;
+  //   if (author) {
+  //     filteredBooks = filteredBooks.filter((book) => book.author === author);
+  //   }
+  //   if (category) {
+  //     filteredBooks = filteredBooks.filter(
+  //       (book) => book.category === category
+  //     );
+  //   }
+  //   if (minPrice) {
+  //     filteredBooks = filteredBooks.filter(
+  //       (book) => book.originalPrice >= minPrice
+  //     );
+  //   }
+  //   if (maxPrice) {
+  //     filteredBooks = filteredBooks.filter(
+  //       (book) => book.originalPrice <= maxPrice
+  //     );
+  //   }
+  //   if (query) {
+  //     filteredBooks = filteredBooks.filter((book) =>
+  //       book.title.toLowerCase().includes(query.toLowerCase())
+  //     );
+  //   }
+  //   const sortedBooks = sortBooks(filteredBooks, sortOption);
+  //   setBooks(sortedBooks);
+  // }, [allBooks, author, category, minPrice, maxPrice, query, sortOption]);
 
-  const paginatedBooks = books.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
+  // const paginatedBooks = books.slice(
+  //   (page - 1) * itemsPerPage,
+  //   page * itemsPerPage
+  // );
 
   return (
     <main className="container mx-auto mh-[60vh]">
@@ -386,8 +398,14 @@ function BooksPage() {
                                           type="radio"
                                           onChange={
                                             index === 0
-                                              ? () => setAuthor(option.value)
-                                              : () => setCategory(option.value)
+                                              ? () => {
+                                                  setAuthor(option.value);
+                                                  setPage(1);
+                                                }
+                                              : () => {
+                                                  setCategory(option.value);
+                                                  setPage(1);
+                                                }
                                           }
                                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                         />
@@ -410,9 +428,10 @@ function BooksPage() {
                                           name={`${section.id}[]`}
                                           type="number"
                                           placeholder="Min Price"
-                                          onChange={(e) =>
-                                            setMinPrice(e.target.value)
-                                          }
+                                          onChange={(e) => {
+                                            setMinPrice(e.target.value);
+                                            setPage(1);
+                                          }}
                                           className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
                                         />
                                         <input
@@ -422,9 +441,10 @@ function BooksPage() {
                                           name={`${section.id}[]`}
                                           type="number"
                                           placeholder="Max Price"
-                                          onChange={(e) =>
-                                            setMaxPrice(e.target.value)
-                                          }
+                                          onChange={(e) => {
+                                            setMaxPrice(e.target.value);
+                                            setPage(1);
+                                          }}
                                           className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
                                         />
                                       </div>
@@ -474,7 +494,10 @@ function BooksPage() {
                           {sortOptions.map((option) => (
                             <MenuItem key={option.value}>
                               <button
-                                onClick={() => handleSortChange(option.value)}
+                                onClick={() => {
+                                  setSortOption(option.value);
+                                  setPage(1);
+                                }}
                                 className={classNames(
                                   sortOption === option.value
                                     ? "font-medium bg-brown-200"
@@ -565,8 +588,14 @@ function BooksPage() {
                                         type="radio"
                                         onChange={
                                           index === 0
-                                            ? () => setAuthor(option.value)
-                                            : () => setCategory(option.value)
+                                            ? () => {
+                                                setAuthor(option.value);
+                                                setPage(1);
+                                              }
+                                            : () => {
+                                                setCategory(option.value);
+                                                setPage(1);
+                                              }
                                         }
                                         className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                       />
@@ -585,9 +614,10 @@ function BooksPage() {
                                         name={`${section.id}[]`}
                                         type="number"
                                         placeholder="Min Price"
-                                        onChange={(e) =>
-                                          setMinPrice(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                          setMinPrice(e.target.value);
+                                          setPage(1);
+                                        }}
                                         className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
                                       />
                                       <input
@@ -596,9 +626,10 @@ function BooksPage() {
                                         name={`${section.id}[]`}
                                         type="number"
                                         placeholder="Max Price"
-                                        onChange={(e) =>
-                                          setMaxPrice(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                          setMaxPrice(e.target.value);
+                                          setPage(1);
+                                        }}
                                         className="input input-bordered [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none w-[100%]"
                                       />
                                     </div>
@@ -613,9 +644,9 @@ function BooksPage() {
 
                     {/* Product grid */}
                     <div className="lg:col-span-3">
-                      {paginatedBooks.length > 0 ? (
+                      {books.length > 0 ? (
                         <div className="flex flex-wrap px-2 pt-7 pb-14 gap-4 justify-evenly">
-                          {paginatedBooks.map((book, index) => (
+                          {books.map((book, index) => (
                             <BookCard
                               _id={book._id}
                               key={index}
@@ -653,10 +684,10 @@ function BooksPage() {
                       )}
                     </div>
                   </div>
-                  {testPages > 1 && (
+                  {totalPages > 1 && (
                     <div className="pagination mt-3 flex justify-center items-center">
                       <div className="join">
-                        {[...Array(testPages)].map((_, index) => (
+                        {[...Array(totalPages)].map((_, index) => (
                           <button
                             key={index + 1}
                             onClick={() => setPage(index + 1)}
