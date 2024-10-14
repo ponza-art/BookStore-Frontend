@@ -18,12 +18,12 @@ export default function Login() {
     useEyePassword(eyePassword === "password" ? "text" : "password");
   };
   const [form, setForm] = useState({
-    username: "",
+   
     email: "",
     password: "",
   });
   const [errorState, setErrorState] = useState({
-    username: null,
+   
     email: null,
     password: null,
   });
@@ -86,8 +86,8 @@ export default function Login() {
               err.response.data.message.includes("Incorrect Email or Password")
             ) {
               setErrorState({
-                email: "Email not found",
-                password: "Password not Correct",
+                email: "Incorrect Email or Password",
+                password: "Incorrect Email or Password",
               });
             } else {
               setErrorState({
@@ -132,9 +132,16 @@ export default function Login() {
         acc[curr.path[0]] = curr.message;
         return acc;
       }, {});
-      setErrorState(errors);
+      setErrorState((prevState) => ({
+        ...prevState,
+        [name]: errors[name], 
+      }));
     } else {
-      setErrorState({ ...errorState, [name]: null });
+      
+      setErrorState((prevState) => ({
+        ...prevState,
+        [name]: null, 
+      }));
     }
   };
 
@@ -177,7 +184,7 @@ export default function Login() {
                   htmlFor="email"
                   name="email"
                   id="email"
-                  eyePassword={eyePassword}
+                  
                   type="text"
                   onBlur={handleOnBLur}
                 />
@@ -234,6 +241,7 @@ export default function Login() {
                   </button>
                 </div>
               )}
+            
               {load ? (
                 <button
                   type="submit"
@@ -243,7 +251,7 @@ export default function Login() {
                   <span>
                     Log in{" "}
                     <img
-                      src="/loader.gif"
+                      src="/loadinglogin.gif"
                       width={"30"}
                       className="inline"
                     />{" "}
@@ -252,22 +260,25 @@ export default function Login() {
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-black p-2 rounded-lg mb-6 mt-5 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  className="w-full text-black p-2 rounded-lg mb-5 mt-5 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
                   value="Log in"
                 />
               )}
               <div className="text-center text-gray-400">
-                Don't have an account?{" "}
-                <Link
-                  to="/signup"
-                  className="font-bold inline-block text-yellow-800 hover:underline"
-                >
-                  Sign up for free
-                </Link>
-                <p className="mt-5 mb-2 text-black">or</p>
-                <hr/>
-                <LoginWithgoogle/>
-              </div>
+             
+                
+              <LoginWithgoogle  />
+              <hr/>
+              
+              Don't have an account?{" "}
+              <Link
+                to="/signup"
+                className="font-bold inline-block text-yellow-800 hover:underline mt-5"
+              >
+                Sign up for free
+              </Link>
+              
+            </div>
             </form>
           </div>
           <div className="relative">

@@ -9,12 +9,13 @@ import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
+  const { getOrderData} = useOrder()
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("search") || "";
   const navigate = useNavigate();
-
+  const token =localStorage.getItem("token")
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -34,6 +35,10 @@ function HomePage() {
       }
     };
     fetchBooks();
+    if(token){
+      getOrderData()
+    }
+    
   }, []);
 
   const handleSearchSubmit = (inputValue) => {

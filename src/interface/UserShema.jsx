@@ -12,10 +12,13 @@ export const UsersShemasign = Joi.object({
       "string.pattern.base":
         "Min 6 characters with upper, lower, number, and special char",
     }),
-  email: Joi.string()
-    .email({ tlds: { allow: false } })
-    .required(),
-});
+    confirmPassword: Joi.string().valid(Joi.ref("password")).required().messages({
+      "any.only": "Passwords do not match",
+    }),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+  }).with("password", "confirmPassword");
 
 // Login schema
 export const UsersShemalogin = Joi.object({
@@ -33,3 +36,5 @@ export const UsersShemalogin = Joi.object({
     .email({ tlds: { allow: false } })
     .required(),
 });
+
+

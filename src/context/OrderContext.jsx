@@ -1,11 +1,13 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
+import useCartContext from "../hooks/use-cart-context";
 
 const OrderContext = createContext({});
 const token = localStorage.getItem("token");
 export const OrderContextProvider = ({ children }) => {
   const [orderBookId, setOrderBookId] = useState([]);
   const [isDownloadLoading, setIsDownloadLoading] = useState(false);
+  const { setCartItems } = useCartContext();
 
   const getOrderData = async () => {
     setIsDownloadLoading(true)
@@ -29,18 +31,20 @@ export const OrderContextProvider = ({ children }) => {
       });
 
       setOrderBookId(bookIds);
+      setCartItems([])
     }
-  };
+  }
 
   useEffect(() => {
     if (token) {
       getOrderData();
+     
       setIsDownloadLoading(false);
     }
   }, [token]);
   return (
     <OrderContext.Provider
-      value={{ orderBookId, setOrderBookId,isDownloadLoading}}
+      value={{ orderBookId, setOrderBookId,isDownloadLoading,getOrderData}}
     >
       {children}
     </OrderContext.Provider>

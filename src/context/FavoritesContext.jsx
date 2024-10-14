@@ -22,7 +22,7 @@ export const FavoritesProvider = ({ children }) => {
         );
         setFavoriteBooks(favBooks);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     };
     if (token) {
