@@ -43,14 +43,6 @@ const AuthorsPage = () => {
     setFilteredAuthors(authors);
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto ">
-        <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
-      </div>
-    );
-  }
-
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   return (
@@ -80,41 +72,59 @@ const AuthorsPage = () => {
         ))}
       </div>
 
-            {/* Author Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                {filteredAuthors.length > 0 ? (
-                    filteredAuthors.map((author) => (
-                        <div key={author._id} className="text-center">
-                            <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
-                                <img
-                                    src={author.image}
-                                    alt={author.name}
-                                    className="w-full h-full object-cover rounded-full shadow-lg"
-                                />
-                            </div>
-                            <h2 className="text-lg sm:text-xl font-semibold">{author.name}</h2>
-                            <p className="text-gray-600 text-sm sm:text-base">
-                                {author.books.length > 0
-                                    ? `${author.books.length} Published Books`
-                                    : 'No Published Books Yet'}
-                            </p>
-                            <Link
-                                to={`/authors/${author._id}`}
-                            >
-                                <button className="button" data-text="">
-                                <span className="actual-text">&nbsp;ViewBooks&nbsp;</span>
-                                <span aria-hidden="true" className="hover-text ">&nbsp;ViewBooks&nbsp;</span>
-                            </button>
-                            </Link>
-                    
-                        </div>
-                    ))
-                ) : (
-                    <div className="col-span-full text-center text-gray-600">No authors found</div>
-                )}
+      {/* Skeleton Loader for Author Cards */}
+      {loading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div key={index} className="text-center animate-pulse">
+              <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 bg-gray-300 rounded-full"></div>
+              <div className="h-6 bg-gray-300 rounded-lg mb-2"></div>
+              <div className="h-4 bg-gray-300 rounded-lg"></div>
             </div>
+          ))}
         </div>
-    );
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {filteredAuthors.length > 0 ? (
+            filteredAuthors.map((author) => (
+              <div key={author._id} className="text-center">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
+                  <img
+                    src={author.image}
+                    alt={author.name}
+                    className="w-full h-full object-cover rounded-full shadow-lg"
+                  />
+                </div>
+                <h2 className="text-lg sm:text-xl font-semibold">
+                  {author.name}
+                </h2>
+                <p className="text-gray-600 text-sm sm:text-base">
+                  {author.books.length > 0
+                    ? `${author.books.length} Published Books`
+                    : "No Published Books Yet"}
+                </p>
+                <Link to={`/authors/${author._id}`}>
+                  <button className="button" data-text="">
+                    <span className="actual-text">&nbsp;ViewBooks&nbsp;</span>
+                    <span
+                      aria-hidden="true"
+                      className="hover-text "
+                    >
+                      &nbsp;ViewBooks&nbsp;
+                    </span>
+                  </button>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-600">
+              No authors found
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default AuthorsPage;
