@@ -12,7 +12,7 @@ function ProfileSkeleton() {
     <div className="animate-pulse flex flex-col items-center gap-4">
       <div className="h-32 w-32 bg-gray-300 rounded-full"></div>
       <div className="h-6 w-40 bg-gray-300 rounded"></div>
-      <div className="h-4 w-24 bg-gray-300 rounded"></div>
+      <div className="h-4 w-24 bg-gray-300 rounded"></div> 
     </div>
   );
 }
