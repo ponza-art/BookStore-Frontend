@@ -115,7 +115,7 @@ function HomePage() {
           <HomeHeaderSkeleton/>
           <SearchHomeSkeleton/>
           <SliderSkeleton/>
-        <div className="mt-10    space-y-20">
+        <div className="mt-10 mx-auto  space-y-20">
           <HomeCardSkeleton /> 
           <HomeCardSkeleton /> 
         </div>

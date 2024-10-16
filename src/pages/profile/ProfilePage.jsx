@@ -6,6 +6,36 @@ import Cards from '../../components/Cards';
 import AddCreditCard from '../../components/AddCreditCard';
 import ReviewedBook from '../../components/ReviewedBook';
 
+
+function ProfileSkeleton() {
+  return (
+    <div className="animate-pulse flex flex-col items-center gap-4">
+      <div className="h-32 w-32 bg-gray-300 rounded-full"></div>
+      <div className="h-6 w-40 bg-gray-300 rounded"></div>
+      <div className="h-4 w-24 bg-gray-300 rounded"></div>
+    </div>
+  );
+}
+
+function WalletSkeleton() {
+  return (
+    <div className="animate-pulse space-y-4">
+      <div className="h-10 bg-gray-300 rounded"></div>
+      <div className="h-10 bg-gray-300 rounded"></div>
+      <div className="h-10 bg-gray-300 rounded"></div>
+    </div>
+  );
+}
+
+function ReviewsSkeleton() {
+  return (
+    <div className="animate-pulse grid gap-6 md:grid-cols-2">
+      <div className="h-40 bg-gray-300 rounded"></div>
+      <div className="h-40 bg-gray-300 rounded"></div>
+    </div>
+  );
+}
+
 function ProfilePage() {
   const { userData, creditCards, userReviews } = useLoaderData();
   const actionData = useActionData();
@@ -58,6 +88,7 @@ function ProfilePage() {
               ) : (
                 <div className="flex flex-col justify-center p-4 mt-8">
                   {!userData ? (
+                    
                     <ProfileSkeleton />
                   ) : (
                     <>
