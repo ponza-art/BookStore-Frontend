@@ -158,23 +158,7 @@ function ProfilePage() {
                         <div>{renderedCards}</div>
                       )}
 
-                      {showAddCreditCard ? (
-                        <AddCreditCard setShowAddCreditCard={setShowAddCreditCard} />
-                      ) : (
-                        <div className="grid grid-cols-3 gap-4 items-center border-t pt-6">
-                          <div className="h-full w-full flex items-center justify-center border-2 border-dashed p-6 rounded-lg transition hover:shadow-lg">
-                            <CirclePlus color="gray" />
-                          </div>
-                          <div className="col-span-2">
-                            <button
-                              className="text-base text-brand-blue hover:text-blue-600 hover:underline transition-all"
-                              onClick={() => setShowAddCreditCard(true)}
-                            >
-                              Add a payment method
-                            </button>
-                          </div>
-                        </div>
-                      )}
+                     
                     </div>
                   </div>
                 )}
