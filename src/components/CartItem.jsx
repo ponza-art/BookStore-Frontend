@@ -5,7 +5,7 @@ import useCartContext from "../hooks/use-cart-context";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
-function CartItem(props) {
+function CartItem(props) { 
   const { book } = props;
   // console.log(book);
   const { cartItems, setCartItems,deleteBookById } = useCartContext();
