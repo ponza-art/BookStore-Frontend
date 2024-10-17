@@ -130,7 +130,7 @@ export default function LibraryComponent() {
                                   </div>
                                 </div>
                               </div>
-                              <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-brown-200 group-hover:rotate-45 duration-100" onClick={() => navigate(`/books/${bookId._id}`)}  />
+                              <RxArrowTopRight className="absolute bottom-5 left-5 w-[35px] h-[35px] text-white group-hover:text-brown-200 group-hover:rotate-45 duration-100" onClick={() => navigate(`/books/${bookId?._id}`)}  />
                             </div>
                           </SwiperSlide>
                         );

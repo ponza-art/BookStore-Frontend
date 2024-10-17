@@ -42,7 +42,7 @@ function CartItem(props) {
           className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0"
         >
           <Link
-            to={`/books/${book.bookId._id}`}
+            to={`/books/${book.bookId?._id}`}
             className="shrink-0 md:order-1"
           >
             <img
@@ -72,12 +72,12 @@ function CartItem(props) {
           </div>
           <div className="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
             <Link
-              to={`/books/${book.bookId._id}`}
+              to={`/books/${book.bookId?._id}`}
               className="text-3xl font-medium text-gray-900 hover:underline"
             >
               {book?.bookId?.title}{" "}
             </Link>
-            <Link to={`/books/${book.bookId._id}`}>
+            <Link to={`/books/${book.bookId?._id}`}>
               <p className="text-gray-900 opacity-70 text-[15px] my-2">
                 {book?.bookId?.author}
                 {" | "}
@@ -90,7 +90,7 @@ function CartItem(props) {
             <div className="flex items-center gap-4">
               <button
                 type="button"
-                onClick={() => deleteBookById(book.bookId._id)}
+                onClick={() => deleteBookById(book.bookId?._id)}
                 className="inline-flex items-center text-sm font-medium text-red-600 hover:underline"
               >
                 <svg
@@ -122,7 +122,7 @@ function CartItem(props) {
       //     key={book.bookId}
       //     className="relative h-52 flex gap-x-5 mb-5 border shadow-2xl bg-white rounded-md"
       //   >
-      //     <Link to={`/books/${book.bookId._id}`} className="w-32 h-36">
+      //     <Link to={`/books/${book.bookId?._id}`} className="w-32 h-36">
       //       <div className="relative w-full h-full rounded-md shadow-2xl ">
       //         <img
       //           className="absolute inset-0 w-full h-52 object-cover object-center"
@@ -136,7 +136,7 @@ function CartItem(props) {
       //         <span className="text-sm uppercase text-rose-500">
       //           {book.bookId.category}
       //         </span>
-      //         <Link to={`/books/${book.bookId._id}`}>
+      //         <Link to={`/books/${book.bookId?._id}`}>
       //           <h2 className="font-medium">{book.bookId.title}</h2>
       //         </Link>
       //       </div>
@@ -148,7 +148,7 @@ function CartItem(props) {
       //       <span className="text-lg font-medium">{book.bookId.price}</span>
       //       <button
       //         className="absolute right-2 bottom-2 btn py-3 rounded-md btn-error"
-      //         onClick={() => deleteBookById(book.bookId._id)}
+      //         onClick={() => deleteBookById(book.bookId?._id)}
       //       >
       //         <FaTrash color="white" />
       //       </button>

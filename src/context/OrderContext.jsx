@@ -27,11 +27,11 @@ export const OrderContextProvider = ({ children }) => {
       const flattenedBooks = bookOrder?.flat();
 
       const bookIds = flattenedBooks.map((book) => {
-        return book.bookId._id;
+        return book.bookId?._id;
       });
 
       setOrderBookId(bookIds);
-      setCartItems([])
+      
     }
   }
 

@@ -5,7 +5,6 @@ import { FaRegHeart, FaHeart, FaBook } from "react-icons/fa";
 import { MdAddShoppingCart } from "react-icons/md";
 import { BsFillCartCheckFill } from "react-icons/bs";
 
-
 const BookCard = ({
   _id,
   title,
@@ -18,10 +17,9 @@ const BookCard = ({
   addToCart,
   InCart,
   isloading,
-  isBookInOrder, 
-  isDownloadLoading
+  isBookInOrder,
+  isDownloadLoading,
 }) => {
-  
   const navigate = useNavigate();
   return (
     <div
@@ -57,18 +55,14 @@ const BookCard = ({
               />
             )
           ) : null}
-              
+
           {localStorage.getItem("token") ? (
-            InCart ? (
-              <BsFillCartCheckFill className="  iconBody" />
-            ) : isBookInOrder ? (
-              <button onClick={() => navigate("/library")} disabled={isDownloadLoading}>
-                <FaBook
-                  className={` ${
-                    isDownloadLoading ? "cursor-not-allowed" : "cursor-pointer iconBody"
-                  }`}
-                />
+            isBookInOrder ? (
+              <button onClick={() => navigate("/library")}>
+                <FaBook />
               </button>
+            ) : InCart ? (
+              <BsFillCartCheckFill className="  iconBody" />
             ) : (
               <button onClick={addToCart} disabled={isloading}>
                 <MdAddShoppingCart

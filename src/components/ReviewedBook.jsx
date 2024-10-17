@@ -8,7 +8,7 @@ function ReviewedBook({ review }) {
   const [book, setBook] = useState({});
   console.log(book);
 
-  const bookId = review.bookId._id;
+  const bookId = review.bookId?._id;
 
   const getBookById = async (id) => {
     try {
@@ -61,7 +61,7 @@ function ReviewedBook({ review }) {
 
         <Link
           className="text-sm text-blue-500 hover:text-blue-600 hover:underline self-end"
-          to={`/books/${book._id}`}
+          to={`/books/${book?._id}`}
         >
           View
         </Link>

@@ -29,7 +29,7 @@ import {
 
 function BooksPage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
-  const { orderBookId, isDownloadLoading,getOrderData } = useOrder();
+  const { orderBookId, isDownloadLoading, getOrderData } = useOrder();
   const { cartItems, addToCart, isloading } = useCartContext();
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
@@ -47,7 +47,7 @@ function BooksPage() {
   const navigate = useNavigate();
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState("default");
-  const token =localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -66,7 +66,7 @@ function BooksPage() {
             },
           }
         );
-       // console.log(res.data.booksDataWithoutSourcePath);
+        // console.log(res.data.booksDataWithoutSourcePath);
         window.scrollTo(0, 0);
         setBooks(res.data.booksDataWithoutSourcePath);
         setTotalPages(res.data.totalPages);
@@ -101,11 +101,13 @@ function BooksPage() {
     fetchCatigories();
     fetchAuthor();
     fetchBooks();
-    if(token){
-      getOrderData()
-    }
   }, [query, author, category, minPrice, maxPrice, sortOption, page]);
 
+  useEffect(() => {
+    if (token) {
+      getOrderData();
+    }
+  }, []);
   const handleSearchSubmit = (inputValue) => {
     if (inputValue.trim()) {
       setPage(1);

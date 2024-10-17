@@ -6,18 +6,17 @@ import { PiListHeartLight } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import CartContext from "../context/cartContext";
 import { MdAddShoppingCart } from "react-icons/md";
-import { useOrder } from "../context/OrderContext"; 
+import { useOrder } from "../context/OrderContext";
 
 const AddFovrit = () => {
   const { favoriteBooks, removeFromFavorites } = useFavorites();
   const [loading, setLoading] = useState(true);
-  const { cartItems, addToCart } = useContext(CartContext); 
-  const { orderBookId } = useOrder();
+  const { cartItems, addToCart } = useContext(CartContext);
+  const { orderBookId,getOrderData } = useOrder();
   const token = localStorage.getItem("token");
-
-
-  const navigate = useNavigate();
   
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchFavorites = async () => {
       setLoading(true);
@@ -36,8 +35,10 @@ const AddFovrit = () => {
       }
     };
     fetchFavorites();
+    if(token){
+      getOrderData()
+    }
   }, [token]);
-
 
   const deleteFav = async (bookId) => {
     if (!bookId) return;
@@ -56,14 +57,12 @@ const AddFovrit = () => {
     }
   };
 
-
-
-
   const isBookInCart = (bookId) => {
-    return cartItems.some((cartItem) => cartItem.bookId._id === bookId);
+    return Boolean(
+      cartItems.find((cart) => cart.bookId?._id === bookId)
+    );
   };
 
-  
   const isBookInOrder = (bookId) => {
     return orderBookId.includes(bookId);
   };
@@ -87,17 +86,20 @@ const AddFovrit = () => {
                     <th className="py-4 px-2">Author</th>
                     <th className="py-4 px-2">Price</th>
                     <th className="py-4 px-2">Remove</th>
-                    <th className="py-4 px-2">Add to Cart</th> 
+                    <th className="py-4 px-2">Add to Cart</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
                   {favoriteBooks.map((book) => (
                     <tr
-                      key={book.bookId._id}
+                      key={book.bookId?._id}
                       className="border-t border-gray-200 hover:bg-gray-100"
                     >
-                      <td className="py-4 px-2 flex justify-center cursor-pointer"  onClick={() => navigate("/books")}   >
-                        <img 
+                      <td
+                        className="py-4 px-2 flex justify-center cursor-pointer"
+                        onClick={() => navigate("/books")}
+                      >
+                        <img
                           src={book.bookId?.coverImage || ""}
                           alt={book.bookId?.title || "No title"}
                           className="w-20 h-24 rounded object-cover"
@@ -105,13 +107,19 @@ const AddFovrit = () => {
                       </td>
 
                       <td className="py-4 px-2">
-                        <p className="text-lg font-semibold text-gray-800  cursor-pointer"    onClick={() => navigate("/books")}    >
+                        <p
+                          className="text-lg font-semibold text-gray-800  cursor-pointer"
+                          onClick={() => navigate("/books")}
+                        >
                           {book.bookId?.title || "No Title"}
                         </p>
                       </td>
 
                       <td className="py-4 px-2">
-                        <p className="text-gray-800 font-semibold text-lg  cursor-pointer"   onClick={() => navigate("/authors")}   >
+                        <p
+                          className="text-gray-800 font-semibold text-lg  cursor-pointer"
+                          onClick={() => navigate("/authors")}
+                        >
                           {book.bookId?.author || "Unknown Author"}
                         </p>
                       </td>
@@ -130,24 +138,28 @@ const AddFovrit = () => {
                           <FaRegTrashCan size={25} />
                         </button>
                       </td>
-
-                 
+                      
                       <td className="py-3 px-6">
-                        {isBookInOrder(book.bookId._id) ? (
+                        {isBookInOrder(book.bookId?._id) ? (
+                          <button
+                          onClick={() => navigate("/library")}
+                          
+                        >
                           <span className="text-sky-800 font-bold">
                             Already Bought
-                          </span> 
-                        ) : isBookInCart(book.bookId._id) ? (
+                          </span>
+                          </button>
+                        ) : isBookInCart(book.bookId?._id) ? (
                           <span className="text-blue-500 font-bold">
                             Added to Cart
-                          </span> 
+                          </span>
                         ) : (
                           <button
                             className="text-blue-400 hover:text-blue-700"
-                            onClick={() => addToCart(book.bookId._id)}  
+                            onClick={() => addToCart(book.bookId)}
                           >
-                              <MdAddShoppingCart  size={30}  />
-                          </button> 
+                            <MdAddShoppingCart size={30} />
+                          </button>
                         )}
                       </td>
                     </tr>
@@ -177,8 +189,8 @@ const AddFovrit = () => {
           </div>
         </div>
       )}
-
     </div>
+   
   );
 };
 
