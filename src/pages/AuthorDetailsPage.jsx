@@ -5,11 +5,11 @@ import BookCard from '../components/BookCard';
 import { useFavorites } from '../context/FavoritesContext';
 import useCartContext from '../hooks/use-cart-context';
 import { useOrder } from '../context/OrderContext';
-
+const token =localStorage.getItem("token")
 const AuthorDetailsPage = () => {
     const { id } = useParams();
-    const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
-    const { orderBookId, isDownloadLoading } = useOrder();
+    const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
+    const { orderBookId,isDownloadLoading,getOrderData } = useOrder();
     const [author, setAuthor] = useState(null);
     const [loading, setLoading] = useState(true);
     const { cartItems, addToCart, isloading } = useCartContext(); // Removed unused deleteBookById
@@ -27,6 +27,9 @@ const AuthorDetailsPage = () => {
         };
 
         fetchAuthorDetails();
+        if(token){
+            getOrderData()
+          }
     }, [id]);
 
     if (loading) {

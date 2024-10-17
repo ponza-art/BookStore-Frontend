@@ -27,7 +27,7 @@ function CartProvider({ children }) {
       setCartItems(data.items);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     } finally {
       setLoading(false);
     }

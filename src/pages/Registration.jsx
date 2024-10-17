@@ -10,20 +10,29 @@ import { MdHome } from "react-icons/md";
 
 export default function Registration() {
   const [eyePassword, setEyePassword] = useState("password");
+  const [eyeConfirmPassword, setEyeConfirmPassword] = useState("password");
   const [load, setload] = useState(false);
   const toggleEyePassword = () => {
     setEyePassword(eyePassword === "password" ? "text" : "password");
+  };
+  const toggleEyeConfirmPassword = () => {
+    setEyeConfirmPassword(
+      eyeConfirmPassword === "password" ? "text" : "password"
+    );
   };
 
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [errorState, setErrorState] = useState({
     username: null,
     email: null,
     password: null,
+
+    confirmPassword: null,
   });
   const navigate = useNavigate();
 
@@ -31,7 +40,12 @@ export default function Registration() {
     try {
       e.preventDefault();
       const { error, value } = UsersShemasign.validate(
-        { username: form.username, email: form.email, password: form.password },
+        {
+          username: form.username,
+          email: form.email,
+          password: form.password,
+          confirmPassword: form.confirmPassword,
+        },
         { abortEarly: false }
       );
       if (error) {
@@ -42,7 +56,12 @@ export default function Registration() {
         console.log(errors);
         setErrorState(errors);
       } else {
-        setErrorState({ username: null, email: null, password: null });
+        setErrorState({
+          username: null,
+          email: null,
+          password: null,
+          confirmPassword: null,
+        });
         setload(true);
         const response = await axios.post(
           "https://book-store-backend-sigma-one.vercel.app/users/register",
@@ -104,12 +123,17 @@ export default function Registration() {
         acc[curr.path[0]] = curr.message;
         return acc;
       }, {});
-      setErrorState(errors);
+      setErrorState((prevState) => ({
+        ...prevState,
+        [name]: errors[name],
+      }));
     } else {
-      setErrorState({ ...errorState, [name]: null });
+      setErrorState((prevState) => ({
+        ...prevState,
+        [name]: null,
+      }));
     }
   };
-
   return (
     <div className="flex justify-center items-center">
       <div className="flex items-center justify-center min-h-screen ">
@@ -232,6 +256,59 @@ export default function Registration() {
                   </button>
                 </div>
               )}
+              {errorState.confirmPassword ? (
+                <div className="relative">
+                  <ErrorInput
+                    value={form.confirmPassword}
+                    onChanges={handleChange}
+                    Error={errorState.confirmPassword}
+                    text="confirmPassword"
+                    placeHolder="confirmPassword"
+                    htmlFor="confirmPassword"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    type={eyeConfirmPassword}
+                    onBlur={handleOnBLur}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleEyeConfirmPassword}
+                    className="absolute top-1/2 right-3 transform -translate-y-1"
+                  >
+                    {eyeConfirmPassword === "password" ? (
+                      <CloseEyeIcon />
+                    ) : (
+                      <OpenEyeIcon />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div className="relative">
+                  <Input
+                    value={form.confirmPassword}
+                    onChanges={handleChange}
+                    text="confirmPassword"
+                    placeHolder="confirmPassword"
+                    htmlFor="confirmPassword"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    type={eyeConfirmPassword}
+                    onBlur={handleOnBLur}
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleEyeConfirmPassword}
+                    className="absolute top-1/2 right-3 transform translate-y-1"
+                  >
+                    {eyeConfirmPassword === "password" ? (
+                      <CloseEyeIcon />
+                    ) : (
+                      <OpenEyeIcon />
+                    )}
+                  </button>
+                </div>
+              )}
+
               {load ? (
                 <button
                   type="submit"

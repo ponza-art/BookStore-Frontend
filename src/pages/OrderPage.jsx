@@ -65,7 +65,7 @@ export default function OrderPage() {
         text: "Order failed !",
         icon: "error",
       });
-      console.log(err);
+     // console.log(err);
     } finally {
       setIsLoading(false);
     }

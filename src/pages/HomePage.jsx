@@ -10,9 +10,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { HomeCardSkeleton ,  HomeHeaderSkeleton ,SearchHomeSkeleton , SliderSkeleton } from "./Skeleton"; // Import the skeleton component
+import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
+  const { getOrderData} = useOrder()
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [saleBooks, setSaleBooks] = useState([]);
@@ -21,7 +23,7 @@ function HomePage() {
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const token =localStorage.getItem("token")
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -43,6 +45,10 @@ function HomePage() {
       }
     };
     fetchBooks();
+    if(token){
+      getOrderData()
+    }
+    
   }, []);
 
   const handleSearchSubmit = (inputValue) => {
