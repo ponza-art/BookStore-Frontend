@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useLoaderData, useActionData, useNavigation } from 'react-router-dom';
+import { useLoaderData, useActionData, useNavigation, Link } from 'react-router-dom';
 import { CirclePlus } from 'lucide-react';
 import UpdateUserData from '../../components/UpdateUserData';
 import Cards from '../../components/Cards';
+import { toast } from 'react-hot-toast'; 
+import { updateUserData, addCreditCard , deleteCard } from '../../services/apiProfile';
 import AddCreditCard from '../../components/AddCreditCard';
 import ReviewedBook from '../../components/ReviewedBook';
+import { BsCreditCard2BackFill } from "react-icons/bs";
 
 
 function ProfileSkeleton() {
@@ -37,10 +40,13 @@ function ReviewsSkeleton() {
 }
 
 function ProfilePage() {
-  const { userData, creditCards, userReviews } = useLoaderData();
+  const { userData, creditCards: initialCreditCards, userReviews } = useLoaderData();
   const actionData = useActionData();
   const navigation = useNavigation();
   const isLoading = navigation.state === 'loading';
+
+  
+  const [creditCards, setCreditCards] = useState(initialCreditCards);
 
   const [activeTab, setActiveTab] = useState('wallet');
   const [showEdit, setShowEdit] = useState(false);
@@ -53,8 +59,29 @@ function ProfilePage() {
     }
   }, [actionData]);
 
+  const handleDeleteCard = async (cardId) => {
+    const token = localStorage.getItem("token");
+    try {
+      await deleteCard(token, cardId);
+      toast.success('Card deleted successfully');
+
+
+      setCreditCards((prevCards) => ({
+        ...prevCards,
+        data: {
+          ...prevCards.data,
+          cards: prevCards.data.cards.filter((card) => card._id !== cardId),
+        },
+      }));
+      
+    } catch (error) {
+      toast.error('Failed to delete card');
+      console.log(error);
+    }
+  };
+
   const renderedCards = creditCards?.data?.cards?.map((card) => (
-    <Cards key={card._id} card={card} />
+    <Cards key={card._id} card={card} onDelete={handleDeleteCard} />
   ));
 
   return (
@@ -88,7 +115,6 @@ function ProfilePage() {
               ) : (
                 <div className="flex flex-col justify-center p-4 mt-8">
                   {!userData ? (
-                    
                     <ProfileSkeleton />
                   ) : (
                     <>
@@ -147,20 +173,26 @@ function ProfilePage() {
 
               <div className="bg-white shadow-lg rounded-lg p-8">
                 {activeTab === 'wallet' && (
-                  <div>
-                    <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
-                      Your Wallet
-                    </h2>
-                    <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg border shadow">
-                      {!creditCards ? (
-                        <WalletSkeleton />
-                      ) : (
-                        <div>{renderedCards}</div>
-                      )}
-
-                     
-                    </div>
-                  </div>
+             <div>
+             <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
+               Your Wallet
+             </h2>
+             <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg shadow">
+               {creditCards.length > 0 ? ( 
+                 <div>{renderedCards}</div>
+               ) : (
+                
+                 <div className="flex flex-col justify-center items-center h-60 py-15">
+                 <BsCreditCard2BackFill  className="text-blue-300 text-6xl mb-6" />
+                 <p className="text-2xl text-gray-700 font-semibold mb-4">
+                   Your wallet is empty.
+                 </p>
+       
+               </div>
+               )}
+             </div>
+           </div>
+           
                 )}
 
                 {activeTab === 'reviews' && (
@@ -193,4 +225,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-

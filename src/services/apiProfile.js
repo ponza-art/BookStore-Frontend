@@ -54,6 +54,31 @@ export async function getUserCreditCards(token) {
   }
 }
 
+// ////////////////////////////Deletcard //////////////////////////
+export async function deleteCard(token, cardId) {
+  // console.log( cardId);
+  try {
+    const res = await axios.delete(
+      
+      `http://localhost:5000/card/${cardId}`,
+      {
+        headers: {
+          Authorization: `Bearer `+  token,
+        },
+        
+      }
+      
+    );
+    return res.data;
+  } catch (error) {
+
+    console.log( error);
+
+  }
+}
+
+
+
 export async function addCreditCard(token, data) {
   try {
     const res = await axios.post(
