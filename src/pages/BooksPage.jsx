@@ -115,34 +115,20 @@ function BooksPage() {
     }
   };
 
-  // const handleSearchSubmit = (inputValue) => {
-  //   if (inputValue.trim()) {
-  //     setAuthor("");
-  //     setCategory("");
-  //     setMinPrice("");
-  //     setMaxPrice("");
-  //     setSortOption("default");
-  //     navigate(`/books?search=${encodeURIComponent(inputValue)}`);
-  //   }
-  // };
-
   const SkeletonCard = () => (
     <div
-      className="card animate-pulse bg-gray-200 relative shadow-xl parentDev"
+      className="card rounded-none animate-pulse bg-gray-200 relative"
       style={{
         width: "280px",
       }}
-      // height: "430px",
-      // transition: "border-color 0.3s ease-in-out",
     >
-      <div className="w-full h-96 mx-auto bg-slate-300 rounded-md"></div>
-      <div className="card-body flex-grow-0 ps-8 bodyCard">
+      <div className="w-full h-96 mx-auto"></div>
+      <div className="card-body flex-grow-0 px-0 mx-0 bg-white bodyCard">
         <div className="w-24 h-4 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-40 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-32 h-4 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-48 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="flex justify-between">
-          {/* <div className="w-24 h-8 bg-slate-300 rounded-md"></div> */}
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
         </div>
@@ -225,32 +211,6 @@ function BooksPage() {
     return classes.filter(Boolean).join(" ");
   }
 
-  // const sortBooks = (books, sortedOption) => {
-  //   switch (sortedOption) {
-  //     case "oldest":
-  //       return [...books].sort(
-  //         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-  //       );
-  //     case "newest":
-  //       return [...books].sort(
-  //         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  //       );
-  //     case "on-sale":
-  //       return [...books].filter((book) => book.discountPercentage > 0);
-  //     case "price-low-to-high":
-  //       return [...books].sort((a, b) => a.originalPrice - b.originalPrice);
-  //     case "price-high-to-low":
-  //       return [...books].sort((a, b) => b.originalPrice - a.originalPrice);
-  //     default:
-  //       return books;
-  //   }
-  // };
-
-  // const handleSortChange = (sortValue) => {
-  //   setSortOption(sortValue);
-  //   setBooks(sortBooks(books, sortValue));
-  // };
-
   const sortOptions = [
     { name: "Default", value: "default" },
     { name: "Oldest", value: "oldest" },
@@ -259,40 +219,6 @@ function BooksPage() {
     { name: "Price: Low to High", value: "price-low-to-high" },
     { name: "Price: High to Low", value: "price-high-to-low" },
   ];
-
-  // useEffect(() => {
-  //   let filteredBooks = allBooks;
-  //   if (author) {
-  //     filteredBooks = filteredBooks.filter((book) => book.author === author);
-  //   }
-  //   if (category) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.category === category
-  //     );
-  //   }
-  //   if (minPrice) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.originalPrice >= minPrice
-  //     );
-  //   }
-  //   if (maxPrice) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.originalPrice <= maxPrice
-  //     );
-  //   }
-  //   if (query) {
-  //     filteredBooks = filteredBooks.filter((book) =>
-  //       book.title.toLowerCase().includes(query.toLowerCase())
-  //     );
-  //   }
-  //   const sortedBooks = sortBooks(filteredBooks, sortOption);
-  //   setBooks(sortedBooks);
-  // }, [allBooks, author, category, minPrice, maxPrice, query, sortOption]);
-
-  // const paginatedBooks = books.slice(
-  //   (page - 1) * itemsPerPage,
-  //   page * itemsPerPage
-  // );
 
   return (
     <main className="container mx-auto mh-[60vh]">
@@ -516,13 +442,6 @@ function BooksPage() {
                       </MenuItems>
                     </Menu>
 
-                    {/* <button
-                      type="button"
-                      className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                    >
-                      <span className="sr-only">View grid</span>
-                      <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-                    </button> */}
                     <button
                       type="button"
                       onClick={() => setMobileFiltersOpen(true)}
