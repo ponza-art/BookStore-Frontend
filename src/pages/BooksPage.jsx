@@ -66,7 +66,7 @@ function BooksPage() {
             },
           }
         );
-        // console.log(res.data.booksDataWithoutSourcePath);
+        console.log(res.data.booksDataWithoutSourcePath);
         window.scrollTo(0, 0);
         setBooks(res.data.booksDataWithoutSourcePath);
         setTotalPages(res.data.totalPages);
@@ -130,19 +130,19 @@ function BooksPage() {
     <div
       className="card animate-pulse bg-gray-200 relative shadow-xl parentDev"
       style={{
-        height: "430px",
         width: "280px",
-        transition: "border-color 0.3s ease-in-out",
       }}
+      // height: "430px",
+      // transition: "border-color 0.3s ease-in-out",
     >
-      <div className="w-40 h-48 mt-6 mx-auto bg-slate-300 rounded-md"></div>
+      <div className="w-full h-96 mx-auto bg-slate-300 rounded-md"></div>
       <div className="card-body flex-grow-0 ps-8 bodyCard">
         <div className="w-24 h-4 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-40 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-32 h-4 bg-slate-300 mb-2 rounded-md"></div>
-        <div className="w-20 h-6 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="w-48 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="flex justify-between">
-          <div className="w-24 h-8 bg-slate-300 rounded-md"></div>
+          {/* <div className="w-24 h-8 bg-slate-300 rounded-md"></div> */}
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
         </div>
@@ -299,9 +299,9 @@ function BooksPage() {
       {loading ? (
         <div className="container px-5 lg:px-[10%] pt-4 pb-28">
           <SkeletonHeader />
-          <div className="flex justify-between mt-20">
+          <div className="flex justify-between mt-14">
             <SkeletonFilters />
-            <div className="flex flex-wrap gap-6 justify-center w-full lg:w-[75%]">
+            <div className="flex flex-wrap gap-6 justify-evenly w-full lg:w-[75%]">
               {Array(3)
                 .fill(0)
                 .map((_, index) => (
@@ -464,7 +464,7 @@ function BooksPage() {
                 </div>
               </Dialog>
 
-              <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <main className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-6 pt-24">
                   <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                     Books List
@@ -538,13 +538,9 @@ function BooksPage() {
                   aria-labelledby="products-heading"
                   className="pb-24 pt-6"
                 >
-                  {/* <h2 id="products-heading" className="sr-only">
-                    Products
-                  </h2> */}
-
-                  <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-4">
                     {/* Filters */}
-                    <form className="hidden lg:block">
+                    <form className="hidden lg:block ps-10 lg:col-span-1">
                       {filters.map((section, index) => (
                         <Disclosure
                           defaultOpen={index === 0 ? true : false}
@@ -646,17 +642,20 @@ function BooksPage() {
                     </form>
 
                     {/* Product grid */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-3 mb-12">
                       {books.length > 0 ? (
-                        <div className="flex flex-wrap px-2 pt-7 pb-14 gap-4 justify-evenly">
+                        <div className="flex flex-wrap px-8 md:gap-8 justify-center md:justify-evenly lg:justify-evenly">
                           {books.map((book, index) => (
                             <BookCard
                               _id={book._id}
                               key={index}
                               title={book.title}
                               author={book.author}
+                              category={book.category}
                               price={book.originalPrice}
                               imageUrl={book.coverImage}
+                              discountedPrice={book.discountedPrice}
+                              discountPercentage={book.discountPercentage}
                               addToFavorites={() => addToFavorites(book)}
                               removeFromFavorites={() =>
                                 removeFromFavorites(book._id)
