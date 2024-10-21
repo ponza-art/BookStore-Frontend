@@ -14,7 +14,7 @@ const LogosSection = () => {
         <div className="text-center">
           <FaBookOpen className="text-gray-800 w-16 h-16 mx-auto mb-2" />
           <h4 className="text-lg font-semibold">Bookland</h4>
-          <p className="text-sm">Publishing House</p>
+     
         </div>
 
         
