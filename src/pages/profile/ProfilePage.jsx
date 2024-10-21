@@ -3,8 +3,8 @@ import { useLoaderData, useActionData, useNavigation, Link } from 'react-router-
 import { CirclePlus } from 'lucide-react';
 import UpdateUserData from '../../components/UpdateUserData';
 import Cards from '../../components/Cards';
-import { toast } from 'react-hot-toast'; 
-import { updateUserData, addCreditCard , deleteCard } from '../../services/apiProfile';
+import { toast } from 'react-hot-toast';
+import { updateUserData, addCreditCard, deleteCard } from '../../services/apiProfile';
 import AddCreditCard from '../../components/AddCreditCard';
 import ReviewedBook from '../../components/ReviewedBook';
 import { BsCreditCard2BackFill } from "react-icons/bs";
@@ -15,7 +15,7 @@ function ProfileSkeleton() {
     <div className="animate-pulse flex flex-col items-center gap-4">
       <div className="h-32 w-32 bg-gray-300 rounded-full"></div>
       <div className="h-6 w-40 bg-gray-300 rounded"></div>
-      <div className="h-4 w-24 bg-gray-300 rounded"></div> 
+      <div className="h-4 w-24 bg-gray-300 rounded"></div>
     </div>
   );
 }
@@ -45,7 +45,7 @@ function ProfilePage() {
   const navigation = useNavigation();
   const isLoading = navigation.state === 'loading';
 
-  
+
   const [creditCards, setCreditCards] = useState(initialCreditCards);
 
   const [activeTab, setActiveTab] = useState('wallet');
@@ -73,7 +73,7 @@ function ProfilePage() {
           cards: prevCards.data.cards.filter((card) => card._id !== cardId),
         },
       }));
-      
+
     } catch (error) {
       toast.error('Failed to delete card');
       console.log(error);
@@ -81,6 +81,7 @@ function ProfilePage() {
   };
 
   const renderedCards = creditCards?.data?.cards?.map((card) => (
+    
     <Cards key={card._id} card={card} onDelete={handleDeleteCard} />
   ));
 
@@ -150,21 +151,19 @@ function ProfilePage() {
             <div className="md:col-span-3">
               <div className="flex justify-center md:justify-start border-b pb-4 mb-6 space-x-6">
                 <button
-                  className={`font-semibold py-2 px-6 rounded-full transition-all ${
-                    activeTab === 'wallet'
+                  className={`font-semibold py-2 px-6 rounded-full transition-all ${activeTab === 'wallet'
                       ? 'bg-gradient-to-r from-blue-400 to-purple-500 text-white shadow-lg'
                       : 'text-gray-500 hover:bg-gray-100'
-                  }`}
+                    }`}
                   onClick={() => setActiveTab('wallet')}
                 >
                   Wallet
                 </button>
                 <button
-                  className={`font-semibold py-2 px-6 rounded-full transition-all ${
-                    activeTab === 'reviews'
+                  className={`font-semibold py-2 px-6 rounded-full transition-all ${activeTab === 'reviews'
                       ? 'bg-gradient-to-r from-blue-400 to-purple-500 text-white shadow-lg'
                       : 'text-gray-500 hover:bg-gray-100'
-                  }`}
+                    }`}
                   onClick={() => setActiveTab('reviews')}
                 >
                   Reviews
@@ -173,26 +172,29 @@ function ProfilePage() {
 
               <div className="bg-white shadow-lg rounded-lg p-8">
                 {activeTab === 'wallet' && (
-             <div>
-             <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
-               Your Wallet
-             </h2>
-             <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg shadow">
-               {creditCards.length > 0 ? ( 
-                 <div>{renderedCards}</div>
-               ) : (
-                
-                 <div className="flex flex-col justify-center items-center h-60 py-15">
-                 <BsCreditCard2BackFill  className="text-blue-300 text-6xl mb-6" />
-                 <p className="text-2xl text-gray-700 font-semibold mb-4">
-                   Your wallet is empty.
-                 </p>
-       
-               </div>
-               )}
-             </div>
-           </div>
-           
+                  <div>
+                    {                        console.log(creditCards.data.cards.length)                    }
+                    <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
+                      Your Wallet
+                    </h2>
+                    <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg shadow">
+                      {creditCards.data.cards.length > 0 ? (
+                        console.log(creditCards),
+
+                        <div>{renderedCards}</div>
+                      ) : (
+
+                        <div className="flex flex-col justify-center items-center h-60 py-15">
+                          <BsCreditCard2BackFill className="text-blue-300 text-6xl mb-6" />
+                          <p className="text-2xl text-gray-700 font-semibold mb-4">
+                            Your wallet is empty.
+                          </p>
+
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                 )}
 
                 {activeTab === 'reviews' && (

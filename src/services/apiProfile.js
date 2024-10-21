@@ -40,7 +40,7 @@ export async function updateUserData(token, data) {
 export async function getUserCreditCards(token) {
   try {
     const res = await axios.get(
-      'https://book-store-backend-sigma-one.vercel.app/card',
+      'https://book-store-backend-sigma-one.vercel.app/card/',
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export async function deleteCard(token, cardId) {
   try {
     const res = await axios.delete(
       
-      `http://localhost:5000/card/${cardId}`,
+      `https://book-store-backend-sigma-one.vercel.app/card/${cardId}`,
       {
         headers: {
           Authorization: `Bearer `+  token,
