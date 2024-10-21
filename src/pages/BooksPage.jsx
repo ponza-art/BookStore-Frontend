@@ -66,7 +66,7 @@ function BooksPage() {
             },
           }
         );
-        // console.log(res.data.booksDataWithoutSourcePath);
+        console.log(res.data.booksDataWithoutSourcePath);
         window.scrollTo(0, 0);
         setBooks(res.data.booksDataWithoutSourcePath);
         setTotalPages(res.data.totalPages);
@@ -115,34 +115,20 @@ function BooksPage() {
     }
   };
 
-  // const handleSearchSubmit = (inputValue) => {
-  //   if (inputValue.trim()) {
-  //     setAuthor("");
-  //     setCategory("");
-  //     setMinPrice("");
-  //     setMaxPrice("");
-  //     setSortOption("default");
-  //     navigate(`/books?search=${encodeURIComponent(inputValue)}`);
-  //   }
-  // };
-
   const SkeletonCard = () => (
     <div
-      className="card animate-pulse bg-gray-200 relative shadow-xl parentDev"
+      className="card rounded-none animate-pulse bg-gray-200 relative"
       style={{
-        height: "430px",
         width: "280px",
-        transition: "border-color 0.3s ease-in-out",
       }}
     >
-      <div className="w-40 h-48 mt-6 mx-auto bg-slate-300 rounded-md"></div>
-      <div className="card-body flex-grow-0 ps-8 bodyCard">
+      <div className="w-full h-96 mx-auto"></div>
+      <div className="card-body flex-grow-0 px-0 mx-0 bg-white bodyCard">
         <div className="w-24 h-4 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-40 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="w-32 h-4 bg-slate-300 mb-2 rounded-md"></div>
-        <div className="w-20 h-6 bg-slate-300 mb-2 rounded-md"></div>
+        <div className="w-48 h-6 bg-slate-300 mb-2 rounded-md"></div>
         <div className="flex justify-between">
-          <div className="w-24 h-8 bg-slate-300 rounded-md"></div>
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
           <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
         </div>
@@ -225,32 +211,6 @@ function BooksPage() {
     return classes.filter(Boolean).join(" ");
   }
 
-  // const sortBooks = (books, sortedOption) => {
-  //   switch (sortedOption) {
-  //     case "oldest":
-  //       return [...books].sort(
-  //         (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-  //       );
-  //     case "newest":
-  //       return [...books].sort(
-  //         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  //       );
-  //     case "on-sale":
-  //       return [...books].filter((book) => book.discountPercentage > 0);
-  //     case "price-low-to-high":
-  //       return [...books].sort((a, b) => a.originalPrice - b.originalPrice);
-  //     case "price-high-to-low":
-  //       return [...books].sort((a, b) => b.originalPrice - a.originalPrice);
-  //     default:
-  //       return books;
-  //   }
-  // };
-
-  // const handleSortChange = (sortValue) => {
-  //   setSortOption(sortValue);
-  //   setBooks(sortBooks(books, sortValue));
-  // };
-
   const sortOptions = [
     { name: "Default", value: "default" },
     { name: "Oldest", value: "oldest" },
@@ -260,48 +220,14 @@ function BooksPage() {
     { name: "Price: High to Low", value: "price-high-to-low" },
   ];
 
-  // useEffect(() => {
-  //   let filteredBooks = allBooks;
-  //   if (author) {
-  //     filteredBooks = filteredBooks.filter((book) => book.author === author);
-  //   }
-  //   if (category) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.category === category
-  //     );
-  //   }
-  //   if (minPrice) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.originalPrice >= minPrice
-  //     );
-  //   }
-  //   if (maxPrice) {
-  //     filteredBooks = filteredBooks.filter(
-  //       (book) => book.originalPrice <= maxPrice
-  //     );
-  //   }
-  //   if (query) {
-  //     filteredBooks = filteredBooks.filter((book) =>
-  //       book.title.toLowerCase().includes(query.toLowerCase())
-  //     );
-  //   }
-  //   const sortedBooks = sortBooks(filteredBooks, sortOption);
-  //   setBooks(sortedBooks);
-  // }, [allBooks, author, category, minPrice, maxPrice, query, sortOption]);
-
-  // const paginatedBooks = books.slice(
-  //   (page - 1) * itemsPerPage,
-  //   page * itemsPerPage
-  // );
-
   return (
     <main className="container mx-auto mh-[60vh]">
       {loading ? (
         <div className="container px-5 lg:px-[10%] pt-4 pb-28">
           <SkeletonHeader />
-          <div className="flex justify-between mt-20">
+          <div className="flex justify-between mt-14">
             <SkeletonFilters />
-            <div className="flex flex-wrap gap-6 justify-center w-full lg:w-[75%]">
+            <div className="flex flex-wrap gap-6 justify-evenly w-full lg:w-[75%]">
               {Array(3)
                 .fill(0)
                 .map((_, index) => (
@@ -464,7 +390,7 @@ function BooksPage() {
                 </div>
               </Dialog>
 
-              <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <main className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between border-b border-gray-200 pb-6 pt-24">
                   <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                     Books List
@@ -516,13 +442,6 @@ function BooksPage() {
                       </MenuItems>
                     </Menu>
 
-                    {/* <button
-                      type="button"
-                      className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                    >
-                      <span className="sr-only">View grid</span>
-                      <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-                    </button> */}
                     <button
                       type="button"
                       onClick={() => setMobileFiltersOpen(true)}
@@ -538,13 +457,9 @@ function BooksPage() {
                   aria-labelledby="products-heading"
                   className="pb-24 pt-6"
                 >
-                  {/* <h2 id="products-heading" className="sr-only">
-                    Products
-                  </h2> */}
-
-                  <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-4">
                     {/* Filters */}
-                    <form className="hidden lg:block">
+                    <form className="hidden lg:block ps-10 lg:col-span-1">
                       {filters.map((section, index) => (
                         <Disclosure
                           defaultOpen={index === 0 ? true : false}
@@ -646,17 +561,20 @@ function BooksPage() {
                     </form>
 
                     {/* Product grid */}
-                    <div className="lg:col-span-3">
+                    <div className="lg:col-span-3 mb-12">
                       {books.length > 0 ? (
-                        <div className="flex flex-wrap px-2 pt-7 pb-14 gap-4 justify-evenly">
+                        <div className="flex flex-wrap px-8 md:gap-8 justify-center md:justify-evenly lg:justify-evenly">
                           {books.map((book, index) => (
                             <BookCard
                               _id={book._id}
                               key={index}
                               title={book.title}
                               author={book.author}
+                              category={book.category}
                               price={book.originalPrice}
                               imageUrl={book.coverImage}
+                              discountedPrice={book.discountedPrice}
+                              discountPercentage={book.discountPercentage}
                               addToFavorites={() => addToFavorites(book)}
                               removeFromFavorites={() =>
                                 removeFromFavorites(book._id)

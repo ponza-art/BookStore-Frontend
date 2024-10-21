@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import useCartContext from "../hooks/use-cart-context";
 import { useOrder } from "../context/OrderContext";
 
-const HomeCard = ({ books, favoriteBooks, addToFavorites, removeFromFavorites }) => {
+const HomeCard = ({
+  books,
+  favoriteBooks,
+  addToFavorites,
+  removeFromFavorites,
+}) => {
   const { cartItems, addToCart, isloading } = useCartContext();
   const { orderBookId, isDownloadLoading } = useOrder();
 
@@ -11,21 +16,26 @@ const HomeCard = ({ books, favoriteBooks, addToFavorites, removeFromFavorites })
     <div className="p-6 container mx-auto">
       {books.length > 0 ? (
         <div className="flex flex-wrap pt-7 pb-14 gap-6 justify-evenly">
-          {books.map((book) => (
+          {books.map((book, index) => (
             <BookCard
-              key={book._id}
+              _id={book._id}
+              key={index}
               title={book.title}
               author={book.author}
+              category={book.category}
               price={book.originalPrice}
               imageUrl={book.coverImage}
-              _id={book._id}
+              discountedPrice={book.discountedPrice}
+              discountPercentage={book.discountPercentage}
               addToFavorites={() => addToFavorites(book)}
               removeFromFavorites={() => removeFromFavorites(book._id)}
               isFavorite={Boolean(
-                favoriteBooks?.find((favBook) => favBook.bookId?._id === book._id)
+                favoriteBooks.find((fav) => fav.bookId._id === book._id)
               )}
               addToCart={() => addToCart(book)}
-              InCart={Boolean(cartItems.find((cart) => cart.bookId?._id === book._id))}
+              InCart={Boolean(
+                cartItems.find((cart) => cart.bookId._id === book._id)
+              )}
               isloading={isloading}
               isBookInOrder={Boolean(orderBookId?.includes(book._id))}
               isDownloadLoading={isDownloadLoading}
