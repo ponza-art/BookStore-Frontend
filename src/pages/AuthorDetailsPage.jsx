@@ -6,13 +6,14 @@ import { useFavorites } from "../context/FavoritesContext";
 import useCartContext from "../hooks/use-cart-context";
 import { useOrder } from "../context/OrderContext";
 const token = localStorage.getItem("token");
+
 const AuthorDetailsPage = () => {
   const { id } = useParams();
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
   const { orderBookId, isDownloadLoading, getOrderData } = useOrder();
   const [author, setAuthor] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { cartItems, addToCart, isloading } = useCartContext(); // Removed unused deleteBookById
+  const { cartItems, addToCart, isloading } = useCartContext();
 
   useEffect(() => {
     const fetchAuthorDetails = async () => {
@@ -35,7 +36,6 @@ const AuthorDetailsPage = () => {
   }, [id]);
 
   if (loading) {
-    // Skeleton Loader for the page while loading
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-evenly mx-auto my-24">
@@ -43,9 +43,7 @@ const AuthorDetailsPage = () => {
             <div
               key={index}
               className="card rounded-none animate-pulse bg-gray-200 relative"
-              style={{
-                width: "280px",
-              }}
+              style={{ width: "280px" }}
             >
               <div className="w-full h-96 mx-auto"></div>
               <div className="card-body flex-grow-0 px-0 mx-0 bg-white bodyCard">
@@ -70,41 +68,63 @@ const AuthorDetailsPage = () => {
   }
 
   return (
-    <div className="author-details-page container mx-auto my-6">
-      <h2 className="text-2xl font-semibold mb-4">Books by {author.name}</h2>
-      <div className="flex flex-wrap px-8 md:gap-8 justify-center md:justify-evenly lg:justify-evenly">
-        {author.books.length > 0 ? (
-          author.books.map((book, index) => {
-            const isFavorite = favoriteBooks.some(
-              (fav) => fav.bookId._id === book.bookId._id
-            );
-            return (
-              <BookCard
-                key={index}
-                _id={book.bookId._id}
-                title={book.bookId.title}
-                author={author.name}
-                category={book.bookId.category}
-                price={book.bookId.originalPrice}
-                discountedPrice={book.bookId.discountedPrice}
-                discountPercentage={book.bookId.discountPercentage}
-                imageUrl={book.bookId.coverImage}
-                isFavorite={isFavorite}
-                addToFavorites={() => addToFavorites(book.bookId)}
-                removeFromFavorites={() => removeFromFavorites(book.bookId._id)}
-                addToCart={() => addToCart(book.bookId)}
-                InCart={Boolean(
-                  cartItems.find((cart) => cart.bookId._id === book.bookId._id)
-                )}
-                isloading={isloading}
-                isBookInOrder={Boolean(orderBookId?.includes(book.bookId._id))}
-                isDownloadLoading={isDownloadLoading}
-              />
-            );
-          })
-        ) : (
-          <div>No books found</div>
-        )}
+    <div className="author-details-page container mx-auto my-12">
+     
+      <div className="flex flex-col md:flex-row gap-10">
+        <div className="md:w-[30%] flex justify-center items-start">
+          <img
+            src={author.image}
+            alt={author.name}
+            className="w-[80%] h-auto mx-auto md:mx-0 rounded-lg shadow-lg my-20"
+          />
+        </div>
+
+        <div className="md:w-[70%]">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center md:text-left">
+            Books by {author.name}
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {author.books.length > 0 ? (
+              author.books.map((book, index) => {
+                const isFavorite = favoriteBooks.some(
+                  (fav) => fav.bookId._id === book.bookId._id
+                );
+                return (
+                  <BookCard
+                    key={index}
+                    _id={book.bookId._id}
+                    title={book.bookId.title}
+                    author={author.name}
+                    category={book.bookId.category}
+                    price={book.bookId.originalPrice}
+                    discountedPrice={book.bookId.discountedPrice}
+                    discountPercentage={book.bookId.discountPercentage}
+                    imageUrl={book.bookId.coverImage}
+                    isFavorite={isFavorite}
+                    addToFavorites={() => addToFavorites(book.bookId)}
+                    removeFromFavorites={() =>
+                      removeFromFavorites(book.bookId._id)
+                    }
+                    addToCart={() => addToCart(book.bookId)}
+                    InCart={Boolean(
+                      cartItems.find(
+                        (cart) => cart.bookId._id === book.bookId._id
+                      )
+                    )}
+                    isloading={isloading}
+                    isBookInOrder={Boolean(
+                      orderBookId?.includes(book.bookId._id)
+                    )}
+                    isDownloadLoading={isDownloadLoading}
+                  />
+                );
+              })
+            ) : (
+              <div>No books found</div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
