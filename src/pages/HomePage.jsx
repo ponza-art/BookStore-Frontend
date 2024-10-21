@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { HomeCardSkeleton ,  HomeHeaderSkeleton ,SearchHomeSkeleton , SliderSkeleton } from "./Skeleton"; // Import the skeleton component
 import { useOrder } from "../context/OrderContext";
+import LogosSection from "../components/LogosSection";
 
 function HomePage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
@@ -214,9 +215,12 @@ function HomePage() {
               </div>
             </div>
           )}
+         
 
-          <div className="mt-10">
-            <div className="flex justify-between">
+          <div className=" mt-10">
+          <LogosSection />
+            
+            <div className="container  flex justify-between">
               <h2 className="text-2xl font-bold mb-5">Latest Books</h2>
               <Link to={"/books"} className="text-blue-500">
                 View All
@@ -234,6 +238,8 @@ function HomePage() {
               ))}
             </div>
           </div>
+ 
+
         </>
       )}
     </main>
