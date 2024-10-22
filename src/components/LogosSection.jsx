@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBookOpen, FaUniversity } from 'react-icons/fa';
-import { GiBlackBook } from "react-icons/gi";
+import { GiWhiteBook } from "react-icons/gi";
 import { GiRead } from "react-icons/gi";
 
 
@@ -24,7 +24,7 @@ const LogosSection = () => {
         </div>
 
         <div className="text-center">
-          <GiBlackBook  className="text-gray-800 w-16 h-16 mx-auto mb-2" />
+          <GiWhiteBook   className="text-gray-800 w-16 h-16 mx-auto mb-2" />
           <h4 className="text-lg font-semibold">Books</h4>
          
         </div>

@@ -71,30 +71,28 @@ const AuthorDetailsPage = () => {
   }
 
   return (
-    <div className="author-details-page container mx-auto my-8">
-      
+    <div className="container mx-auto my-6">
+    
     <div className="flex flex-col items-center">
       <div className="relative mb-6">
         <img
           src={author.image}
           alt={author.name}
-          className="rounded-full shadow-lg object-cover h-72 w-72"
+          className="rounded-full shadow-lg object-cover h-64 w-64"
         />
 
       </div>
-  
-    
       <h2 className="text-4xl font-serif font-bold mb-2">
         {author.name}
       </h2>
   
       <div className="text-center">
-        <p className="italic text-gray-600 mb-4">"Best-selling Author"</p>
+        {author.books.length > 0 ?(<p className="italic text-gray-600 mb-4">"Best-selling Author"</p>):null}
+    
       </div>
   
-    
       {author.books.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-2 mb-4">
           {author.books.map((book, index) => {
             const isFavorite = favoriteBooks.some(
               (fav) => fav.bookId._id === book.bookId._id

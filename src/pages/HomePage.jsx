@@ -218,7 +218,7 @@ function HomePage() {
          
 
           <div className=" mt-10">
-          <LogosSection />
+          {/* <LogosSection /> */}
             
             <div className="container  flex justify-between">
               <h2 className="text-2xl font-bold mb-5">Latest Books</h2>
