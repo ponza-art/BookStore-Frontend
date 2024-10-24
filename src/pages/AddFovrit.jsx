@@ -109,7 +109,7 @@ const AddFovrit = () => {
                       <td className="py-4 px-2">
                         <p
                           className="text-lg font-semibold text-gray-800  cursor-pointer"
-                          onClick={() => navigate("/books")}
+                          onClick={() => navigate(`/books/${book.bookId._id}`)}
                         >
                           {book.bookId?.title || "No Title"}
                         </p>
@@ -118,7 +118,7 @@ const AddFovrit = () => {
                       <td className="py-4 px-2">
                         <p
                           className="text-gray-800 font-semibold text-lg  cursor-pointer"
-                          onClick={() => navigate("/authors")}
+                          onClick={() => navigate(`/authors/${book.bookId._id}`)}
                         >
                           {book.bookId?.author || "Unknown Author"}
                         </p>

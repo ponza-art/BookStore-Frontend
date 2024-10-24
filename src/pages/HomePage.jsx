@@ -9,12 +9,12 @@ import { useFavorites } from "../context/FavoritesContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HomeCardSkeleton ,  HomeHeaderSkeleton ,SearchHomeSkeleton , SliderSkeleton } from "./Skeleton"; // Import the skeleton component
+import { HomeCardSkeleton, HomeHeaderSkeleton, SearchHomeSkeleton, SliderSkeleton } from "./Skeleton";
 import { useOrder } from "../context/OrderContext";
 
 function HomePage() {
-  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites(); 
-  const { getOrderData} = useOrder()
+  const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
+  const { getOrderData } = useOrder();
   const [loading, setLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [saleBooks, setSaleBooks] = useState([]);
@@ -23,7 +23,8 @@ function HomePage() {
   const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const token =localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -44,11 +45,11 @@ function HomePage() {
         console.error("Error fetching books:", error);
       }
     };
+
     fetchBooks();
-    if(token){
-      getOrderData()
+    if (token) {
+      getOrderData();
     }
-    
   }, []);
 
   const handleSearchSubmit = (inputValue) => {
@@ -108,51 +109,50 @@ function HomePage() {
   };
 
   const handleNextClick = () => {
-    if (currentSlide < saleBooks.length - calculateSlidesToShow(saleBooks.length)) {
+    const maxSlideIndex =
+      saleBooks.length - Math.min(calculateSlidesToShow(saleBooks.length), saleBooks.length);
+
+    if (currentSlide < maxSlideIndex) {
       sliderRef.current.slickNext();
     }
   };
 
   return (
-    <main className="container mx-auto relative">
+    <main className="container mx-auto relative px-4 md:px-8">
       {loading ? (
         <div className="container">
-
-          <HomeHeaderSkeleton/>
-          <SearchHomeSkeleton/>
-          <SliderSkeleton/>
-        <div className="mt-10 mx-auto  space-y-20">
-          <HomeCardSkeleton /> 
-          <HomeCardSkeleton /> 
-        </div>
+          <HomeHeaderSkeleton />
+          <SearchHomeSkeleton />
+          <SliderSkeleton />
+          <div className="mt-10 mx-auto space-y-20">
+            <HomeCardSkeleton />
+            <HomeCardSkeleton />
+          </div>
         </div>
       ) : (
         <>
-          <div className="mt-15">
+          <div className="mt-4 md:mt-10">
             <HomeHeader />
           </div>
-          <div className="mt-10">
+          <div className="mt-4 md:mt-8">
             <SearchHome initialQuery={query} onSearch={handleSearchSubmit} />
           </div>
 
           {saleBooks.length > 0 && (
             <div className="mt-10">
-              <div className="flex justify-center items-center bg-red-500 text-white py-5 mb-5 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold uppercase">
+              <div className="flex justify-center items-center bg-red-500 text-white py-3 md:py-5 mb-5 rounded-lg shadow-lg">
+                <h2 className="text-lg md:text-2xl font-bold uppercase text-center px-4">
                   Special Sale! Books with 25% or More Discount
                 </h2>
               </div>
 
-              {/* Prev and Next arrows */}
               <div className="relative">
                 <button
                   onClick={handlePrevClick}
                   disabled={currentSlide === 0}
-                  className={`absolute left-0  top-1/2 transform -translate-y-1/2 p-3 rounded-full  shadow-lg transition-all z-10 ${
-                    currentSlide === 0
-                      ? "bg-gray-400 text-white cursor-not-allowed"
-                      : "bg-brown-200 text-white hover:bg-gray-700"
-                  }`}
+                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 
+                    ${currentSlide === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-brown-200 hover:bg-gray-700"}
+                    hidden lg:block`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,47 +161,13 @@ function HomePage() {
                     stroke="currentColor"
                     className="w-6 h-6"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-
-                <button
-                  onClick={handleNextClick}
-                  disabled={
-                    currentSlide >=
-                    saleBooks.length - calculateSlidesToShow(saleBooks.length)
-                  }
-                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg transition-all z-10 ${
-                    currentSlide >=
-                    saleBooks.length - calculateSlidesToShow(saleBooks.length)
-                      ? "bg-gray-400 text-white cursor-not-allowed"
-                      : "bg-brown-200 text-white hover:bg-gray-700"
-                  }`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
 
                 <Slider ref={sliderRef} {...sliderSettings}>
                   {saleBooks.map((book) => (
-                    <div key={book._id} className="px-2">
+                    <div key={book._id}>
                       <HomeCard
                         books={[book]}
                         favoriteBooks={favoriteBooks}
@@ -211,18 +177,36 @@ function HomePage() {
                     </div>
                   ))}
                 </Slider>
+
+                <button
+                  onClick={handleNextClick}
+                  disabled={currentSlide >= saleBooks.length - calculateSlidesToShow(saleBooks.length)}
+                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 
+                    ${currentSlide >= saleBooks.length - calculateSlidesToShow(saleBooks.length) ? "bg-gray-400 cursor-not-allowed" : "bg-brown-200 hover:bg-gray-700"}
+                    hidden lg:block`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
           )}
 
           <div className="mt-10">
-            <div className="flex justify-between">
-              <h2 className="text-2xl font-bold mb-5">Latest Books</h2>
+            <div className="flex w-full justify-between items-center px-4">
+              <h2 className="text-xl md:text-2xl font-bold mb-5">Latest Books</h2>
               <Link to={"/books"} className="text-blue-500">
                 View All
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
               {books.map((book) => (
                 <HomeCard
                   key={book._id}

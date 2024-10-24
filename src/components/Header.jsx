@@ -1,9 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { UserContext } from '../hooks/UserContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { GrShop } from 'react-icons/gr';
-import useCartContext from '../hooks/use-cart-context';
+import { useFavorites } from '../context/FavoritesContext'; 
+import useCartContext from '../hooks/use-cart-context'; 
 
 function Header() {
   const navigate = useNavigate();
@@ -11,9 +12,8 @@ function Header() {
   const username = userInfo?.username;
   const userImage = userInfo?.image;
 
-  const [favoriteCount, setFavoriteCount] = useState(0);
-  const [cartCount, setCartCount] = useState(0); // State for cart count
-  const { cartItems, setCartItems, getUserCartItems } = useCartContext();
+  const { favoriteBooks } = useFavorites(); 
+  const { cartItems } = useCartContext(); 
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -26,10 +26,8 @@ function Header() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
-    // const cartData = JSON.parse(localStorage.getItem("cart") || "{}");
     if (userData) {
       setUserInfo(userData);
-      // getUserCartItems();
     }
   }, []);
 
@@ -58,113 +56,139 @@ function Header() {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-80 p-2 shadow gap-4"
           >
             <li>
-              <Link
-                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600 active:bg-transparent active:text-yellow-600"
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-xl text-yellow-600'
+                    : 'font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600'
+                }
                 to={'/'}
               >
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-xl text-yellow-600'
+                    : 'font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600'
+                }
                 to={'/books'}
               >
                 Books
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                className="font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600"
-                to={'/authors'} // New Authors link
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-bold text-xl text-yellow-600'
+                    : 'font-bold text-xl hover:text-yellow-600 hover:bg-transparent focus:bg-transparent focus:text-yellow-600'
+                }
+                to={'/authors'}
               >
                 Authors
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
-        <Link className="bg-inherit text-xl " to={'/'}>
+        <NavLink className="bg-inherit text-xl " to={'/'}>
           <img src="/logo-removebg.png" width={'100'} alt="Logo" />
-        </Link>
+        </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="gap-10 menu-horizontal px-1">
           <li>
-            <Link
-              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'font-bold text-xl text-white'
+                  : 'font-bold text-xl hover:bg-transparent hover:text-white focus:text-white'
+              }
               style={{ transition: '0.3s ease' }}
               to={'/'}
             >
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
-              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'font-bold text-xl text-white'
+                  : 'font-bold text-xl hover:bg-transparent hover:text-white focus:text-white'
+              }
               style={{ transition: '0.3s ease' }}
               to={'/books'}
             >
               Books
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
-              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'font-bold text-xl text-white'
+                  : 'font-bold text-xl hover:bg-transparent hover:text-white focus:text-white'
+              }
               style={{ transition: '0.3s ease' }}
-              to={'/authors'} // New Authors link
+              to={'/authors'}
             >
               Authors
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
-              className="font-bold text-xl hover:bg-transparent hover:text-white focus:text-white"
+            <NavLink
+              className={({ isActive }) =>
+                isActive
+                  ? 'font-bold text-xl text-white'
+                  : 'font-bold text-xl hover:bg-transparent hover:text-white focus:text-white'
+              }
               style={{ transition: '0.3s ease' }}
-              to={'/about'} // New Authors link
+              to={'/about'}
             >
               About Us
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>
       <div className="navbar-end font-bold text-xl flex items-center gap-4">
         {localStorage.getItem('token') ? (
           <>
-            <Link to={'/favorite'} className="relative flex items-center">
+            <NavLink to={'/favorite'} className="relative flex items-center">
               <FaRegHeart className="text-2xl transition-colors duration-300" />
-              {favoriteCount > 0 && (
-                <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
-                  {favoriteCount}
+              {favoriteBooks.length > 0 && (
+                <span className="absolute -top-1 -right-3 bg-brown-200 text-black text-sm rounded-full px-2">
+                  {favoriteBooks.length}
                 </span>
               )}
-            </Link>
-            <Link to={'/cart'} className="relative flex items-center">
+            </NavLink>
+            <NavLink to={'/cart'} className="relative flex items-center">
               <GrShop className="text-2xl transition-colors duration-300" />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs rounded-full px-2">
-                  {cartCount}
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-3 bg-brown-200 text-black text-sm rounded-full px-2">
+                  {cartItems.length}
                 </span>
               )}
-            </Link>
+            </NavLink>
           </>
         ) : null}
         <ul className="flex gap-8 items-center">
           {!username && (
             <>
               <li>
-                <Link
+                <NavLink
                   className="hover:text-white focus:text-white active:text-white"
                   style={{ transition: '0.3s ease' }}
                   to={'/login'}
                 >
                   Log in
-                </Link>
+                </NavLink>
               </li>
               <div className="dropdown dropdown-end" tabIndex={0} role="button">
                 <li className="font-serif text-xl w-15 h-12 flex rounded-full avatar">
-                  <Link to={'/login'}>
-                    {/* <img src="/profileimg.png" className="avatar rounded-full" /> */}
-                  </Link>
+                  <NavLink to={'/login'}></NavLink>
                 </li>
               </div>
             </>
@@ -179,7 +203,7 @@ function Header() {
                 >
                   <li className="w-12 h-12 flex items-center justify-center rounded-full overflow-hidden outline shadow-lg bg-white">
                     <img
-                      src={userImage} 
+                      src={userImage}
                       alt={username}
                       className="w-full h-full object-cover"
                       crossOrigin="anonymous"
@@ -190,10 +214,10 @@ function Header() {
                     className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                   >
                     <li className="font-bold text-xl hover:text-yellow-600">
-                      <Link to="/library">Library</Link>
+                      <NavLink to="/library">Library</NavLink>
                     </li>
                     <li className="font-bold text-xl hover:text-yellow-600">
-                      <Link to="/profile">Profile</Link>
+                      <NavLink to="/profile">Profile</NavLink>
                     </li>
                     <li className="font-bold text-xl hover:text-yellow-600">
                       <button onClick={logout}>Logout</button>
@@ -214,10 +238,10 @@ function Header() {
                     className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
                   >
                     <li className="font-bold text-xl hover:text-yellow-600">
-                      <Link to="/library">Library</Link>
+                      <NavLink to="/library">Library</NavLink>
                     </li>
                     <li className="font-bold text-xl hover:text-yellow-600">
-                      <Link to="/profile">Profile</Link>
+                      <NavLink to="/profile">Profile</NavLink>
                     </li>
                     <li className="font-bold text-xl hover:text-yellow-600">
                       <button onClick={logout}>Logout</button>

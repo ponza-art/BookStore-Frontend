@@ -98,9 +98,9 @@ function DetailsPage() {
                 },
               }
             ),
-            toast.success("Review updated successfully", {
-              style: { top: "80px", position: "relative" },
-            }))
+              toast.success("Review updated successfully", {
+                style: { top: "80px", position: "relative" },
+              }))
           : (await axios.post(
               "https://book-store-backend-sigma-one.vercel.app/review",
               { comment, rating, bookId: id },

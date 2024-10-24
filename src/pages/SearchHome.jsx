@@ -14,7 +14,7 @@ const SearchHome = () => {
   };
 
   return (
-    <div className="p-6 container mx-auto flex flex-col lg:flex-row items-center justify-between rounded-lg" style={{ backgroundColor: "#dab26d" }}>
+    <div className="p-6 container mx-auto flex flex-col lg:flex-row items-center justify-between rounded-lg " style={{ backgroundColor: "#dab26d" }}>
       <div className="lg:w-1/2 mb-4 lg:mb-0 flex flex-col items-center lg:items-start">
         <h2 className="text-3xl lg:text-4xl font-bold mb-6 text-center lg:text-left">
           Find Books Fast.
