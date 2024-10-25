@@ -113,6 +113,9 @@ function BooksPage() {
       setPage(1);
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
     }
+    else {
+      navigate(`/books`);
+    }
   };
 
   const SkeletonCard = () => (
@@ -414,6 +417,7 @@ function BooksPage() {
                           />
                         </MenuButton>
                       </div>
+                      
 
                       <MenuItems
                         transition
@@ -455,9 +459,10 @@ function BooksPage() {
 
                 <section
                   aria-labelledby="products-heading"
-                  className="pb-24 pt-6"
+                  className="pb-24 pt-6 "
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-4">
+
                     {/* Filters */}
                     <form className="hidden lg:block ps-10 lg:col-span-1">
                       {filters.map((section, index) => (

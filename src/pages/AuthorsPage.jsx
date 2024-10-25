@@ -122,9 +122,12 @@ const AuthorsPage = () => {
             </div>
           )}
         </div>
+        
       )}
     </div>
+    
   );
 };
+
 
 export default AuthorsPage;

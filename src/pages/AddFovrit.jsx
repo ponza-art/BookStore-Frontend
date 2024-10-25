@@ -97,7 +97,7 @@ const AddFovrit = () => {
                     >
                       <td
                         className="py-4 px-2 flex justify-center cursor-pointer"
-                        onClick={() => navigate("/books")}
+                        onClick={() => navigate(`/books/${book.bookId._id}`)}
                       >
                         <img
                           src={book.bookId?.coverImage || ""}
@@ -118,7 +118,7 @@ const AddFovrit = () => {
                       <td className="py-4 px-2">
                         <p
                           className="text-gray-800 font-semibold text-lg  cursor-pointer"
-                          onClick={() => navigate(`/authors/${book.bookId._id}`)}
+                          onClick={() => navigate(`/authors/`)}
                         >
                           {book.bookId?.author || "Unknown Author"}
                         </p>
