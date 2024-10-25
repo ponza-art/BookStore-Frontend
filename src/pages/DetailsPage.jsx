@@ -346,8 +346,7 @@ function DetailsPage() {
                         size={25}
                         className="cursor-pointer me-5 text-red-600 iconBody"
                         onClick={() => {
-                          removeFromFavorites(book?._id);
-                        
+                          removeFromFavorites(book?._id); 
                         }}
                       />
                     ) : (
@@ -356,7 +355,6 @@ function DetailsPage() {
                         className="cursor-pointer me-5 iconBody"
                         onClick={() => {
                           addToFavorites(book);
-                      
                         }}
                       />
                     )
