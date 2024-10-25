@@ -347,9 +347,7 @@ function DetailsPage() {
                         className="cursor-pointer me-5 text-red-600 iconBody"
                         onClick={() => {
                           removeFromFavorites(book?._id);
-                          toast.success("Book removed successfully", {
-                            style: { top: "80px", position: "relative" },
-                          });
+                        
                         }}
                       />
                     ) : (
@@ -358,12 +356,7 @@ function DetailsPage() {
                         className="cursor-pointer me-5 iconBody"
                         onClick={() => {
                           addToFavorites(book);
-                          toast.success("Book added to favourites", {
-                            style: {
-                              top: "80px",
-                              position: "relative",
-                            },
-                          });
+                      
                         }}
                       />
                     )

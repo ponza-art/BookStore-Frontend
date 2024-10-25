@@ -7,6 +7,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import CartContext from "../context/cartContext";
 import { MdAddShoppingCart } from "react-icons/md";
 import { useOrder } from "../context/OrderContext";
+import toast from "react-hot-toast";
 
 const AddFovrit = () => {
   const { favoriteBooks, removeFromFavorites } = useFavorites();
@@ -44,6 +45,7 @@ const AddFovrit = () => {
     if (!bookId) return;
     removeFromFavorites(bookId, true);
 
+
     try {
       await axios.delete(
         "https://book-store-backend-sigma-one.vercel.app/favorites/",
@@ -52,6 +54,10 @@ const AddFovrit = () => {
           headers: { Authorization: "Bearer " + token },
         }
       );
+      toast.success("Book removed successfully", {
+        style: { top: "80px", position: "relative" },
+      });
+
     } catch (error) {
       console.log(error.message);
     }

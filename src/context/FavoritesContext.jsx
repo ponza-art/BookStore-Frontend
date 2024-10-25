@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // Create a context
 const FavoritesContext = createContext();
@@ -31,15 +32,25 @@ export const FavoritesProvider = ({ children }) => {
   }, [token]);
 
   const addToFavorites = async (book) => {
-    setFavoriteBooks((prevFavorites) => [...prevFavorites, { bookId: book }]);
+    // setFavoriteBooks((prevFavorites) => [...prevFavorites, { bookId: book }]);
 
     try {
-      await axios.post(
+      const res=  await axios.post(
         `https://book-store-backend-sigma-one.vercel.app/favorites`,
         { bookId: book._id },
         { headers: { Authorization: "Bearer " + token } }
       );
+  
+        toast.success("Book added to favourites", {
+          style: {
+            top: "80px",
+            position: "relative",
+          },
+        });
+        
+        setFavoriteBooks((prevFavorites) => [...prevFavorites, { bookId: book }]);
     } catch (error) {
+      toast.error("Failed to add book to favorite.");
       console.log(error);
     }
   };
@@ -59,6 +70,9 @@ export const FavoritesProvider = ({ children }) => {
           headers: { Authorization: "Bearer " + token },
         }
       );
+      toast.success("Book removed successfully", {
+        style: { top: "80px", position: "relative" },
+      });
     } catch (error) {
       console.log(error.message);
     }

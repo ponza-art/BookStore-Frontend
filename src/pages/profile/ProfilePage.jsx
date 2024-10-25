@@ -173,11 +173,11 @@ function ProfilePage() {
               <div className="bg-white shadow-lg rounded-lg p-8">
                 {activeTab === 'wallet' && (
                   <div>
-                    {                        console.log(creditCards.data.cards.length)                    }
+                    {                     console.log(creditCards.data.cards.length)                    }
                     <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
                       Your Wallet
                     </h2>
-                    <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg shadow">
+                    <div className="bg-white max-w-screen-sm mx-auto px-6 py-6  rounded-lg shadow">
                       {creditCards.data.cards.length > 0 ? (
                         console.log(creditCards),
 
