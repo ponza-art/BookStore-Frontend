@@ -45,6 +45,7 @@ const AddFovrit = () => {
     if (!bookId) return;
     removeFromFavorites(bookId, true);
 
+
     try {
       await axios.delete(
         "https://book-store-backend-sigma-one.vercel.app/favorites/",
@@ -53,7 +54,11 @@ const AddFovrit = () => {
           headers: { Authorization: "Bearer " + token },
         }
       );
-      toast.success("Book deleted from Favourite successfully!");
+      toast.success("Book removed successfully", {
+        style: {position: "relative",left: "40%",
+          top: "65px", },
+      });
+
     } catch (error) {
       console.log("Error deleting item:", error.massege);
       toast.error(

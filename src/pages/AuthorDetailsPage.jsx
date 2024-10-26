@@ -6,13 +6,17 @@ import { useFavorites } from "../context/FavoritesContext";
 import useCartContext from "../hooks/use-cart-context";
 import { useOrder } from "../context/OrderContext";
 const token = localStorage.getItem("token");
+// import { FaSadTear } from "react-icons/fa";
+import { FaBook } from "react-icons/fa";
+
+
 const AuthorDetailsPage = () => {
   const { id } = useParams();
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
   const { orderBookId, isDownloadLoading, getOrderData } = useOrder();
   const [author, setAuthor] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { cartItems, addToCart, isloading } = useCartContext(); // Removed unused deleteBookById
+  const { cartItems, addToCart, isloading } = useCartContext();
 
   useEffect(() => {
     const fetchAuthorDetails = async () => {
@@ -35,7 +39,6 @@ const AuthorDetailsPage = () => {
   }, [id]);
 
   if (loading) {
-    // Skeleton Loader for the page while loading
     return (
       <div className="container mx-auto">
         <div className="flex flex-wrap justify-evenly mx-auto my-24">
@@ -43,9 +46,7 @@ const AuthorDetailsPage = () => {
             <div
               key={index}
               className="card rounded-none animate-pulse bg-gray-200 relative"
-              style={{
-                width: "280px",
-              }}
+              style={{ width: "280px" }}
             >
               <div className="w-full h-96 mx-auto"></div>
               <div className="card-body flex-grow-0 px-0 mx-0 bg-white bodyCard">
@@ -70,11 +71,29 @@ const AuthorDetailsPage = () => {
   }
 
   return (
-    <div className="author-details-page container mx-auto my-6">
-      <h2 className="text-2xl font-semibold mb-4">Books by {author.name}</h2>
-      <div className="flex flex-wrap px-8 md:gap-8 justify-center md:justify-evenly lg:justify-evenly">
-        {author.books.length > 0 ? (
-          author.books.map((book, index) => {
+    <div className="container mx-auto my-6">
+    
+    <div className="flex flex-col items-center">
+      <div className="relative mb-6">
+        <img
+          src={author.image}
+          alt={author.name}
+          className="rounded-full shadow-lg object-cover h-64 w-64"
+        />
+
+      </div>
+      <h2 className="text-4xl font-serif font-bold mb-2">
+        {author.name}
+      </h2>
+  
+      <div className="text-center">
+        {author.books.length > 0 ?(<p className="italic text-gray-600 mb-4">"Best-selling Author"</p>):null}
+    
+      </div>
+  
+      {author.books.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-2 mb-4">
+          {author.books.map((book, index) => {
             const isFavorite = favoriteBooks.some(
               (fav) => fav.bookId._id === book.bookId._id
             );
@@ -101,12 +120,23 @@ const AuthorDetailsPage = () => {
                 isDownloadLoading={isDownloadLoading}
               />
             );
-          })
-        ) : (
-          <div>No books found</div>
-        )}
-      </div>
+          })}
+        </div>
+      ) : (
+       
+<div className="flex flex-col items-center justify-center mt-10">
+<FaBook className="w-16 h-16 text-gray-500 mb-4" />
+  <p className="text-gray-700 text-lg font-semibold text-center">
+    This author currently has no available books.
+  </p>
+  <p className="text-gray-500 text-sm text-center">
+    Please check back later for updates or explore other authors.
+  </p>
+</div>
+      )}
     </div>
+  </div>
+  
   );
 };
 

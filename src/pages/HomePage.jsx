@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { HomeCardSkeleton, HomeHeaderSkeleton, SearchHomeSkeleton, SliderSkeleton } from "./Skeleton";
 import { useOrder } from "../context/OrderContext";
+import LogosSection from "../components/LogosSection";
 
 function HomePage() {
   const { favoriteBooks, addToFavorites, removeFromFavorites } = useFavorites();
@@ -218,6 +219,8 @@ function HomePage() {
               ))}
             </div>
           </div>
+ 
+
         </>
       )}
     </main>
