@@ -51,7 +51,7 @@ function CartProvider({ children }) {
       if (res.status === 201) {
         toast.success("Book added to cart successfully!" , {
           style: {position: "relative",left: "40%",
-            top: "65px", },
+            top: "65px", }
         }
 
         );
