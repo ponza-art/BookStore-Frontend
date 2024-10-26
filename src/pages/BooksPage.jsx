@@ -66,7 +66,7 @@ function BooksPage() {
             },
           }
         );
-        console.log(res.data.booksDataWithoutSourcePath);
+        //console.log(res.data.booksDataWithoutSourcePath);
         window.scrollTo(0, 0);
         setBooks(res.data.booksDataWithoutSourcePath);
         setTotalPages(res.data.totalPages);

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function ReviewedBook({ review }) {
-  console.log(review);
+  //console.log(review);
   const [book, setBook] = useState({});
-  console.log(book);
+  //console.log(book);
 
   const bookId = review.bookId?._id;
 

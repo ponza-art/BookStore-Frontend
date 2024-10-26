@@ -9,7 +9,7 @@ const expiryDateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 export async function profileAction({ request }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
+ // console.log(data);
 
   if (data.actionType === 'addCreditCard') {
     const errors = {};
