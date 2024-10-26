@@ -10,8 +10,10 @@ import "swiper/css/pagination";
 import "swiper/css/free-mode";
 import { FreeMode, Pagination, Navigation } from "swiper/modules";
 import { RxArrowTopRight } from "react-icons/rx";
+import useCartContext from "../hooks/use-cart-context";
 export default function LibraryComponent() {
   const [orderData, setOrderData] = useState([]);
+  const { getUserCartItems} = useCartContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate= useNavigate()
@@ -33,6 +35,7 @@ export default function LibraryComponent() {
         );
 
         setOrderData(response.data);
+        getUserCartItems()
         setLoading(false);
       } catch (err) {
         setError("Failed to load orders.");

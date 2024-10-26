@@ -7,14 +7,15 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import CartContext from "../context/cartContext";
 import { MdAddShoppingCart } from "react-icons/md";
 import { useOrder } from "../context/OrderContext";
+import toast from "react-hot-toast";
 
 const AddFovrit = () => {
   const { favoriteBooks, removeFromFavorites } = useFavorites();
   const [loading, setLoading] = useState(true);
   const { cartItems, addToCart } = useContext(CartContext);
-  const { orderBookId,getOrderData } = useOrder();
+  const { orderBookId, getOrderData } = useOrder();
   const token = localStorage.getItem("token");
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,13 +31,13 @@ const AddFovrit = () => {
 
         setLoading(false);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         setLoading(false);
       }
     };
     fetchFavorites();
-    if(token){
-      getOrderData()
+    if (token) {
+      getOrderData();
     }
   }, [token]);
 
@@ -52,15 +53,17 @@ const AddFovrit = () => {
           headers: { Authorization: "Bearer " + token },
         }
       );
+      toast.success("Book deleted from Favourite successfully!");
     } catch (error) {
-      console.log(error.message);
+      console.log("Error deleting item:", error.massege);
+      toast.error(
+        "There was an error in deleting the book from the favourite."
+      );
     }
   };
 
   const isBookInCart = (bookId) => {
-    return Boolean(
-      cartItems.find((cart) => cart.bookId?._id === bookId)
-    );
+    return Boolean(cartItems.find((cart) => cart.bookId?._id === bookId));
   };
 
   const isBookInOrder = (bookId) => {
@@ -118,7 +121,9 @@ const AddFovrit = () => {
                       <td className="py-4 px-2">
                         <p
                           className="text-gray-800 font-semibold text-lg  cursor-pointer"
-                          onClick={() => navigate(`/authors/${book.bookId._id}`)}
+                          onClick={() =>
+                            navigate(`/authors/${book.bookId._id}`)
+                          }
                         >
                           {book.bookId?.author || "Unknown Author"}
                         </p>
@@ -138,16 +143,13 @@ const AddFovrit = () => {
                           <FaRegTrashCan size={25} />
                         </button>
                       </td>
-                      
+
                       <td className="py-3 px-6">
                         {isBookInOrder(book.bookId?._id) ? (
-                          <button
-                          onClick={() => navigate("/library")}
-                          
-                        >
-                          <span className="text-sky-800 font-bold">
-                            Already Bought
-                          </span>
+                          <button onClick={() => navigate("/library")}>
+                            <span className="text-sky-800 font-bold">
+                              Already Bought
+                            </span>
                           </button>
                         ) : isBookInCart(book.bookId?._id) ? (
                           <span className="text-blue-500 font-bold">
@@ -190,7 +192,6 @@ const AddFovrit = () => {
         </div>
       )}
     </div>
-   
   );
 };
 

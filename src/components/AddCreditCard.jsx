@@ -6,7 +6,7 @@ function AddCreditCard({ setShowAddCreditCard }) {
   const isSubmitting = navigation.state === 'submitting';
 
   const actionData = useActionData();
-  console.log(actionData);
+  //console.log(actionData);
 
   return (
     <div className="py-8">

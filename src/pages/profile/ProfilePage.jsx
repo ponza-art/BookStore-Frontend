@@ -179,7 +179,7 @@ function ProfilePage() {
                     </h2>
                     <div className="bg-white max-w-screen-sm mx-auto px-6 py-6 rounded-lg shadow">
                       {creditCards.data.cards.length > 0 ? (
-                        console.log(creditCards),
+                       // console.log(creditCards),
 
                         <div>{renderedCards}</div>
                       ) : (
