@@ -49,7 +49,12 @@ function CartProvider({ children }) {
       );
       //console.log(res);
       if (res.status === 201) {
-        toast.success("Book added to cart successfully!");
+        toast.success("Book added to cart successfully!" , {
+          style: {position: "relative",left: "40%",
+            top: "65px", },
+        }
+
+        );
         setCartItems((prevCartItem) => [...prevCartItem, { bookId: book }]);
         //setCartItems(res.data.items);
         setLoading(false);
@@ -85,7 +90,12 @@ function CartProvider({ children }) {
         )
       );
 
-      toast.success("Book deleted from cart successfully!");
+      toast.success("Book deleted from cart successfully!" , {
+        style: {position: "relative",left: "40%",
+          top: "65px", },
+      }
+
+      );
     } catch (error) {
       console.log("Error deleting item:", error);
       toast.error("There was an error in deleting the book from the cart.");

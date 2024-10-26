@@ -63,7 +63,11 @@ function ProfilePage() {
     const token = localStorage.getItem("token");
     try {
       await deleteCard(token, cardId);
-      toast.success('Card deleted successfully');
+      toast.success('Card deleted successfully',{
+          style: {position: "relative",left: "40%",
+            top: "65px", },
+        }
+      );
 
 
       setCreditCards((prevCards) => ({

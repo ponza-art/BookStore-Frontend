@@ -43,7 +43,8 @@ export const FavoritesProvider = ({ children }) => {
   
         toast.success("Book added to favourites", {
           style: {
-            top: "80px",
+            left: "40%",
+            top: "65px",
             position: "relative",
           },
         });
@@ -71,7 +72,8 @@ export const FavoritesProvider = ({ children }) => {
         }
       );
       toast.success("Book removed successfully", {
-        style: { top: "80px", position: "relative" },
+        style: {   left: "40%",
+          top: "65px", position: "relative" },
       });
     } catch (error) {
       console.log(error.message);

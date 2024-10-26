@@ -55,7 +55,8 @@ const AddFovrit = () => {
         }
       );
       toast.success("Book removed successfully", {
-        style: { top: "80px", position: "relative" },
+        style: {position: "relative",left: "40%",
+          top: "65px", },
       });
 
     } catch (error) {
