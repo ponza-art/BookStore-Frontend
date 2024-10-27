@@ -30,7 +30,7 @@ function HomePage() {
     const fetchBooks = async () => {
       try {
         const { data } = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/book"
+          "https://book-store-backend-sigma-one.vercel.app/book/home"
         );
 
         const saleBooks = data.filter((book) => book.discountPercentage > 25);

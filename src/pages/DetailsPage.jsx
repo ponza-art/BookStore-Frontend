@@ -14,10 +14,14 @@ import ReviewCard from "../components/ReviewCard";
 import ReviewForm from "../components/ReviewForm";
 import { useFavorites } from "../context/FavoritesContext";
 import StarIcon from "../components/StarIcon";
+import PdfBookReader from "../components/PdfBookReader";
+
 
 function DetailsPage() {
   const [book, setBook] = useState({});
-
+  const [showPdfReader, setShowPdfReader] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  
   const [orderBookId, setOrderBookId] = useState([]);
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
@@ -191,34 +195,6 @@ function DetailsPage() {
   };
   const isBookInOrder = orderBookId.includes(book._id);
 
-  // const addToCart = async () => {
-  //   setIsLoading(true);
-  //   const token = localStorage.getItem("token");
-  //   try {
-  //     const res = await axios.post(
-  //       "https://book-store-backend-sigma-one.vercel.app/cart/",
-  //       { bookId: id },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     // console.log(res.data.items)
-  //     if (res.status === 201) {
-  //       toast.success("Book added to cart successfully!");
-
-  //       setCartItems(res.data.items);
-  //     } else {
-  //       toast.error("Failed to add book to cart.");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error adding book to cart:", error);
-  //     toast.error("There was an error adding the book to the cart.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   useEffect(() => {
     if (cartItems) {
       const flattenedCartBooks = cartItems.flat();
@@ -318,6 +294,7 @@ function DetailsPage() {
   } else {
     isInCart = cartItems.some((item) => item?.bookId === id);
   }
+ 
   return (
     <main className="my-[9vh] mx-auto max-w-screen-xl md:px-0 px-5">
       <section className="container mx-auto pb-6">
@@ -390,15 +367,16 @@ function DetailsPage() {
               )}
             </div>
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
-              <Link
-                to={book?.sourcePath || book?.samplePdf}
-                target="_blank"
-                className="flex items-center justify-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
-              >
-                Preview {book?.sourcePath ? "Full Version" : "Demo"}
-                {/* Preview / Download */}
-                <PiFileArrowDownDuotone size={28} />
-              </Link>
+            <button
+              onClick={() => {
+                setPdfUrl(book?.sourcePath || book?.samplePdf);
+                setShowPdfReader(true);
+              }}
+              className="flex items-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
+            >
+              Preview {book?.sourcePath ? "Full Version" : "Demo"}
+              <PiFileArrowDownDuotone size={28} />
+            </button>
               {token ? (
                 <button
                   onClick={() => {
@@ -456,6 +434,20 @@ function DetailsPage() {
             </div>
           </div>
         </div>
+        {showPdfReader && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white w-11/12 md:w-3/4 lg:w-3/4 rounded-lg p-10  relative">
+          {/* <div className="bg-white w-full h-full rounded-lg p-10  relative"> */}
+            <button
+              onClick={() => setShowPdfReader(false)}
+              className="absolute top-0 right-2 text-black  text-2xl font-bold"
+            >
+              &times;
+            </button>
+            <PdfBookReader pdfUrl={pdfUrl} />
+          </div>
+        </div>
+      )}
       </section>
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-2 px-5 md:px-0">
