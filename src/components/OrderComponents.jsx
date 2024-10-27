@@ -50,7 +50,7 @@ export default function OrderComponents({
       </div>
 
       <button
-        className="btn bg-blue-600 text-white rounded-md w-full"
+        className="btn bg-blue-950 hover:bg-blue-950 hover:text-[#dbb891] text-white rounded-md w-full"
         onClick={handleProceedToCheckout}
       >
         Proceed to Checkout
@@ -59,7 +59,7 @@ export default function OrderComponents({
         <span className="text-sm font-normal text-gray-500"> or </span>
         <Link
           to={"/books"}
-          className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline"
+          className="inline-flex items-center gap-2 text-sm font-medium text-primary-700 hover:underline no-underline"
         >
           Discover More
         </Link>

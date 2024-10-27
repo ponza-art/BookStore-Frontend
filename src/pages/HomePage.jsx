@@ -9,7 +9,12 @@ import { useFavorites } from "../context/FavoritesContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { HomeCardSkeleton, HomeHeaderSkeleton, SearchHomeSkeleton, SliderSkeleton } from "./Skeleton";
+import {
+  HomeCardSkeleton,
+  HomeHeaderSkeleton,
+  SearchHomeSkeleton,
+  SliderSkeleton,
+} from "./Skeleton";
 import { useOrder } from "../context/OrderContext";
 import LogosSection from "../components/LogosSection";
 
@@ -30,7 +35,7 @@ function HomePage() {
     const fetchBooks = async () => {
       try {
         const { data } = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/book"
+          "https://book-store-backend-sigma-one.vercel.app/book/home"
         );
 
         const saleBooks = data.filter((book) => book.discountPercentage > 25);
@@ -111,7 +116,8 @@ function HomePage() {
 
   const handleNextClick = () => {
     const maxSlideIndex =
-      saleBooks.length - Math.min(calculateSlidesToShow(saleBooks.length), saleBooks.length);
+      saleBooks.length -
+      Math.min(calculateSlidesToShow(saleBooks.length), saleBooks.length);
 
     if (currentSlide < maxSlideIndex) {
       sliderRef.current.slickNext();
@@ -121,7 +127,7 @@ function HomePage() {
   return (
     <main className="container mx-auto relative px-4 md:px-8">
       {loading ? (
-        <div className="container">
+        <div className="container overflow-hidden">
           <HomeHeaderSkeleton />
           <SearchHomeSkeleton />
           <SliderSkeleton />
@@ -140,8 +146,8 @@ function HomePage() {
           </div>
 
           {saleBooks.length > 0 && (
-            <div className="mt-10">
-              <div className="flex justify-center items-center bg-red-500 text-white py-3 md:py-5 mb-5 rounded-lg shadow-lg">
+            <div className="mt-16 overflow-hidden">
+              <div className="flex justify-center items-center bg-[#172554] text-[#dbb891] py-3 md:py-5 rounded-lg shadow-lg">
                 <h2 className="text-lg md:text-2xl font-bold uppercase text-center px-4">
                   Special Sale! Books with 25% or More Discount
                 </h2>
@@ -151,8 +157,12 @@ function HomePage() {
                 <button
                   onClick={handlePrevClick}
                   disabled={currentSlide === 0}
-                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 
-                    ${currentSlide === 0 ? "bg-gray-400 cursor-not-allowed" : "bg-brown-200 hover:bg-gray-700"}
+                  className={`absolute left-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 duration-300
+                    ${
+                      currentSlide === 0
+                        ? "bg-[#a68c75] cursor-not-allowed"
+                        : "bg-[#dbb891] hover:bg-[#ac8e6d]"
+                    }
                     hidden lg:block`}
                 >
                   <svg
@@ -162,7 +172,12 @@ function HomePage() {
                     stroke="currentColor"
                     className="w-6 h-6"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
                   </svg>
                 </button>
 
@@ -181,9 +196,17 @@ function HomePage() {
 
                 <button
                   onClick={handleNextClick}
-                  disabled={currentSlide >= saleBooks.length - calculateSlidesToShow(saleBooks.length)}
-                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 
-                    ${currentSlide >= saleBooks.length - calculateSlidesToShow(saleBooks.length) ? "bg-gray-400 cursor-not-allowed" : "bg-brown-200 hover:bg-gray-700"}
+                  disabled={
+                    currentSlide >=
+                    saleBooks.length - calculateSlidesToShow(saleBooks.length)
+                  }
+                  className={`absolute right-0 top-1/2 transform -translate-y-1/2 p-3 rounded-full shadow-lg z-10 duration-300
+                    ${
+                      currentSlide >=
+                      saleBooks.length - calculateSlidesToShow(saleBooks.length)
+                        ? "bg-[#a68c75] cursor-not-allowed"
+                        : "bg-[#dbb891] hover:bg-[#ac8e6d]"
+                    }
                     hidden lg:block`}
                 >
                   <svg
@@ -193,17 +216,24 @@ function HomePage() {
                     stroke="currentColor"
                     className="w-6 h-6"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </button>
               </div>
             </div>
           )}
 
-          <div className="mt-10">
+          <div className="mt-8">
             <div className="flex w-full justify-between items-center px-4">
-              <h2 className="text-xl md:text-2xl font-bold mb-5">Latest Books</h2>
-              <Link to={"/books"} className="text-blue-500">
+              <h2 className="text-xl md:text-2xl font-bold mb-5">
+                Latest Books
+              </h2>
+              <Link to={"/books"} className="text-[#3f4f78] text-lg">
                 View All
               </Link>
             </div>
@@ -219,8 +249,6 @@ function HomePage() {
               ))}
             </div>
           </div>
- 
-
         </>
       )}
     </main>

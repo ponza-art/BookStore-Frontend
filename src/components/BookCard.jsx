@@ -27,14 +27,11 @@ const BookCard = ({
 }) => {
   const navigate = useNavigate();
   return (
-    // <Link to={`/books/${_id}`}>
     <div
       className="card rounded-none relative overflow-hidden cursor-pointer"
       style={{
         width: "280px",
       }}
-      // transition: "border-color 0.3s ease-in-out",
-      // height: "430px",
     >
       <div
         className="h-96 w-full mx-auto mt-8 flex justify-center overflow-hidden cursor-pointer"
@@ -54,7 +51,7 @@ const BookCard = ({
           onClick={() => {
             navigate(`/books/${_id}`);
           }}
-          className="text-red-600 uppercase mb-0 pb-0 text-sm cursor-pointer"
+          className="text-[#545c72] font-bold uppercase mb-0 pb-0 text-sm cursor-pointer"
         >
           {category}
         </p>
@@ -138,7 +135,6 @@ const BookCard = ({
         </div>
       </div>
     </div>
-    // </Link>
   );
 };
 

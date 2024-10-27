@@ -45,7 +45,6 @@ const AddFovrit = () => {
     if (!bookId) return;
     removeFromFavorites(bookId, true);
 
-
     try {
       await axios.delete(
         "https://book-store-backend-sigma-one.vercel.app/favorites/",
@@ -55,10 +54,8 @@ const AddFovrit = () => {
         }
       );
       toast.success("Book removed successfully", {
-        style: {position: "relative",left: "40%",
-          top: "65px", },
+        style: { position: "relative", left: "40%", top: "65px" },
       });
-
     } catch (error) {
       console.log("Error deleting item:", error.massege);
       toast.error(
@@ -77,7 +74,9 @@ const AddFovrit = () => {
 
   return (
     <div className="container mx-auto p-4 pb-10">
-      <h1 className="text-3xl font-bold mb-4 text-center">My Favorite Books</h1>
+      <h1 className="text-3xl font-bold mt-5 mb-10 text-center">
+        My Favorite Books
+      </h1>
       {loading ? (
         <div className="flex justify-center items-center relative top-0 left-0 h-[50vh] w-fit my-[6.75rem] mx-auto">
           <img src="/loader.gif" alt="Loading..." className="w-full h-full" />
@@ -88,7 +87,7 @@ const AddFovrit = () => {
             {favoriteBooks.length > 0 ? (
               <table className="table-auto tab-border-3 w-full text-center shadow-md rounded-lg mb-8">
                 <thead>
-                  <tr className="bg-[#e2d6d6] tab-border-2  text-sm leading-normal">
+                  <tr className="bg-slate-200 tab-border-2  text-sm leading-normal">
                     <th className="py-4 px-2">Book</th>
                     <th className="py-4 px-2">Title</th>
                     <th className="py-4 px-2">Author</th>
@@ -150,17 +149,17 @@ const AddFovrit = () => {
                       <td className="py-3 px-6">
                         {isBookInOrder(book.bookId?._id) ? (
                           <button onClick={() => navigate("/library")}>
-                            <span className="text-sky-800 font-bold">
+                            <span className="text-blue-950 font-bold">
                               Already Bought
                             </span>
                           </button>
                         ) : isBookInCart(book.bookId?._id) ? (
-                          <span className="text-blue-500 font-bold">
+                          <span className="text-blue-950 font-bold">
                             Added to Cart
                           </span>
                         ) : (
                           <button
-                            className="text-blue-400 hover:text-blue-700"
+                            className="text-blue-950"
                             onClick={() => addToCart(book.bookId)}
                           >
                             <MdAddShoppingCart size={30} />

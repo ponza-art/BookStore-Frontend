@@ -1,14 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useLoaderData, useActionData, useNavigation, Link } from 'react-router-dom';
-import { CirclePlus } from 'lucide-react';
-import UpdateUserData from '../../components/UpdateUserData';
-import Cards from '../../components/Cards';
-import { toast } from 'react-hot-toast';
-import { updateUserData, addCreditCard, deleteCard } from '../../services/apiProfile';
-import AddCreditCard from '../../components/AddCreditCard';
-import ReviewedBook from '../../components/ReviewedBook';
+import { useState, useEffect } from "react";
+import {
+  useLoaderData,
+  useActionData,
+  useNavigation,
+  Link,
+} from "react-router-dom";
+import { CirclePlus } from "lucide-react";
+import UpdateUserData from "../../components/UpdateUserData";
+import Cards from "../../components/Cards";
+import { toast } from "react-hot-toast";
+import {
+  updateUserData,
+  addCreditCard,
+  deleteCard,
+} from "../../services/apiProfile";
+import AddCreditCard from "../../components/AddCreditCard";
+import ReviewedBook from "../../components/ReviewedBook";
 import { BsCreditCard2BackFill } from "react-icons/bs";
-
 
 function ProfileSkeleton() {
   return (
@@ -40,15 +48,18 @@ function ReviewsSkeleton() {
 }
 
 function ProfilePage() {
-  const { userData, creditCards: initialCreditCards, userReviews } = useLoaderData();
+  const {
+    userData,
+    creditCards: initialCreditCards,
+    userReviews,
+  } = useLoaderData();
   const actionData = useActionData();
   const navigation = useNavigation();
-  const isLoading = navigation.state === 'loading';
-
+  const isLoading = navigation.state === "loading";
 
   const [creditCards, setCreditCards] = useState(initialCreditCards);
 
-  const [activeTab, setActiveTab] = useState('wallet');
+  const [activeTab, setActiveTab] = useState("wallet");
   const [showEdit, setShowEdit] = useState(false);
   const [showAddCreditCard, setShowAddCreditCard] = useState(false);
 
@@ -63,12 +74,9 @@ function ProfilePage() {
     const token = localStorage.getItem("token");
     try {
       await deleteCard(token, cardId);
-      toast.success('Card deleted successfully',{
-          style: {position: "relative",left: "40%",
-            top: "65px", },
-        }
-      );
-
+      toast.success("Card deleted successfully", {
+        style: { position: "relative", left: "40%", top: "65px" },
+      });
 
       setCreditCards((prevCards) => ({
         ...prevCards,
@@ -77,15 +85,13 @@ function ProfilePage() {
           cards: prevCards.data.cards.filter((card) => card._id !== cardId),
         },
       }));
-
     } catch (error) {
-      toast.error('Failed to delete card');
+      toast.error("Failed to delete card");
       console.log(error);
     }
   };
 
   const renderedCards = creditCards?.data?.cards?.map((card) => (
-    
     <Cards key={card._id} card={card} onDelete={handleDeleteCard} />
   ));
 
@@ -134,13 +140,17 @@ function ProfilePage() {
                       <div className="flex items-center gap-3 py-4">
                         <p className="font-semibold text-gray-700">Status:</p>
                         {userData.data.user.status ? (
-                          <p className="text-green-500 font-medium">You are allowed to review</p>
+                          <p className="text-green-500 font-medium">
+                            You are allowed to review
+                          </p>
                         ) : (
-                          <p className="text-red-500 font-medium">You are not allowed to review</p>
+                          <p className="text-red-500 font-medium">
+                            You are not allowed to review
+                          </p>
                         )}
                       </div>
                       <button
-                        className="mt-6 text-base text-brand-blue hover:underline transition-all"
+                        className="mt-6 bg-blue-950 text-white hover:text-[#dbb891] w-fit px-3 py-2 rounded-lg mx-auto transition-all"
                         onClick={() => setShowEdit(true)}
                       >
                         Edit Profile
@@ -155,53 +165,52 @@ function ProfilePage() {
             <div className="md:col-span-3">
               <div className="flex justify-center md:justify-start border-b pb-4 mb-6 space-x-6">
                 <button
-                  className={`font-semibold py-2 px-6 rounded-full transition-all ${activeTab === 'wallet'
-                      ? 'bg-gradient-to-r from-blue-400 to-purple-500 text-white shadow-lg'
-                      : 'text-gray-500 hover:bg-gray-100'
-                    }`}
-                  onClick={() => setActiveTab('wallet')}
+                  className={`font-semibold py-2 px-6 rounded-full transition-all ${
+                    activeTab === "wallet"
+                      ? "bg-gradient-to-r bg-blue-950 text-[#dbb891] shadow-lg"
+                      : "text-gray-500 hover:bg-gray-100"
+                  }`}
+                  onClick={() => setActiveTab("wallet")}
                 >
                   Wallet
                 </button>
                 <button
-                  className={`font-semibold py-2 px-6 rounded-full transition-all ${activeTab === 'reviews'
-                      ? 'bg-gradient-to-r from-blue-400 to-purple-500 text-white shadow-lg'
-                      : 'text-gray-500 hover:bg-gray-100'
-                    }`}
-                  onClick={() => setActiveTab('reviews')}
+                  className={`font-semibold py-2 px-6 rounded-full transition-all ${
+                    activeTab === "reviews"
+                      ? "bg-gradient-to-r bg-blue-950 text-[#dbb891] shadow-lg"
+                      : "text-gray-500 hover:bg-gray-100"
+                  }`}
+                  onClick={() => setActiveTab("reviews")}
                 >
                   Reviews
                 </button>
               </div>
 
               <div className="bg-white shadow-lg rounded-lg p-8">
-                {activeTab === 'wallet' && (
+                {activeTab === "wallet" && (
                   <div>
-                    {                     console.log(creditCards.data.cards.length)                    }
+                    {console.log(creditCards.data.cards.length)}
                     <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
                       Your Wallet
                     </h2>
                     <div className="bg-white max-w-screen-sm mx-auto px-6 py-6  rounded-lg shadow">
                       {creditCards.data.cards.length > 0 ? (
-                       // console.log(creditCards),
+                        // console.log(creditCards),
 
                         <div>{renderedCards}</div>
                       ) : (
-
                         <div className="flex flex-col justify-center items-center h-60 py-15">
                           <BsCreditCard2BackFill className="text-blue-300 text-6xl mb-6" />
                           <p className="text-2xl text-gray-700 font-semibold mb-4">
                             Your wallet is empty.
                           </p>
-
                         </div>
                       )}
                     </div>
                   </div>
-
                 )}
 
-                {activeTab === 'reviews' && (
+                {activeTab === "reviews" && (
                   <div>
                     <h2 className="font-poppins font-semibold text-brand-black text-3xl text-center mb-8">
                       Your Reviews

@@ -14,7 +14,7 @@ export default function Input(props) {
   } = props;
   return (
     <div className="py-3 relative">
-      <label className="mb-2 text-md text-yellow-800" htmlFor={htmlFor}>
+      <label className="mb-2 text-md text-[#545c72]" htmlFor={htmlFor}>
         {text}
       </label>
       <input

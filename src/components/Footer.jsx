@@ -6,12 +6,17 @@ import YoutupeIcon from "../../icons/YoutupeIcon";
 function Footer() {
   return (
     <footer
-      className="footer footer-center gap-5 bg-base-200 text-base-content rounded py-6 w-full"
-      style={{ backgroundColor: "#dab26d" }}
+      className="footer footer-center gap-5 bg-base-200 rounded py-6 w-full text-white font-bold"
+      style={{ backgroundColor: "#172554" }}
     >
       <nav>
         <Link to={"/"}>
-          <img src="/logo-removebg.png" width={"80"} alt="Logo" />
+          <img
+            src="/logo-removebg.svg"
+            width={"80"}
+            alt="Logo"
+            style={{ filter: "invert(1) brightness(2)" }}
+          />
         </Link>
       </nav>
       <nav>
