@@ -15,7 +15,7 @@ const HomeCard = ({
   return (
     <div className="p-6 container mx-auto">
       {books.length > 0 ? (
-        <div className="flex flex-wrap pt-7 pb-14 gap-6 justify-evenly">
+        <div className="flex flex-wrap justify-evenly">
           {books.map((book, index) => (
             <BookCard
               _id={book._id}

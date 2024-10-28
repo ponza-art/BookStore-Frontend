@@ -84,10 +84,7 @@ function CartPage() {
                 calculateTotalPrice={calculateTotalPrice}
                 calculateOriginalPrice={calculateOriginalPrice}
                 calculateTotalSavings={calculateTotalSavings}
-                // calculateStorePick={calculateStorePick}
                 calculateTax={calculateTax}
-                // createOrder={createOrder}
-                // handleClick={handleClick}
                 isLoading={isloading}
               />
             </div>
@@ -95,20 +92,6 @@ function CartPage() {
         </div>
       </section>
     ) : (
-      // <main>
-      //   <div>
-      //     <section className="max-w-screen-md mx-auto px-4 py-14 mb-52">
-      //       <h2 className="mb-10 text-2xl font-semibold">Your cart</h2>
-      //       <ul className="flex flex-col gap-4">{renderedItems}</ul>
-      //       <Link
-      //         to="/orders"
-      //         className="btn px-8 w-40 rounded-md bg-brown-200 hover:bg-white hover:border-brown-200"
-      //       >
-      //         Order
-      //       </Link>
-      //     </section>
-      //   </div>
-      // </main>
       <div className="flex flex-col justify-center items-center my-32 mx-auto text-center ">
         <LiaShoppingBagSolid
           className="text-black  mb-4 "
@@ -117,7 +100,7 @@ function CartPage() {
         <p className="text-xl text-gray-700">Your cart is currently empty.</p>
         <Link
           to="/books"
-          className="mt-4 px-6 py-2 bg-brown-200 hover:bg-white border border-brown-200 rounded-md"
+          className="mt-4 px-6 py-2 bg-[#545c72] hover:text-[#dbb891] font-bold text-white rounded-md"
         >
           Return to shop
         </Link>

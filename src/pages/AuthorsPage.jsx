@@ -9,7 +9,6 @@ const AuthorsPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedLetter, setSelectedLetter] = useState("");
 
-  // Fetch authors from the API
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
@@ -28,7 +27,6 @@ const AuthorsPage = () => {
     fetchAuthors();
   }, []);
 
-  // Function to handle letter click and filter authors
   const handleLetterClick = (letter) => {
     setSelectedLetter(letter);
     const filtered = authors.filter((author) =>
@@ -37,7 +35,6 @@ const AuthorsPage = () => {
     setFilteredAuthors(filtered);
   };
 
-  // Function to reset the filter
   const handleResetClick = () => {
     setSelectedLetter("");
     setFilteredAuthors(authors);
@@ -47,13 +44,14 @@ const AuthorsPage = () => {
 
   return (
     <div className="authors-page container mx-auto my-6 px-4 sm:px-6 lg:px-8">
-      {/* Letter row */}
       <div className="flex justify-center mb-6 flex-wrap">
         <button
           onClick={handleResetClick}
-          className={`px-3 py-2 mx-1 mb-2 rounded-full ${
-            selectedLetter === "" ? "bg-yellow-600 text-white" : "bg-gray-200"
-          } hover:bg-yellow-400 transition`}
+          className={`px-3 py-2 mx-1 mb-2 rounded-md w-11 ${
+            selectedLetter === ""
+              ? "bg-[#545c72] text-[#dbb891]"
+              : "bg-gray-200"
+          } hover:bg-[#545c72] hover:text-white transition`}
         >
           All
         </button>
@@ -61,20 +59,19 @@ const AuthorsPage = () => {
           <button
             key={letter}
             onClick={() => handleLetterClick(letter)}
-            className={`px-3 py-2 mx-1 mb-2 rounded-full ${
+            className={`px-3 py-2 mx-1 mb-2 rounded-md w-11 ${
               selectedLetter === letter
-                ? "bg-yellow-600 text-white"
+                ? "bg-[#545c72] text-[#dbb891]"
                 : "bg-gray-200"
-            } hover:bg-yellow-400 transition`}
+            } hover:text-white hover:bg-[#545c72] transition`}
           >
             {letter}
           </button>
         ))}
       </div>
 
-      {/* Skeleton Loader for Author Cards */}
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-11">
           {Array.from({ length: 10 }).map((_, index) => (
             <div key={index} className="text-center animate-pulse">
               <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 bg-gray-300 rounded-full"></div>
@@ -84,7 +81,7 @@ const AuthorsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 gap-y-14 mb-11">
           {filteredAuthors.length > 0 ? (
             filteredAuthors.map((author) => (
               <div key={author._id} className="text-center">
@@ -95,23 +92,23 @@ const AuthorsPage = () => {
                     className="w-full h-full object-cover rounded-full shadow-lg"
                   />
                 </div>
-                <h2 className="text-lg sm:text-xl font-semibold">
+                <h2 className="text-lg sm:text-xl font-semibold line-clamp-1 overflow-hidden">
                   {author.name}
                 </h2>
-                <p className="text-gray-600 text-sm sm:text-base">
+                <p className="text-gray-600 text-sm sm:text-base mb-3">
                   {author.books.length > 0
                     ? `${author.books.length} Published Books`
                     : "No Published Books Yet"}
                 </p>
-                <Link to={`/authors/${author._id}`}>
-                  <button className="button" data-text="">
-                    <span className="actual-text">&nbsp;ViewBooks&nbsp;</span>
-                    <span
-                      aria-hidden="true"
-                      className="hover-text "
-                    >
+                <Link to={`/authors/${author._id}`} className="">
+                  <button
+                    className="btn bg-blue-950 hover:bg-blue-950 px-8 rounded-full text-white hover:text-[#dbb891]"
+                    data-text=""
+                  >
+                    <span className="">&nbsp;ViewBooks&nbsp;</span>
+                    {/* <span aria-hidden="true" className="hover-text ">
                       &nbsp;ViewBooks&nbsp;
-                    </span>
+                    </span> */}
                   </button>
                 </Link>
               </div>
@@ -122,12 +119,9 @@ const AuthorsPage = () => {
             </div>
           )}
         </div>
-        
       )}
     </div>
-    
   );
 };
-
 
 export default AuthorsPage;

@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import axios from 'axios'; 
-import Swal from 'sweetalert2'; 
+import { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function AboutPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -16,23 +16,30 @@ function AboutPage() {
     const contactData = {
       name,
       email,
-      message: `${message}`, 
+      message: `${message}`,
     };
 
     try {
-      const response = await axios.post('https://book-store-backend-sigma-one.vercel.app/contact', contactData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, 
-        },
-      });
+      const response = await axios.post(
+        "https://book-store-backend-sigma-one.vercel.app/contact",
+        contactData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-
-      Swal.fire('Success', 'Your message has been sent!', 'success');
-      setName('');
-      setEmail('');
-      setMessage('');
+      Swal.fire("Success", "Your message has been sent!", "success");
+      setName("");
+      setEmail("");
+      setMessage("");
     } catch (error) {
-      Swal.fire('Error', 'Failed to send the message. Please try again.', 'error');
+      Swal.fire(
+        "Error",
+        "Failed to send the message. Please try again.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -82,7 +89,9 @@ function AboutPage() {
 
               <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2">
-                  <label className="font-poppins font-medium text-sm">Name</label>
+                  <label className="font-poppins font-medium text-sm">
+                    Name
+                  </label>
                   <input
                     type="text"
                     className="w-full border border-stone-200 px-4 py-2 font-poppins text-sm rounded"
@@ -93,7 +102,9 @@ function AboutPage() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-poppins font-medium text-sm">Email</label>
+                  <label className="font-poppins font-medium text-sm">
+                    Email
+                  </label>
                   <input
                     type="email"
                     className="w-full border border-stone-200 px-4 py-2 font-poppins text-sm rounded"
@@ -103,10 +114,10 @@ function AboutPage() {
                   />
                 </div>
 
-                
-
                 <div className="flex flex-col gap-2">
-                  <label className="font-poppins font-medium text-sm">Message</label>
+                  <label className="font-poppins font-medium text-sm">
+                    Message
+                  </label>
                   <textarea
                     className="h-32 w-full border border-stone-200 px-4 py-2 font-poppins text-sm rounded"
                     value={message}
@@ -117,10 +128,10 @@ function AboutPage() {
 
                 <button
                   type="submit"
-                  className="mt-6 flex items-center justify-center gap-1 rounded px-4 py-2 bg-brand-primary text-white transition-all duration-300 hover:bg-brand-primary-darker"
+                  className="mt-6 flex items-center justify-center gap-1 rounded px-4 py-2 bg-blue-950 text-white transition-all duration-300 hover:text-[#dbb891]"
                   disabled={loading}
                 >
-                  {loading ? 'Sending...' : 'Send'}
+                  {loading ? "Sending..." : "Send"}
                 </button>
               </form>
             </div>

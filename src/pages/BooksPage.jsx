@@ -112,8 +112,7 @@ function BooksPage() {
     if (inputValue.trim()) {
       setPage(1);
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
-    }
-    else {
+    } else {
       navigate(`/books`);
     }
   };
@@ -339,11 +338,11 @@ function BooksPage() {
                                                   setPage(1);
                                                 }
                                           }
-                                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                          className="size-5 radio checked:bg-[#172554] "
                                         />
                                         <label
                                           htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                          className="ml-3 min-w-0 flex-1 text-gray-500"
+                                          className="ml-3 min-w-0 flex-1 text-[#172554]"
                                         >
                                           {option.label}
                                         </label>
@@ -417,7 +416,6 @@ function BooksPage() {
                           />
                         </MenuButton>
                       </div>
-                      
 
                       <MenuItems
                         transition
@@ -433,9 +431,9 @@ function BooksPage() {
                                 }}
                                 className={classNames(
                                   sortOption === option.value
-                                    ? "font-medium bg-brown-200"
-                                    : "text-gray-500",
-                                  "w-full text-start block px-4 py-2 text-sm data-[focus]:bg-gray-100"
+                                    ? "font-medium bg-[#172554] text-white"
+                                    : "text-gray-500 data-[focus]:bg-[#172554] data-[focus]:text-white",
+                                  "w-full text-start block px-4 py-2 text-sm"
                                 )}
                               >
                                 {option.name}
@@ -462,7 +460,6 @@ function BooksPage() {
                   className="pb-24 pt-6 "
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-4">
-
                     {/* Filters */}
                     <form className="hidden lg:block ps-10 lg:col-span-1">
                       {filters.map((section, index) => (
@@ -520,11 +517,11 @@ function BooksPage() {
                                                 setPage(1);
                                               }
                                         }
-                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                        className="size-5 radio checked:bg-[#172554]"
                                       />
                                       <label
                                         htmlFor={`filter-${section.id}-${optionIdx}`}
-                                        className="ml-3 text-sm text-gray-600"
+                                        className="ml-3 text-sm text-[#172554] font-bold"
                                       >
                                         {option.label}
                                       </label>

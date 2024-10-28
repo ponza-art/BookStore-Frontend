@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 
 export default function SearchBar({ initialQuery, onSearch }) {
-  const [searchTerm, setSearchTerm] = useState(initialQuery); // Initialize with the query
+  const [searchTerm, setSearchTerm] = useState(initialQuery);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(searchTerm); // Call the parent handler with the search term
+    onSearch(searchTerm);
   };
 
   return (
@@ -15,14 +15,14 @@ export default function SearchBar({ initialQuery, onSearch }) {
         <div className="input flex items-center gap-2 bg-white border border-gray-300 rounded-full p-1 w-full mx-auto">
           <input
             type="text"
-            className="flex-grow bg-white p-2 rounded-full border-none outline-none"
+            className="flex-grow bg-white p-2 text-black rounded-full border-none outline-none"
             placeholder="Search Books"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // Update the search term on input change
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
             className="flex items-center justify-center w-10 h-10 rounded-full text-black"
-            style={{ backgroundColor: "#dab26d" }}
+            style={{ backgroundColor: "#dbb891" }}
           >
             <IoMdSearch />
           </button>

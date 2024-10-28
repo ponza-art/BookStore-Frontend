@@ -7,7 +7,7 @@ import ErrorInput from "../components/ErrorInput";
 import axios from "axios";
 import { UserContext } from "../hooks/UserContext";
 import { MdHome } from "react-icons/md";
-import CloseEyeIcon from './../../icons/CloseEyeicon';
+import CloseEyeIcon from "./../../icons/CloseEyeicon";
 import LoginWithgoogle from "../components/LoginWithgoogle";
 
 export default function Login() {
@@ -18,12 +18,10 @@ export default function Login() {
     useEyePassword(eyePassword === "password" ? "text" : "password");
   };
   const [form, setForm] = useState({
-   
     email: "",
     password: "",
   });
   const [errorState, setErrorState] = useState({
-   
     email: null,
     password: null,
   });
@@ -32,14 +30,12 @@ export default function Login() {
     try {
       e.preventDefault();
 
-      // Validate the form data using Joi schema
       const { error, value } = UsersShemalogin.validate(
         { email: form.email, password: form.password },
         { abortEarly: false }
       );
 
       if (error) {
-        // Handle validation errors
         const errors = error.details.reduce((acc, curr) => {
           acc[curr.path[0]] = curr.message;
           return acc;
@@ -47,11 +43,9 @@ export default function Login() {
         console.log(errors);
         setErrorState(errors);
       } else {
-        // Clear validation errors if form is valid
         setErrorState({ email: null, password: null });
         setload(true);
         try {
-          // Send data to the backend for login
           const response = await axios.post(
             "https://book-store-backend-sigma-one.vercel.app/users/login",
             {
@@ -65,8 +59,6 @@ export default function Login() {
             }
           );
 
-          // Handle successful login response
-         // console.log(response.data);
           const Data = response.data.data;
           localStorage.setItem("token", Data.user.token);
           localStorage.setItem("user", JSON.stringify(Data.user));
@@ -77,11 +69,9 @@ export default function Login() {
           setload(false);
           navigate("/", { replace: true });
         } catch (err) {
-          // Handle backend errors
           console.error("An error occurred:", err);
           setload(false);
           if (err.response && err.response.data && err.response.data.message) {
-            // Check if the error is related to invalid email or password
             if (
               err.response.data.message.includes("Incorrect Email or Password")
             ) {
@@ -96,7 +86,6 @@ export default function Login() {
               });
             }
           } else {
-            // Generic error handling for network issues or unknown errors
             setErrorState({
               email: "A network error occurred. Please try again later.",
               password: null,
@@ -121,7 +110,6 @@ export default function Login() {
   const handleOnBLur = (e) => {
     const { name, value } = e.target;
 
-    //setForm({ ...form, [name]: value });
     const { error } = UsersShemalogin.validate(
       { ...form, [name]: value },
       { abortEarly: false }
@@ -134,30 +122,29 @@ export default function Login() {
       }, {});
       setErrorState((prevState) => ({
         ...prevState,
-        [name]: errors[name], 
+        [name]: errors[name],
       }));
     } else {
-      
       setErrorState((prevState) => ({
         ...prevState,
-        [name]: null, 
+        [name]: null,
       }));
     }
   };
 
   return (
     <div style={{ height: "100vh" }} className="flex justify-center">
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex flex-col justify-center p-8 md:p-14">
             <Link to={"/"} className="absolute top-5 left-5">
-              <MdHome className="size-6 text-brown-200" />
+              <MdHome className="size-6 text-[#545c72]" />
             </Link>
-            <span className="mb-3 text-4xl font-bold  text-yellow-800 ">
+            <span className="mb-3 text-4xl font-bold  text-[#545c72]">
               {" "}
               Welcome Back
             </span>
-            <span className="font-light text-gray-400 mb-8">
+            <span className="font-light text-gray-500 mb-8">
               {" "}
               Welcome Back Please enter your details
             </span>
@@ -184,7 +171,6 @@ export default function Login() {
                   htmlFor="email"
                   name="email"
                   id="email"
-                  
                   type="text"
                   onBlur={handleOnBLur}
                 />
@@ -241,7 +227,7 @@ export default function Login() {
                   </button>
                 </div>
               )}
-            
+
               {load ? (
                 <button
                   type="submit"
@@ -249,7 +235,6 @@ export default function Login() {
                   disabled
                 >
                   <span>
-                    Log in{" "}
                     <img
                       src="/loadinglogin.gif"
                       width={"30"}
@@ -260,25 +245,22 @@ export default function Login() {
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-black p-2 rounded-lg mb-5 mt-5 bg-brown-200  hover:bg-white hover:cursor-pointer hover:border  hover:text-black hover:border-brown-200"
+                  className="w-full text-white p-2 rounded-lg mb-5 mt-5 bg-[#545c72] hover:cursor-pointer duration-200 font-bold hover:bg-[#545c72] hover:text-[#dbb891]"
                   value="Log in"
                 />
               )}
+              <p className="text-center text-xs">OR</p>
               <div className="text-center text-gray-400">
-             
-                
-              <LoginWithgoogle  />
-              <hr/>
-              
-              Don't have an account?{" "}
-              <Link
-                to="/signup"
-                className="font-bold inline-block text-yellow-800 hover:underline mt-5"
-              >
-                Sign up for free
-              </Link>
-              
-            </div>
+                <LoginWithgoogle />
+                <hr />
+                Don't have an account?{" "}
+                <Link
+                  to="/signup"
+                  className="font-bold inline-block text-[#545c72] hover:underline mt-5"
+                >
+                  Sign up for free
+                </Link>
+              </div>
             </form>
           </div>
           <div className="relative">

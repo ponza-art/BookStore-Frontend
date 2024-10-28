@@ -112,7 +112,6 @@ export default function Registration() {
   const handleOnBLur = (e) => {
     const { name, value } = e.target;
 
-    //setForm({ ...form, [name]: value });
     const { error } = UsersShemasign.validate(
       { ...form, [name]: value },
       { abortEarly: false }
@@ -140,13 +139,13 @@ export default function Registration() {
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex relative flex-col justify-center p-8 md:p-14">
             <Link to={"/"} className="absolute top-5 left-5">
-              <MdHome className="size-6 text-brown-200" />
+              <MdHome className="size-6 text-[#545c72]" />
             </Link>
-            <span className="mb-3 text-4xl font-bold  text-yellow-800 ">
+            <span className="mb-3 text-4xl font-bold text-[#545c72] ">
               {" "}
               Register
             </span>
-            <span className="font-light text-gray-400 mb-5">
+            <span className="font-light text-gray-500 mb-5">
               {" "}
               Create your account. It's free and only take a minute
             </span>
@@ -287,8 +286,8 @@ export default function Registration() {
                   <Input
                     value={form.confirmPassword}
                     onChanges={handleChange}
-                    text="confirmPassword"
-                    placeHolder="confirmPassword"
+                    text="Confirm Password"
+                    placeHolder="Confirm Password"
                     htmlFor="confirmPassword"
                     name="confirmPassword"
                     id="confirmPassword"
@@ -312,7 +311,7 @@ export default function Registration() {
               {load ? (
                 <button
                   type="submit"
-                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6  opacity-50 bg-white border border-brown-200  "
+                  className="w-full cursor-not-allowed text-black p-2 rounded-lg mb-6 bg-white border-brown-200"
                   disabled
                 >
                   <span>
@@ -327,7 +326,7 @@ export default function Registration() {
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-black p-2 rounded-lg mb-6 mt-5 bg-brown-200 hover:bg-white hover:cursor-pointer hover:border hover:text-black hover:border-brown-200"
+                  className="w-full text-white p-2 rounded-lg mb-6 mt-5 bg-[#545c72] hover:cursor-pointer duration-200 hover:text-[#dbb891]"
                   value="Register Now"
                 />
               )}
@@ -336,7 +335,7 @@ export default function Registration() {
                 I already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-bold inline-block text-yellow-800 hover:underline"
+                  className="font-bold inline-block text-[#545c72] hover:underline"
                 >
                   Log in
                 </Link>
