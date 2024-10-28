@@ -462,7 +462,7 @@ function DetailsPage() {
               className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-blue-950 text-white hover:bg-blue-950 hover:text-[#dbb891]"
             >
               Leave a Review
-            </button>
+            </button> 
           )}
         </div>
         <div className="flex justify-between flex-col md:flex-row">
