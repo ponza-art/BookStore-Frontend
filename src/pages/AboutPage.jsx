@@ -36,10 +36,12 @@ function AboutPage() {
       setMessage("");
     } catch (error) {
       Swal.fire(
-        "Error",
+        "Error",error.response.data.errors[0] ||
         "Failed to send the message. Please try again.",
         "error"
       );
+      console.log(error);
+      
     } finally {
       setLoading(false);
     }

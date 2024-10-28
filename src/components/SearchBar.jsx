@@ -21,7 +21,7 @@ export default function SearchBar({ initialQuery, onSearch }) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
-            className="flex items-center justify-center w-10 h-10 rounded-full text-black"
+            className="flex items-center justify-center w-10 h-10 rounded-full text-[#172554]"
             style={{ backgroundColor: "#dbb891" }}
           >
             <IoMdSearch />
