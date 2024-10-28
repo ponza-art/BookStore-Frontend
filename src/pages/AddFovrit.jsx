@@ -172,7 +172,7 @@ const AddFovrit = () => {
               </table>
             ) : (
               <div className="flex flex-col justify-center items-center py-20">
-                <PiListHeartLight className="text-blue-300 text-8xl mb-6" />
+                <PiListHeartLight className="text-blue-950 text-8xl mb-6" />
 
                 <p className="text-2xl text-gray-700 font-semibold mb-4">
                   Your favorite list is currently empty.
@@ -184,7 +184,7 @@ const AddFovrit = () => {
                 </p>
                 <Link
                   to="/books"
-                  className="px-6 py-3 bg-blue-300 hover:bg-blue-500 text-black text-lg rounded-lg shadow-md transition-all duration-300"
+                  className="px-6 py-3 bg-blue-950 hover:bg-blue-950 hover:text-[#dbb891] text-white text-lg rounded-lg shadow-md transition-all duration-300"
                 >
                   Return to Books
                 </Link>

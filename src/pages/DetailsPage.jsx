@@ -16,12 +16,11 @@ import { useFavorites } from "../context/FavoritesContext";
 import StarIcon from "../components/StarIcon";
 import PdfBookReader from "../components/PdfBookReader";
 
-
 function DetailsPage() {
   const [book, setBook] = useState({});
   const [showPdfReader, setShowPdfReader] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
-  
+
   const [orderBookId, setOrderBookId] = useState([]);
   const [isInCartCheck, setIsInCartCheck] = useState(false);
   const [DetailsLoading, setDetailsLoading] = useState(true);
@@ -102,9 +101,9 @@ function DetailsPage() {
                 },
               }
             ),
-              toast.success("Review updated successfully", {
-                style: { top: "80px", position: "relative" },
-              }))
+            toast.success("Review updated successfully", {
+              style: { top: "80px", position: "relative" },
+            }))
           : (await axios.post(
               "https://book-store-backend-sigma-one.vercel.app/review",
               { comment, rating, bookId: id },
@@ -294,7 +293,7 @@ function DetailsPage() {
   } else {
     isInCart = cartItems.some((item) => item?.bookId === id);
   }
- 
+
   return (
     <main className="my-[9vh] mx-auto max-w-screen-xl md:px-0 px-5">
       <section className="container mx-auto pb-6">
@@ -323,7 +322,7 @@ function DetailsPage() {
                         size={25}
                         className="cursor-pointer me-5 text-red-600 iconBody"
                         onClick={() => {
-                          removeFromFavorites(book?._id); 
+                          removeFromFavorites(book?._id);
                         }}
                       />
                     ) : (
@@ -338,8 +337,10 @@ function DetailsPage() {
                   ) : null}
                 </div>
               </div>
-              <p className="text-red-600 uppercase">{book?.author}</p>
-              <span className="badge bg-yellow-600 text-white p-3 text-lg">
+              <p className="text-[#545c72] font-bold uppercase text-lg">
+                {book?.author}
+              </p>
+              <span className="badge bg-[#545c72] text-[#dbb891] font-bold p-4 text-lg">
                 {book?.category}
               </span>
               {bookRate > 0 ? (
@@ -367,16 +368,16 @@ function DetailsPage() {
               )}
             </div>
             <div className="flex flex-col gap-4 md:flex-row md:items-center justify-center">
-            <button
-              onClick={() => {
-                setPdfUrl(book?.sourcePath || book?.samplePdf);
-                setShowPdfReader(true);
-              }}
-              className="flex items-center gap-2 font-semibold bg-transparent text-[#4A2C2A] border-2 border-yellow-600 rounded-md px-6 py-2 hover:bg-yellow-600 hover:text-white transition-all duration-300"
-            >
-              Preview {book?.sourcePath ? "Full Version" : "Demo"}
-              <PiFileArrowDownDuotone size={28} />
-            </button>
+              <button
+                onClick={() => {
+                  setPdfUrl(book?.sourcePath || book?.samplePdf);
+                  setShowPdfReader(true);
+                }}
+                className="flex items-center justify-center gap-2 border-[#dbb891] hover:border-transparent border-2 text-blue-950 hover:bg-blue-950 hover:text-white font-bold rounded-md px-6 py-2 transition-all duration-300"
+              >
+                Preview {book?.sourcePath ? "Full Version" : "Demo"}
+                <PiFileArrowDownDuotone size={28} />
+              </button>
               {token ? (
                 <button
                   onClick={() => {
@@ -388,10 +389,10 @@ function DetailsPage() {
                   aria-disabled={
                     isBookInOrder || isInCart || isInCartCheck || isloading
                   }
-                  className={`flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 ${
+                  className={`flex items-center justify-center gap-2 rounded-md px-10 py-3 transition-all duration-300 ${
                     isBookInOrder || isInCart || isInCartCheck || isloading
                       ? " text-gray cursor-not-allowed"
-                      : "bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                      : "bg-blue-950 text-white hover:text-[#dbb891]"
                   }`}
                 >
                   {isBookInOrder
@@ -406,7 +407,7 @@ function DetailsPage() {
                 </button>
               ) : (
                 <button
-                  className=" flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 bg-yellow-600 text-white hover:bg-white hover:text-yellow-600 border-4 border-yellow-600"
+                  className="flex items-center justify-center gap-2 rounded-md px-10 py-[11px] transition-all duration-300 bg-[#545c72] text-[#fcf6e6] hover:text-[#dbb891] font-bold hover:bg-[#363b4a]"
                   onClick={() => {
                     navigate("/login");
                   }}
@@ -435,19 +436,19 @@ function DetailsPage() {
           </div>
         </div>
         {showPdfReader && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white w-11/12 md:w-3/4 lg:w-3/4 rounded-lg p-10  relative">
-          {/* <div className="bg-white w-full h-full rounded-lg p-10  relative"> */}
-            <button
-              onClick={() => setShowPdfReader(false)}
-              className="absolute top-0 right-2 text-black  text-2xl font-bold"
-            >
-              &times;
-            </button>
-            <PdfBookReader pdfUrl={pdfUrl} />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white w-11/12 md:w-3/4 lg:w-3/4 rounded-lg p-10  relative">
+              {/* <div className="bg-white w-full h-full rounded-lg p-10  relative"> */}
+              <button
+                onClick={() => setShowPdfReader(false)}
+                className="absolute top-0 right-2 text-black  text-2xl font-bold"
+              >
+                &times;
+              </button>
+              <PdfBookReader pdfUrl={pdfUrl} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </section>
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-2 px-5 md:px-0">
@@ -458,7 +459,7 @@ function DetailsPage() {
                 setIsOpen(true);
                 resetForm();
               }}
-              className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-yellow-600 text-white hover:bg-[#946B3C]"
+              className="flex items-center justify-center gap-2 rounded-md px-6 py-2 transition-all duration-300 mb-4 btn bg-blue-950 text-white hover:bg-blue-950 hover:text-[#dbb891]"
             >
               Leave a Review
             </button>

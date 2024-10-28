@@ -110,6 +110,7 @@ function BooksPage() {
   }, []);
   const handleSearchSubmit = (inputValue) => {
     if (inputValue.trim()) {
+      setLoading(true);
       setPage(1);
       navigate(`/books?search=${encodeURIComponent(inputValue)}`);
     } else {
@@ -330,10 +331,12 @@ function BooksPage() {
                                           onChange={
                                             index === 0
                                               ? () => {
+                                                  setLoading(true);
                                                   setAuthor(option.value);
                                                   setPage(1);
                                                 }
                                               : () => {
+                                                  setLoading(true);
                                                   setCategory(option.value);
                                                   setPage(1);
                                                 }
@@ -360,6 +363,7 @@ function BooksPage() {
                                           type="number"
                                           placeholder="Min Price"
                                           onChange={(e) => {
+                                            setLoading(true);
                                             setMinPrice(e.target.value);
                                             setPage(1);
                                           }}
@@ -373,6 +377,7 @@ function BooksPage() {
                                           type="number"
                                           placeholder="Max Price"
                                           onChange={(e) => {
+                                            setLoading(true);
                                             setMaxPrice(e.target.value);
                                             setPage(1);
                                           }}
@@ -426,6 +431,7 @@ function BooksPage() {
                             <MenuItem key={option.value}>
                               <button
                                 onClick={() => {
+                                  setLoading(true);
                                   setSortOption(option.value);
                                   setPage(1);
                                 }}
@@ -509,10 +515,12 @@ function BooksPage() {
                                         onChange={
                                           index === 0
                                             ? () => {
+                                                setLoading(true);
                                                 setAuthor(option.value);
                                                 setPage(1);
                                               }
                                             : () => {
+                                                setLoading(true);
                                                 setCategory(option.value);
                                                 setPage(1);
                                               }
@@ -535,6 +543,7 @@ function BooksPage() {
                                         type="number"
                                         placeholder="Min Price"
                                         onChange={(e) => {
+                                          setLoading(true);
                                           setMinPrice(e.target.value);
                                           setPage(1);
                                         }}
@@ -547,6 +556,7 @@ function BooksPage() {
                                         type="number"
                                         placeholder="Max Price"
                                         onChange={(e) => {
+                                          setLoading(true);
                                           setMaxPrice(e.target.value);
                                           setPage(1);
                                         }}
@@ -613,9 +623,14 @@ function BooksPage() {
                         {[...Array(totalPages)].map((_, index) => (
                           <button
                             key={index + 1}
-                            onClick={() => setPage(index + 1)}
+                            onClick={() => {
+                              setLoading(true);
+                              setPage(index + 1);
+                            }}
                             className={`join-item btn  btn-lg ${
-                              page === index + 1 ? "bg-brown-200" : ""
+                              page === index + 1
+                                ? "bg-blue-950 text-white hover:bg-blue-950"
+                                : ""
                             }`}
                           >
                             {index + 1}

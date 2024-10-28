@@ -138,9 +138,9 @@ export default function Login() {
         <div className="relative flex flex-col space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
           <div className="flex flex-col justify-center p-8 md:p-14">
             <Link to={"/"} className="absolute top-5 left-5">
-              <MdHome className="size-6 text-[#545c72]" />
+              <MdHome className="size-6 text-blue-950" />
             </Link>
-            <span className="mb-3 text-4xl font-bold  text-[#545c72]">
+            <span className="mb-3 text-4xl font-bold  text-blue-950">
               {" "}
               Welcome Back
             </span>
@@ -245,7 +245,7 @@ export default function Login() {
               ) : (
                 <input
                   type="submit"
-                  className="w-full text-white p-2 rounded-lg mb-5 mt-5 bg-[#545c72] hover:cursor-pointer duration-200 font-bold hover:bg-[#545c72] hover:text-[#dbb891]"
+                  className="w-full text-white p-2 rounded-lg mb-5 mt-5 bg-blue-950 hover:cursor-pointer duration-200 font-bold hover:bg-blue-950 hover:text-[#dbb891]"
                   value="Log in"
                 />
               )}
@@ -256,7 +256,7 @@ export default function Login() {
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-bold inline-block text-[#545c72] hover:underline mt-5"
+                  className="font-bold inline-block text-blue-950 hover:underline mt-5"
                 >
                   Sign up for free
                 </Link>

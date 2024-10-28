@@ -122,6 +122,7 @@ function AboutPage() {
                     className="h-32 w-full border border-stone-200 px-4 py-2 font-poppins text-sm rounded"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Please Enter More Than 10 Characters"
                     required
                   />
                 </div>
