@@ -17,7 +17,7 @@ export const OrderContextProvider = ({ children }) => {
       },
     };
     const res = await axios.get(
-      "https://book-store-backend-sigma-one.vercel.app/orders",
+      "https://book-store-backend-azure-tau.vercel.app/orders/",
       config
     );
     if (res.status === 200) {

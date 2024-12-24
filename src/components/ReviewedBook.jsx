@@ -13,7 +13,7 @@ function ReviewedBook({ review }) {
   const getBookById = async (id) => {
     try {
       const res = await axios.get(
-        `https://book-store-backend-sigma-one.vercel.app/book/${id}`
+        `https://book-store-backend-azure-tau.vercel.app/book/${id}`
       );
 
       const data = res.data;

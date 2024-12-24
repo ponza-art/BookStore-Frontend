@@ -41,7 +41,7 @@ export default function Checkout() {
 
       try {
         const res = await axios.get(
-          `https://book-store-backend-sigma-one.vercel.app/card/`,
+          `https://book-store-backend-azure-tau.vercel.app/card/`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -119,7 +119,7 @@ export default function Checkout() {
       try {
         setIsLoading(true);
         const res = await axios.post(
-          `https://book-store-backend-sigma-one.vercel.app/paymob/`,
+          `https://book-store-backend-azure-tau.vercel.app/paymob/`,
           { userId: userInfo?.id, cardId: selectedCardId },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -145,7 +145,7 @@ export default function Checkout() {
       try {
         setIsLoading(true);
         const paymentRes = await axios.post(
-          `https://book-store-backend-sigma-one.vercel.app/paymob/`,
+          `https://book-store-backend-azure-tau.vercel.app/paymob/`,
           {
             userId: userInfo?.id,
             cardDetails: {
@@ -172,7 +172,7 @@ export default function Checkout() {
             };
 
             const saveCardRes = await axios.post(
-              `https://book-store-backend-sigma-one.vercel.app/card/`,
+              `https://book-store-backend-azure-tau.vercel.app/card/`,
               cardData,
               { headers: { Authorization: `Bearer ${token}` } }
             );

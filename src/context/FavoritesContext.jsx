@@ -14,7 +14,7 @@ export const FavoritesProvider = ({ children }) => {
     const fetchFavorites = async () => {
       try {
         const { data: { books: favBooks } } = await axios.get(
-          `https://book-store-backend-sigma-one.vercel.app/favorites`,
+          `https://book-store-backend-azure-tau.vercel.app/favorites`,
           {
             headers: {
               Authorization: "Bearer " + token,
@@ -36,7 +36,7 @@ export const FavoritesProvider = ({ children }) => {
 
     try {
       const res=  await axios.post(
-        `https://book-store-backend-sigma-one.vercel.app/favorites`,
+        `https://book-store-backend-azure-tau.vercel.app/favorites`,
         { bookId: book._id },
         { headers: { Authorization: "Bearer " + token } }
       );
@@ -65,7 +65,7 @@ export const FavoritesProvider = ({ children }) => {
   
     try {
       await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/favorites/`,
+        `https://book-store-backend-azure-tau.vercel.app/favorites/`,
         {
           data: { bookId },
           headers: { Authorization: "Bearer " + token },

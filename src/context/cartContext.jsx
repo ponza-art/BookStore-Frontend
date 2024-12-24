@@ -16,7 +16,7 @@ function CartProvider({ children }) {
     try {
       // setLoading(true);
       const res = await axios.get(
-        "https://book-store-backend-sigma-one.vercel.app/cart",
+        "https://book-store-backend-azure-tau.vercel.app/cart",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -39,7 +39,7 @@ function CartProvider({ children }) {
 
     try {
       const res = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/cart/",
+        "https://book-store-backend-azure-tau.vercel.app/cart",
         { bookId: book },
         {
           headers: {
@@ -73,7 +73,7 @@ function CartProvider({ children }) {
     setCartItems(cartItems.filter((item) => item.bookId._id != id));
     try {
       const res = await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
+        `https://book-store-backend-azure-tau.vercel.app/cart/remove-item/`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

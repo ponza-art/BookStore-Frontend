@@ -21,7 +21,7 @@ function AboutPage() {
 
     try {
       const response = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/contact",
+        " https://book-store-backend-azure-tau.vercel.app/contact",
         contactData,
         {
           headers: {

@@ -35,7 +35,7 @@ export default function LibraryComponent() {
         };
 
         const response = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/orders",
+          "https://book-store-backend-azure-tau.vercel.app/orders",
           config
         );
 
@@ -43,6 +43,7 @@ export default function LibraryComponent() {
         getUserCartItems();
         setLoading(false);
       } catch (err) {
+        console.log(err)
         setError("Failed to load orders.");
         setLoading(false);
       }

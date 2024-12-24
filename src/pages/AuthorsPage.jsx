@@ -13,7 +13,7 @@ const AuthorsPage = () => {
     const fetchAuthors = async () => {
       try {
         const response = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/author"
+          "https://book-store-backend-azure-tau.vercel.app/author"
         );
         setAuthors(response.data);
         setFilteredAuthors(response.data);

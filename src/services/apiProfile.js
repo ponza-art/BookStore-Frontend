@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 export async function getUserData(token) {
   try {
     const res = await axios.get(
-      'https://book-store-backend-sigma-one.vercel.app/users/profile',
+      ' https://book-store-backend-azure-tau.vercel.app/users/profile',
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -21,7 +21,7 @@ export async function getUserData(token) {
 export async function updateUserData(token, data) {
   try {
     const res = await axios.patch(
-      'https://book-store-backend-sigma-one.vercel.app/users/profile',
+      ' https://book-store-backend-azure-tau.vercel.app/users/profile',
       data,
       {
         headers: {
@@ -40,7 +40,7 @@ export async function updateUserData(token, data) {
 export async function getUserCreditCards(token) {
   try {
     const res = await axios.get(
-      'https://book-store-backend-sigma-one.vercel.app/card/',
+      ' https://book-store-backend-azure-tau.vercel.app/card/',
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export async function deleteCard(token, cardId) {
   try {
     const res = await axios.delete(
       
-      `https://book-store-backend-sigma-one.vercel.app/card/${cardId}`,
+      ` https://book-store-backend-azure-tau.vercel.app/card/${cardId}`,
       {
         headers: {
           Authorization: `Bearer `+  token,
@@ -82,7 +82,7 @@ export async function deleteCard(token, cardId) {
 export async function addCreditCard(token, data) {
   try {
     const res = await axios.post(
-      'https://book-store-backend-sigma-one.vercel.app/card',
+      ' https://book-store-backend-azure-tau.vercel.app/card',
       data,
       {
         headers: {
@@ -102,7 +102,7 @@ export async function addCreditCard(token, data) {
 export async function getUserReviews(token) {
   try {
     const res = await axios.get(
-      'https://book-store-backend-sigma-one.vercel.app/review/user/',
+      ' https://book-store-backend-azure-tau.vercel.app/review/user/',
       {
         headers: {
           Authorization: `Bearer ${token}`,

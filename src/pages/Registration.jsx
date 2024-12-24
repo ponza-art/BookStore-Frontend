@@ -64,7 +64,7 @@ export default function Registration() {
         });
         setload(true);
         const response = await axios.post(
-          "https://book-store-backend-sigma-one.vercel.app/users/register",
+          "https://book-store-backend-azure-tau.vercel.app/users/register",
           {
             username: value.username,
             email: value.email,

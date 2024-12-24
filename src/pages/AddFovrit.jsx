@@ -25,7 +25,7 @@ const AddFovrit = () => {
         const {
           data: { books: favBooks },
         } = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/favorites",
+          "https://book-store-backend-azure-tau.vercel.app/favorites",
           { headers: { Authorization: "Bearer " + token } }
         );
 
@@ -47,7 +47,7 @@ const AddFovrit = () => {
 
     try {
       await axios.delete(
-        "https://book-store-backend-sigma-one.vercel.app/favorites/",
+        "https://book-store-backend-azure-tau.vercel.app/favorites/",
         {
           data: { bookId },
           headers: { Authorization: "Bearer " + token },

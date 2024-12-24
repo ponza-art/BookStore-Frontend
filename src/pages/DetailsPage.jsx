@@ -55,7 +55,7 @@ function DetailsPage() {
       setDetailsLoading(true);
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const res = await axios.get(
-        `https://book-store-backend-sigma-one.vercel.app/book/${id}`,
+        `https://book-store-backend-azure-tau.vercel.app/book/${id}`,
         { headers }
       );
       setDetailsLoading(false);
@@ -70,7 +70,7 @@ function DetailsPage() {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        `https://book-store-backend-sigma-one.vercel.app/review/${id}/reviews`
+        `https://book-store-backend-azure-tau.vercel.app/review/${id}/reviews`
       );
       setReviews(response.data);
       const reviews = response.data;
@@ -93,7 +93,7 @@ function DetailsPage() {
         setIsDisabled(true);
         const response = editingReviewId
           ? (await axios.put(
-              `https://book-store-backend-sigma-one.vercel.app/review/${editingReviewId}`,
+              `https://book-store-backend-azure-tau.vercel.app/review/${editingReviewId}`,
               { comment, rating, bookId: id },
               {
                 headers: {
@@ -105,7 +105,7 @@ function DetailsPage() {
               style: { top: "80px", position: "relative" },
             }))
           : (await axios.post(
-              "https://book-store-backend-sigma-one.vercel.app/review",
+              "https://book-store-backend-azure-tau.vercel.app/review",
               { comment, rating, bookId: id },
               {
                 headers: {
@@ -144,7 +144,7 @@ function DetailsPage() {
     try {
       setIsDisabled(true);
       await axios.delete(
-        `https://book-store-backend-sigma-one.vercel.app/review/${reviewId}`,
+        `https://book-store-backend-azure-tau.vercel.app/review/${reviewId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -178,7 +178,7 @@ function DetailsPage() {
       },
     };
     const res = await axios.get(
-      "https://book-store-backend-sigma-one.vercel.app/orders",
+      "https://book-store-backend-azure-tau.vercel.app/orders",
       config
     );
     if (res.status === 200) {

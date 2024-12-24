@@ -10,26 +10,7 @@ function CartItem(props) {
   // console.log(book);
   const { cartItems, setCartItems,deleteBookById } = useCartContext();
   const token = localStorage.getItem("token");
-  // console.log(cartItems);
-  // const deleteBookById = async (id) => {
-  //   try {
-  //     const res = await axios.delete(
-  //       `https://book-store-backend-sigma-one.vercel.app/cart/remove-item/`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //         data: {
-  //           bookId: id,
-  //         },
-  //       }
-  //     );
-  //     setCartItems(cartItems.filter((item) => item.bookId._id != id));
-  //   } catch (error) {
-  //     console.log("Error deleting item:", error);
-  //   }
-  // };
-  // console.log(book);
+
 
   {
     return cartItems?.length > 0 ? (

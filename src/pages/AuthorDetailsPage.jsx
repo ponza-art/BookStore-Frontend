@@ -21,7 +21,7 @@ const AuthorDetailsPage = () => {
     const fetchAuthorDetails = async () => {
       try {
         const response = await axios.get(
-          `https://book-store-backend-sigma-one.vercel.app/author/${id}`
+          `https://book-store-backend-azure-tau.vercel.app/author/${id}`
         );
         setAuthor(response.data);
         setLoading(false);

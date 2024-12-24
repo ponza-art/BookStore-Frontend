@@ -35,7 +35,7 @@ export default function OrderPage() {
     try {
       setIsLoading(true);
       const res = await axios.post(
-        "https://book-store-backend-sigma-one.vercel.app/orders",
+        "https://book-store-backend-azure-tau.vercel.app/orders",
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

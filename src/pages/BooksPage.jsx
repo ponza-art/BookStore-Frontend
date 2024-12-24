@@ -52,7 +52,7 @@ function BooksPage() {
     const fetchBooks = async () => {
       try {
         const res = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/book/filters",
+          "https://book-store-backend-azure-tau.vercel.app/book/filters",
           {
             params: {
               search: query,
@@ -80,7 +80,7 @@ function BooksPage() {
     const fetchCatigories = async () => {
       try {
         const { data } = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/category"
+          "https://book-store-backend-azure-tau.vercel.app/category"
         );
         setFilterCatigory(data);
       } catch (error) {
@@ -90,7 +90,7 @@ function BooksPage() {
     const fetchAuthor = async () => {
       try {
         const { data } = await axios.get(
-          "https://book-store-backend-sigma-one.vercel.app/author"
+          "https://book-store-backend-azure-tau.vercel.app/author"
         );
         setFilterAuthor(data);
       } catch (error) {
